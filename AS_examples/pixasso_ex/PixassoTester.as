@@ -26,7 +26,7 @@ public class PixassoTester extends Sprite
 		this.stage.align = "T";
 		_imageHolder = new Sprite();
 		this.addChild(_imageHolder);
-		var ldr:ImageLoader = new ImageLoader( "product.png", _imageHolder );
+		var ldr:ImageLoader = new ImageLoader( "idahoan1.png", _imageHolder );
 		ldr.addEventListener( Event.COMPLETE, _handleImageLoaded );
 		ldr.loadItem();
 	}
@@ -44,12 +44,12 @@ public class PixassoTester extends Sprite
 		var effectList:EffectList = new EffectList();
 		effectList.addEffect( Pixasso.REFLECT, [0.2,0,0.6,3, 6] );
 		effectList.addEffect( Pixasso.SCALE, [ 1 ]);
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-9", "120%", "2%", 0.2, 5 ]);
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-15", "95%", "10%", 0.1, 5 ]);
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-9", "125%", "2%", 0.1, 5 ]);
+ 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-9", "110%", "2%", 0.2, 5 ]);
+// 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-15", "95%", "10%", 0.1, 5 ]);
+ 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-9", "120%", "2%", 0.1, 5 ]);
  	   	effectList.addEffect( Pixasso.BRING_ORIGINAL_IMAGE_TO_FRONT, [] );
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-3", "80%", 1.6, 0.23, 1.2 ]);
-	   	effectList.addEffect( Pixasso.ADD_EXTERNAL_IMAGE, ["BUG.png","right-30","top+33",] );
+ 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-3", "100%", 2.6, 0.33, 1.2 ]);
+//	   	effectList.addEffect( Pixasso.ADD_EXTERNAL_IMAGE, ["BUG.png","right-30","top+33",] );
 		//effectList.addEffect( Pixasso.ADD_BACKGROUND_COLOR, [0xFFFFAA] );
  	   	//effectList.addEffect( Pixasso.SCALE, [ "50%" ]);
 		
