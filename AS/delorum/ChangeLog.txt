@@ -1,1 +1,2 @@
+2008 Aug 19 - added the loading.DataLoader class. Should probably delete the XMLloader. They are the same thing. 
 2008 Aug 15 - Consolidating the code library into one location.
