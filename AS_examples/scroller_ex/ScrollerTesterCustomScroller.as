@@ -6,14 +6,14 @@ import delorum.scrolling.*;
 import delorum.scrolling.assets.*;
 import flash.events.*;
 
-public class ScrollerTester extends Sprite
+public class ScrollerTesterCustomScroller extends Sprite
 {
 	private var _scrolledObject:Sprite;
 	private var _scroller:Scroller;
 	
 	private var _originalStageWidth:Number;
 	
-	public function ScrollerTester():void
+	public function ScrollerTesterCustomScroller():void
 	{
 		_originalStageWidth = this.stage.stageWidth;
 		_createScrollObjects();
@@ -28,11 +28,12 @@ public class ScrollerTester extends Sprite
 		_scroller.x = 30;
 		_scroller.y = 100;
 		
-		// If this is not called, Scroller will build a default scroller
-		_scroller.styleDefaultScroller( 0xFFFFFF, 0xCCCCCC, 0x777777, 4 );
+		// Create custom scroll bars
+		var csb:CustomScrollBar = new CustomScrollBar();
+		var cst:CustomScrollTrack = new CustomScrollTrack( 1 );
 		
 		// build Scroller
-		_scroller.build();
+		_scroller.build( csb, cst );
 		
 		// set event handlers
 		_scroller.addEventListener( Scroller.SCROLL, _handleScroll );

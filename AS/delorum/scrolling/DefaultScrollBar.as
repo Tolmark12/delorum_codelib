@@ -1,21 +1,21 @@
-package delorum.scrolling.assets
+package delorum.scrolling
 {
 
 import flash.display.Sprite;
 
-public class DScrollBar extends Sprite implements iDScrollBar
+public class DefaultScrollBar extends BaseScrollBar implements iScrollBar
 {
 	private var _hitPadding:Number;
 	private var _color:uint;
 	
-	public function DScrollBar( $color:uint, $hitPadding:Number=1.2  ):void
+	public function DefaultScrollBar( $color:uint=0xFFFFFF, $hitPadding:Number=1.2  ):void
 	{
+		super();
 		_hitPadding = $hitPadding;
 		_color = $color;
-		buttonMode = true;
 	}
 
-	public function drawBar ( $width:Number, $height:Number ):void
+	override public function drawBar ( $width:Number, $height:Number ):void
 	{
 		this.graphics.clear();
 		this.graphics.beginFill( _color );

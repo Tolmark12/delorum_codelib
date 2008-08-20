@@ -5,10 +5,7 @@ Change Log:
 1) Added $height + $padding to the constructor
 2) Removed the holder mc and changed the way it sets the x and y, now need to attach movie clip
 3) Added the build function to start things moving
-
-TODO:
-- Allow other track / bar / arrowbtn graphics
-- Create setters for the colors
+4) Made scroll bar and scroll track external classes
 
 */
 
@@ -71,23 +68,13 @@ public class Scroller extends Sprite
 	
 	// Sizes
 	private var _barHeight:Number  	 = 4;
-	private var _padding:Number		 = 4;
 	private var _arrowBtnSize:Number = 7;
 	
-	// Original Position
-	private var _originalPoint:Point;
-	
 	// Sprites
-	private var _holderMc:Sprite;
-	private var _track:DScrollTrack;
+	private var _track:BaseScrollTrack;
 	private var _rightBtn:ArrowBtn;
 	private var _leftBtn:ArrowBtn;
-	private var _scrollBar:DScrollBar;
-	
-	// Colors
-	private var _trackFill:uint;
-	private var _trackStroke:uint;
-	private var _barFill:uint;
+	private var _scrollBar:BaseScrollBar;
 	
 	// Math
 	private var _trackWidth:Number;						// The static width of the track
@@ -131,14 +118,10 @@ public class Scroller extends Sprite
 	*/
 	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4 ):void
 	{
-		_useDefaultScroller = true;
-		_barHeight	 = barHeight = _barHeight - $padding;
-		_trackFill   = $trackFill;
-		_trackStroke = $trackStroke;
-		_barFill     = $barFill;
-		
-		_track			= new DScrollTrack( $trackFill, $trackStroke, $padding );
-		_scrollBar		= new DScrollBar( $barFill, 1.2 );
+		_useDefaultScroller  = true;
+		_barHeight	 		 = barHeight = _barHeight - $padding;
+		_track				 = new DefaultScrollTrack( $trackFill, $trackStroke, $padding );
+		_scrollBar			 = new DefaultScrollBar( $barFill, 1.2 );
 	}
 	
 	
@@ -147,7 +130,7 @@ public class Scroller extends Sprite
 	*	@param		A Scroll Bar, if none is defined, one will be built
 	*	@param		A Scroll Track, if none is defined, one will be built
 	*/
-	public function build( $scrollBar:DScrollBar=null, $scrollTrack:DScrollTrack=null ) : void 
+	public function build( $scrollBar:BaseScrollBar=null, $scrollTrack:BaseScrollTrack=null ) : void 
 	{	
 		// If no classes were passed, and useDefaultScroller() has not been called
 		if ( ($scrollBar == null || $scrollTrack == null) && !_useDefaultScroller ) {
@@ -159,7 +142,6 @@ public class Scroller extends Sprite
 			_scrollBar 	= $scrollBar;
 			trace( "elseif" );
 		} 
-			
 
 		_make();
 		_changeOrientation( _orientaion );
@@ -237,9 +219,6 @@ public class Scroller extends Sprite
 
 		_scrollBar.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll );
 
-		//_barMc.addEventListener( MouseEvent.MOUSE_OVER, _mouseOver   );
-		//_barMc.addEventListener( MouseEvent.MOUSE_OUT, _mouseOut     );
-		
 		_rightBtn.incrament = 1;
 		_leftBtn.incrament = -1;
 		_rightBtn.addEventListener( ArrowBtn.INCRAMENT, _handleButtonClick );
@@ -254,12 +233,9 @@ public class Scroller extends Sprite
 	private function _changeOrientation( $orientation:String )
 	{
 		if( $orientation == HORIZONTAL ){
-			//this.x = _padding;
 		}else{
 			this.rotation = 90;
-			//this.x = barHeight + _padding;
 		}
-		//this.y = _padding;
 	}
 	
 	

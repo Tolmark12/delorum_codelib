@@ -1,22 +1,22 @@
-package delorum.scrolling.assets
+package delorum.scrolling
 {
 
 import flash.display.Sprite;
 
-public class DScrollTrack extends Sprite implements iDScrollTrack
+public class DefaultScrollTrack extends BaseScrollTrack implements iScrollTrack
 {
 	public var trackFill:uint;
 	public var trackStroke:uint;
 	public var barPadding:Number;
 	
-	public function DScrollTrack( $fill:uint=0xCCCCCC, $stroke:uint=0x666666, $barPadding:Number=4 ):void
+	public function DefaultScrollTrack( $fill:uint=0xCCCCCC, $stroke:uint=0x666666, $barPadding:Number=4 ):void
 	{
 		trackFill = $fill;
 		trackStroke = $stroke;
 		barPadding = $barPadding;
 	}
 	
-	public function drawTrack ( $trackWidth:Number, $barHeight:Number ):void
+	override public function drawTrack ( $trackWidth:Number, $barHeight:Number ):void
 	{
 	   this.graphics.clear();
 	   this.graphics.beginFill( trackFill );

@@ -1,7 +1,7 @@
-package delorum.scrolling.assets
+package delorum.scrolling
 {
 
-public interface iDScrollBar 
+public interface iScrollBar 
 {
 	function drawBar( $width:Number, $height:Number  ) : void;
 }

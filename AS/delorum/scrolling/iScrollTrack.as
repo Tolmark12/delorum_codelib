@@ -1,7 +1,7 @@
-package delorum.scrolling.assets
+package delorum.scrolling
 {
 
-public interface iDScrollTrack 
+public interface iScrollTrack 
 {
 	
 function drawTrack ( $trackWidth:Number, $barHeight:Number ) : void;	
