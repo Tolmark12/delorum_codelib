@@ -17,7 +17,6 @@ import flash.display.Sprite;
 import flash.events.*;
 import flash.geom.*;
 import caurina.transitions.Tweener;
-import delorum.scrolling.assets.*;
 
 /**
 * 	A simple scrollbar

@@ -3,7 +3,6 @@ package
 
 import flash.display.Sprite;
 import delorum.scrolling.*;
-import delorum.scrolling.assets.*;
 import flash.events.*;
 
 public class ScrollerTester extends Sprite
