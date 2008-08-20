@@ -52,6 +52,8 @@ public class Pixasso extends EventDispatcher
 	public static const SCALE:String	 						= "scale";
 	public static const SET_WIDTH:String 						= "setWidth";
 	public static const SET_HEIGHT:String 						= "setHeight";
+	public static const ROUND_CORNERS:String 					= "round_corners";
+	
 	
 	// Copy of the original image
 	private var _pristineBmData:BitmapData;
@@ -317,6 +319,29 @@ public class Pixasso extends EventDispatcher
 		scale( $height / _bmData.height );
 	}
 	
+	/// ROUND CORNERS
+	public function roundCorners ( $cornerRadius:Number ):void
+	{
+		trace( $cornerRadius );
+		var sprite:Sprite = new Sprite();
+		var masker:Sprite = new Sprite();
+		var bitmap:Bitmap = new Bitmap( _bmData );
+		
+		masker.graphics.beginFill(0xFF0000);
+		masker.graphics.drawRoundRect(0,0, _bmData.width, _bmData.height, $cornerRadius);
+		
+		bitmap.mask = masker;
+		bitmap.cacheAsBitmap = true;
+		bitmap.cacheAsBitmap = true
+		sprite.addChild( bitmap );
+		sprite.addChild( masker );
+		
+		
+		_bmData = new BitmapData( sprite.width, sprite.height, true, 0x000000 );
+		_bmData.draw( sprite );
+		_fireEffectComplete();
+	}
+	
 	/// BRING THE ORIGINAL IMAGE TO THE FRONT OF THE EFFECTS
 	/** 
 	*	Brings the original image back in front of any effects.
@@ -413,6 +438,9 @@ public class Pixasso extends EventDispatcher
 				break;
 				case SET_HEIGHT:
 					setHeight( params[0] );
+				break;
+				case ROUND_CORNERS:
+					roundCorners( params[0] ); 
 				break;
 			}
 		}else{

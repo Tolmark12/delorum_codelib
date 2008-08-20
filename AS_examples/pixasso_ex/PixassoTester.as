@@ -42,6 +42,7 @@ public class PixassoTester extends Sprite
 		
 		
 		var effectList:EffectList = new EffectList();
+//		effectList.addEffect( Pixasso.ROUND_CORNERS, [200] );
 		effectList.addEffect( Pixasso.REFLECT, [0.2,0,0.6,3, 6] );
 		effectList.addEffect( Pixasso.SCALE, [ 1 ]);
  	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-9", "110%", "2%", 0.2, 5 ]);

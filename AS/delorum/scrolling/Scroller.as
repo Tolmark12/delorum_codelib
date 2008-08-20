@@ -1,11 +1,26 @@
+/*
+
+Change Log:
+
+1) Added $height + $padding to the constructor
+2) Removed the holder mc and changed the way it sets the x and y, now need to attach movie clip
+3) Added the build function to start things moving
+
+TODO:
+- Allow other track / bar / arrowbtn graphics
+- Create setters for the colors
+
+*/
+
+
 package delorum.scrolling
 {
 
 import flash.display.Sprite;
 import flash.events.*;
-import flash.geom.Rectangle;
+import flash.geom.*;
 import caurina.transitions.Tweener;
-
+import delorum.scrolling.assets.*;
 
 /**
 * 	A simple scrollbar
@@ -35,7 +50,7 @@ import caurina.transitions.Tweener;
 */
 
 
-public class Scroller extends EventDispatcher
+public class Scroller extends Sprite
 {
 	// NOTE: all var names assume a horizontal scrollbar orientation
 	
@@ -48,17 +63,26 @@ public class Scroller extends EventDispatcher
 	public var trackWidth:Number 	= 0;
 	public var barHeight:Number		= 0;
 	
+	// Which scroll assets to use
+	private var _useDefaultScroller:Boolean = false;
+	
+	// Horizontal or Vertical
+	private var _orientaion:String;
+	
 	// Sizes
 	private var _barHeight:Number  	 = 4;
 	private var _padding:Number		 = 4;
 	private var _arrowBtnSize:Number = 7;
 	
+	// Original Position
+	private var _originalPoint:Point;
+	
 	// Sprites
 	private var _holderMc:Sprite;
-	private var _trackMc:Sprite;
-	private var _barMc:Sprite;
+	private var _track:DScrollTrack;
 	private var _rightBtn:ArrowBtn;
 	private var _leftBtn:ArrowBtn;
+	private var _scrollBar:DScrollBar;
 	
 	// Colors
 	private var _trackFill:uint;
@@ -84,72 +108,63 @@ public class Scroller extends EventDispatcher
 	/** 
 	*	Constructor
 	*	
-	*	@param		The sprite to build the scrollbar in
-	*	@param		How wide (or tall) the scrollbar should be
+	*	@param		How wide (or tall if scrolling vertical) the scroll track should be
+	*	@param		How tall (or wide if scrolling vertical) the scroll track should be
 	*	@param		Whether the scrollbar should be VERTICAL or HORIZONTAL
 	*/
-	public function Scroller( $parentMc:Sprite, $width:Number, $orientation:String = HORIZONTAL, 
-	 						  $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB):void
+	public function Scroller(  $width:Number, $height:Number, $orientation:String = HORIZONTAL ):void
 	{
-		barHeight    = _barHeight;
+		_barHeight	 = barHeight = $height;
 		_trackWidth  = $width;
-		_holderMc    = new Sprite();
-		_trackFill   = $trackFill;
-		_trackStroke = $trackStroke;
-		_barFill     = $barFill;
-		
-		$parentMc.addChild( _holderMc );
-		_make();
-		_changeOrientation( $orientation );
-		_resetScrollSpeed();
+		_orientaion	 = $orientation;
 	}
 	
 	// ______________________________________________________________ Make
 	
-	private function _make (  ):void
+	/**
+	*	Sets the styling for the default scroller 
+	*	
+	*	@param		The padding between the scroll track and the scrollbar
+	*	@param		The scrollbar's color
+	*	@param		the scroll track's color
+	*	@param		The scroll track's stroke color
+	*/
+	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4 ):void
 	{
-		_trackMc 		= new Sprite();
-		_barMc			= new Sprite();
-		_rightBtn		= new ArrowBtn(  );
-		_leftBtn		= new ArrowBtn(  );
-		_leftBtn.scaleX = -1;
+		_useDefaultScroller = true;
+		_barHeight	 = barHeight = _barHeight - $padding;
+		_trackFill   = $trackFill;
+		_trackStroke = $trackStroke;
+		_barFill     = $barFill;
 		
-		_rightBtn.draw( _arrowBtnSize );
-		_leftBtn.draw(  _arrowBtnSize );
-		
-		_holderMc.addChild( _trackMc  );
-		_holderMc.addChild( _barMc    );
-		_holderMc.addChild( _rightBtn );
-		_holderMc.addChild( _leftBtn  );
-		
-		_barMc.buttonMode = true;
-		_barMc.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll );
-		//_barMc.addEventListener( MouseEvent.MOUSE_OVER, _mouseOver   );
-		//_barMc.addEventListener( MouseEvent.MOUSE_OUT, _mouseOut     );
-		
-		_rightBtn.incrament = 1;
-		_leftBtn.incrament = -1;
-		_rightBtn.addEventListener( ArrowBtn.INCRAMENT, _handleButtonClick );
-		_leftBtn.addEventListener ( ArrowBtn.INCRAMENT, _handleButtonClick );
-		_leftBtn.addEventListener ( MouseEvent.CLICK, _resetScrollSpeed );
-		_rightBtn.addEventListener( MouseEvent.CLICK, _resetScrollSpeed );
-
-
-		
-		_drawTrack();
-		updateScrollWindow(0);
-	}   
+		_track			= new DScrollTrack( $trackFill, $trackStroke, $padding );
+		_scrollBar		= new DScrollBar( $barFill, 1.2 );
+	}
 	
-	private function _changeOrientation( $orientation:String )
-	{
-		if( $orientation == HORIZONTAL ){
-			_holderMc.x = _padding;
-		}else{
-			_holderMc.rotation = 90;
-			_holderMc.x = barHeight + _padding;
+	
+	/** 
+	*	Build the scroller
+	*	@param		A Scroll Bar, if none is defined, one will be built
+	*	@param		A Scroll Track, if none is defined, one will be built
+	*/
+	public function build( $scrollBar:DScrollBar=null, $scrollTrack:DScrollTrack=null ) : void 
+	{	
+		// If no classes were passed, and useDefaultScroller() has not been called
+		if ( ($scrollBar == null || $scrollTrack == null) && !_useDefaultScroller ) {
+			styleDefaultScroller();
 		}
+		// If these are custom classes..
+		 else if ( !_useDefaultScroller ) {
+			_track		= $scrollTrack;
+			_scrollBar 	= $scrollBar;
+			trace( "elseif" );
+		} 
+			
 
-		_holderMc.y = _padding;
+		_make();
+		_changeOrientation( _orientaion );
+		_resetScrollSpeed();
+		changeWidth( _trackWidth );
 	}
 	
 	// ______________________________________________________________ API
@@ -158,6 +173,7 @@ public class Scroller extends EventDispatcher
 	*	This changes the bar-width to track-width ratio
 	*	
 	*	@param		The percentage (0 - 1) of the target that is visible in the window 
+	*	@param		tween speed
 	*/
 	public function updateScrollWindow ( $percentVisible:Number, $speed:Number=1 ):void
 	{
@@ -165,14 +181,26 @@ public class Scroller extends EventDispatcher
 		_scrollWidth = _trackWidth - (_trackWidth * _percentOfContentVisible);
 		Tweener.addTween( this, { barWidth:_trackWidth * _percentOfContentVisible, time:$speed, transition:"EaseInOutQuint", onUpdate:_barTweenUpdate } );
 		changeScrollPosition( _currentPercent, $speed );
+		
 	}
 	
+	/** 
+	*	Change the width
+	*	@param		new width
+	*	@param		tween speed
+	*/
 	public function changeWidth ( $newWidth:Number, $speed:Number=1 ):void
 	{
+		updateScrollWindow(_percentOfContentVisible);
 		_trackWidth	= $newWidth;
 		Tweener.addTween( this, { trackWidth:$newWidth, time:$speed, transition:"EaseInOutQuint", onUpdate:_trackTweenUpdate } );
 	}
 	
+	/** 
+	*	Change the height
+	*	@param		new height
+	*	@param		tween speed
+	*/
 	public function changeHeight ( $newHeight:Number, $speed:Number=0.4 ):void
 	{
 		_barHeight = $newHeight;
@@ -183,12 +211,57 @@ public class Scroller extends EventDispatcher
 	*	Manually changes the scrollbar's position (0 - 1)
 	*	
 	*	@param		The scrollbar's percentage (0 - 1), 0 is at left (or top), 1 is at right, (or bottom)
+	*	@param		tween speed
 	*/
 	public function changeScrollPosition ( $percent:Number, $speed:Number=1 ):void
 	{
 		_currentPercent = $percent;
-		Tweener.addTween( _barMc, { x:_scrollWidth * $percent,time:$speed, transition:"EaseInOutQuint"} );
+		Tweener.addTween( _scrollBar, { x:_scrollWidth * $percent,time:$speed, transition:"EaseInOutQuint"} );
 	}
+	
+	// ______________________________________________________________ Make
+	
+	private function _make (  ):void
+	{
+		_rightBtn		= new ArrowBtn(  );
+		_leftBtn		= new ArrowBtn(  );
+		_leftBtn.scaleX = -1;
+		
+		_rightBtn.draw( _arrowBtnSize );
+		_leftBtn.draw(  _arrowBtnSize );
+
+		this.addChild( _track );
+		this.addChild( _scrollBar );
+		this.addChild( _rightBtn );
+		this.addChild( _leftBtn  );
+
+		_scrollBar.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll );
+
+		//_barMc.addEventListener( MouseEvent.MOUSE_OVER, _mouseOver   );
+		//_barMc.addEventListener( MouseEvent.MOUSE_OUT, _mouseOut     );
+		
+		_rightBtn.incrament = 1;
+		_leftBtn.incrament = -1;
+		_rightBtn.addEventListener( ArrowBtn.INCRAMENT, _handleButtonClick );
+		_leftBtn.addEventListener ( ArrowBtn.INCRAMENT, _handleButtonClick );
+		_leftBtn.addEventListener ( MouseEvent.CLICK, _resetScrollSpeed );
+		_rightBtn.addEventListener( MouseEvent.CLICK, _resetScrollSpeed );
+
+		_drawTrack();
+		updateScrollWindow(0);
+	}   
+	
+	private function _changeOrientation( $orientation:String )
+	{
+		if( $orientation == HORIZONTAL ){
+			//this.x = _padding;
+		}else{
+			this.rotation = 90;
+			//this.x = barHeight + _padding;
+		}
+		//this.y = _padding;
+	}
+	
 	
 	// Called on tween update, see:  updateScrollWindow()
 	private function _barTweenUpdate (  ):void
@@ -199,6 +272,7 @@ public class Scroller extends EventDispatcher
 	private function _trackTweenUpdate (  ):void
 	{
 		_drawTrack();
+		_drawBar();
 		_positionButtons();
 	}
 	
@@ -214,15 +288,15 @@ public class Scroller extends EventDispatcher
 	// This is called by via Tweener. see: updateScrollWindow()
 	public function _drawBar ():void
 	{
-		_barMc.graphics.clear();
-		_barMc.graphics.beginFill( _barFill );
-		_barMc.graphics.drawRoundRect(0, 0, barWidth, barHeight, barHeight, barHeight);
-		// Draw larger hit area
-		_barMc.graphics.beginFill( 0xFF0000, 0 );
-		_barMc.graphics.drawRect(0, barHeight * -2, barWidth, barHeight*5 );
 		_dragArea = new Rectangle(0, 0, _scrollWidth, 0);
+		_scrollBar.drawBar( barWidth, barHeight  );
 	}
 	
+	public function _drawTrack ():void
+	{
+		_track.drawTrack( trackWidth, barHeight );
+	}
+		
 	private function _positionButtons (  ):void
 	{
 		_rightBtn.x	= trackWidth + 10;
@@ -230,24 +304,15 @@ public class Scroller extends EventDispatcher
 		_rightBtn.y = _leftBtn.y = barHeight / 2;
 	}
 	
-	public function _drawTrack ():void
-	{
-		_trackMc.graphics.clear();
-		_trackMc.graphics.beginFill( _trackFill );
-		_trackMc.graphics.lineStyle( 1, _trackStroke );
-		_trackMc.graphics.drawRoundRect(-_padding, -_padding, trackWidth + _padding * 1.8, barHeight + _padding * 1.8, barHeight + _padding, barHeight + _padding);
-	}
-	
 	// ______________________________________________________________ Scrolling Event Handlers
 	
 	private function _startScroll ( e:Event ):void
 	{
-		Tweener.removeTweens( _barMc, "x" );
+		Tweener.removeTweens( _scrollBar, "x" );
 		_isDragging = true;
-		_barMc.startDrag( false, _dragArea );
-		_barMc.stage.addEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );
-		_barMc.stage.addEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
-		
+		_scrollBar.startDrag( false, _dragArea );
+		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );
+		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
 	}
 	
 	private function _stopScrolling ( e:Event ):void
@@ -255,10 +320,9 @@ public class Scroller extends EventDispatcher
 		if( _isDragging ) 
 		{
 			_isDragging = false;
-			_barMc.stopDrag();
-			_barMc.stage.removeEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );1
-			_barMc.stage.removeEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
-			
+			_scrollBar.stopDrag();
+			_scrollBar.stage.removeEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );1
+			_scrollBar.stage.removeEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
 		}
 	}
 	
@@ -278,51 +342,36 @@ public class Scroller extends EventDispatcher
 		
 		// If this is triggered via arrow button click, set easing to none
 		scrollEvent.easeMotion = ( e == null )? false : true;
-		scrollEvent.percent = _currentPercent = _barMc.x / _scrollWidth;
+		scrollEvent.percent = _currentPercent = _scrollBar.x / _scrollWidth;
 		this.dispatchEvent( scrollEvent );
 		// Update this var for use by scrolling buttons
-		_barTarget = _barMc.x;
+		_barTarget = _scrollBar.x;
 	}
+	
 	
 	// ______________________________________________________________ Arrow Button click
 	
 	private function _handleButtonClick ( e:Event ):void
 	{
-
-		var x:Number = _barMc.x + e.currentTarget.incrament * _scrollIncrament;
+		var x:Number = _scrollBar.x + e.currentTarget.incrament * _scrollIncrament;
         
 		if( x > _scrollWidth ) 
 			x = _scrollWidth;
 		else if( x < 0)
 			x = 0;
 		
-		if( x != _barMc.x ){ 	
-			_barMc.x = x;
+		if( x != _scrollBar.x ){ 	
+			_scrollBar.x = x;
 			_sendScrollEvent();
 		}
-		
-		//Tweener.addTween( _barMc, { x:_barTarget, time:1, transition:"linear"} );
-/*		var x:Number = _barTarget + _scrollSpeed * e.currentTarget.incrament;
-		
-		if( x > _scrollWidth ) 
-			x = _scrollWidth;
-		else if( x < 0)
-			x = 0;
-		
-		if( Math.round(x) != Math.round(_barTarget) )
-		{
-			_barTarget = x;
-			_scrollSpeed *= _scrollEasing;
-			Tweener.addTween( _barMc, { x:_barTarget, time:0.1, transition:"linear"} );
-			_sendScrollEvent();
-		}
-		*/
 	}
 	
 	private function _resetScrollSpeed ( e:Event = null ):void
 	{
 		_scrollSpeed = _scrollIncrament;
 	}
+	
+	// ______________________________________________________________ Getters / Setters
 }
 
 }
