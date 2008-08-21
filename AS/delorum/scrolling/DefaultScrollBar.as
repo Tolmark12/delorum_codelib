@@ -11,7 +11,7 @@ public class DefaultScrollBar extends BaseScrollBar implements iScrollBar
 	public function DefaultScrollBar( $color:uint=0xFFFFFF, $hitPadding:Number=1.2  ):void
 	{
 		super();
-		_hitPadding = $hitPadding;
+		_hitPadding = $hitPadding - 1;
 		_color = $color;
 	}
 
@@ -22,7 +22,6 @@ public class DefaultScrollBar extends BaseScrollBar implements iScrollBar
 		this.graphics.drawRoundRect(0, 0, $width, $height, $height, $height);
   		// Draw larger hit area
 		this.graphics.beginFill( 0xFF0000, 0 );
-		_hitPadding -= 1;
 		this.graphics.drawRect(0, $height *-_hitPadding,   $width, $height + ($height * _hitPadding*2) );
 	}
 }

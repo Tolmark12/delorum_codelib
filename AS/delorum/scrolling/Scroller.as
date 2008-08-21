@@ -8,8 +8,6 @@ Change Log:
 4) Made scroll bar and scroll track external classes
 
 */
-
-
 package delorum.scrolling
 {
 
@@ -22,24 +20,6 @@ import caurina.transitions.Tweener;
 * 	A simple scrollbar
 * 	
 *	@requires caurina.transitions.Tweener
-* 	@example Sample usage:
-* 	<listing version=3.0>
-* 	
-*	// Working code:
-*	_scrollHolder = new Sprite();
-*	
-*	// Create vertical scroller and listen to onScroll updates
-*	_scroller = new Scroller( _scrollHolder, 500, Scroller.VERTICAL );
-*	_scroller.addEventListener( Scroller.SCROLL, _handlerScroll );
-*	
-*	// Manually et the scroller's height based on the realative scale of 
-*	// the item we're scrolling and the window we're scrolling through.
-*	_scroller.updateScrollWindow( window.width / target.width );
-*	// You can also manually set the scrollbar's position
-*	_scroller.changeScrollPosition( 0.5 );
-*	
-* 	</listing>
-* 	
 * 	@language ActionScript 3, Flash 9.0.0
 * 	@author   Mark Parson. 2008-07-07
 * 	@rights	  Copyright (c) Delorum 2008. All rights reserved	
@@ -67,12 +47,12 @@ public class Scroller extends Sprite
 	
 	// Sizes
 	private var _barHeight:Number  	 = 4;
-	private var _arrowBtnSize:Number = 7;
+	private var _BaseScrollBtnSize:Number = 7;
 	
 	// Sprites
 	private var _track:BaseScrollTrack;
-	private var _rightBtn:ArrowBtn;
-	private var _leftBtn:ArrowBtn;
+	private var _rightBtn:BaseScrollBtn;
+	private var _leftBtn:BaseScrollBtn;
 	private var _scrollBar:BaseScrollBar;
 	
 	// Math
@@ -121,6 +101,12 @@ public class Scroller extends Sprite
 		_barHeight	 		 = barHeight = _barHeight - $padding;
 		_track				 = new DefaultScrollTrack( $trackFill, $trackStroke, $padding );
 		_scrollBar			 = new DefaultScrollBar( $barFill, 1.2 );
+		_rightBtn			 = new DefaultScrollBtn(  );
+		_leftBtn			 = new DefaultScrollBtn(  );
+		_leftBtn.scaleX 	 = -1;
+		
+		_rightBtn.draw( _BaseScrollBtnSize );
+		_leftBtn.draw(  _BaseScrollBtnSize );
 	}
 	
 	
@@ -129,7 +115,7 @@ public class Scroller extends Sprite
 	*	@param		A Scroll Bar, if none is defined, one will be built
 	*	@param		A Scroll Track, if none is defined, one will be built
 	*/
-	public function build( $scrollBar:BaseScrollBar=null, $scrollTrack:BaseScrollTrack=null ) : void 
+	public function build( $scrollBar:BaseScrollBar=null, $scrollTrack:BaseScrollTrack=null, $leftBtn:BaseScrollBtn=null, $rightBtn:BaseScrollBtn=null ) : void 
 	{	
 		// If no classes were passed, and useDefaultScroller() has not been called
 		if ( ($scrollBar == null || $scrollTrack == null) && !_useDefaultScroller ) {
@@ -139,7 +125,8 @@ public class Scroller extends Sprite
 		 else if ( !_useDefaultScroller ) {
 			_track		= $scrollTrack;
 			_scrollBar 	= $scrollBar;
-			trace( "elseif" );
+			_leftBtn	= $leftBtn;
+			_rightBtn	= $rightBtn;
 		} 
 
 		_make();
@@ -204,24 +191,18 @@ public class Scroller extends Sprite
 	
 	private function _make (  ):void
 	{
-		_rightBtn		= new ArrowBtn(  );
-		_leftBtn		= new ArrowBtn(  );
-		_leftBtn.scaleX = -1;
-		
-		_rightBtn.draw( _arrowBtnSize );
-		_leftBtn.draw(  _arrowBtnSize );
-
 		this.addChild( _track );
 		this.addChild( _scrollBar );
 		this.addChild( _rightBtn );
 		this.addChild( _leftBtn  );
-
+		_positionButtons();
+		
 		_scrollBar.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll );
 
 		_rightBtn.incrament = 1;
 		_leftBtn.incrament = -1;
-		_rightBtn.addEventListener( ArrowBtn.INCRAMENT, _handleButtonClick );
-		_leftBtn.addEventListener ( ArrowBtn.INCRAMENT, _handleButtonClick );
+		_rightBtn.addEventListener( BaseScrollBtn.INCRAMENT, _handleButtonClick );
+		_leftBtn.addEventListener ( BaseScrollBtn.INCRAMENT, _handleButtonClick );
 		_leftBtn.addEventListener ( MouseEvent.CLICK, _resetScrollSpeed );
 		_rightBtn.addEventListener( MouseEvent.CLICK, _resetScrollSpeed );
 
@@ -345,8 +326,6 @@ public class Scroller extends Sprite
 	{
 		_scrollSpeed = _scrollIncrament;
 	}
-	
-	// ______________________________________________________________ Getters / Setters
 }
 
 }

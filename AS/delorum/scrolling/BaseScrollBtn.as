@@ -5,7 +5,7 @@ import flash.display.Sprite;
 import flash.events.*;
 import flash.utils.Timer;
 
-public class ArrowBtn extends Sprite
+public class BaseScrollBtn extends Sprite implements iScrollBtn
 {
 	// Dispatched events
 	public static const INCRAMENT:String = "incrament";
@@ -19,7 +19,7 @@ public class ArrowBtn extends Sprite
 	private var _timer:Timer;
 	private var _incrament:int;
 	
-	public function ArrowBtn(  ):void
+	public function BaseScrollBtn(  ):void
 	{
 		this.buttonMode = true;
 	}
@@ -40,7 +40,7 @@ public class ArrowBtn extends Sprite
 	
 	// ______________________________________________________________ Event Handlers
 	
-	private function _mousePress ( e:Event ):void
+	protected function _mousePress ( e:Event ):void
 	{
 		_isPressed = true;
 		_sendIncramentNotice();
@@ -51,7 +51,7 @@ public class ArrowBtn extends Sprite
 		this.stage.addEventListener( MouseEvent.MOUSE_UP,   _mouseUp );
 	}
 	
-	private function _mouseUp ( e:Event ):void
+	protected function _mouseUp ( e:Event ):void
 	{
 		_isPressed = false;
 		_timer.stop();
@@ -59,7 +59,7 @@ public class ArrowBtn extends Sprite
 		this.stage.removeEventListener(MouseEvent.MOUSE_UP, _mouseUp);
 	}
 	
-	private function _timer1 ( e:Event ):void
+	protected function _timer1 ( e:Event ):void
 	{
 		if( _isPressed ){ 
 			_timer.stop();
@@ -71,7 +71,7 @@ public class ArrowBtn extends Sprite
 	
 	// ______________________________________________________________ Dispatched events
 	
-	private function _sendIncramentNotice ( e:Event = null ):void
+	protected function _sendIncramentNotice ( e:Event = null ):void
 	{
 		this.dispatchEvent( new Event( INCRAMENT ) );
 	}
