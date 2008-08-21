@@ -47,7 +47,6 @@ public class Scroller extends Sprite
 	
 	// Sizes
 	private var _barHeight:Number  	 = 4;
-	private var _BaseScrollBtnSize:Number = 7;
 	
 	// Sprites
 	private var _track:BaseScrollTrack;
@@ -94,19 +93,18 @@ public class Scroller extends Sprite
 	*	@param		The scrollbar's color
 	*	@param		the scroll track's color
 	*	@param		The scroll track's stroke color
+	*	@param		Size of the arrow buttons
+	*	@param		Button Color
 	*/
-	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4 ):void
+	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4, $buttonSize:Number=7, $buttonColor:uint=0xFF0000 ):void
 	{
 		_useDefaultScroller  = true;
 		_barHeight	 		 = barHeight = _barHeight - $padding;
 		_track				 = new DefaultScrollTrack( $trackFill, $trackStroke, $padding );
 		_scrollBar			 = new DefaultScrollBar( $barFill, 1.2 );
-		_rightBtn			 = new DefaultScrollBtn(  );
-		_leftBtn			 = new DefaultScrollBtn(  );
+		_rightBtn			 = new DefaultScrollBtn( $buttonSize, $buttonColor );
+		_leftBtn			 = new DefaultScrollBtn( $buttonSize, $buttonColor );
 		_leftBtn.scaleX 	 = -1;
-		
-		_rightBtn.draw( _BaseScrollBtnSize );
-		_leftBtn.draw(  _BaseScrollBtnSize );
 	}
 	
 	
@@ -114,8 +112,10 @@ public class Scroller extends Sprite
 	*	Build the scroller
 	*	@param		A Scroll Bar, if none is defined, one will be built
 	*	@param		A Scroll Track, if none is defined, one will be built
+	*	@param		Right scroll btn
+	*	@param		Left scroll btn
 	*/
-	public function build( $scrollBar:BaseScrollBar=null, $scrollTrack:BaseScrollTrack=null, $leftBtn:BaseScrollBtn=null, $rightBtn:BaseScrollBtn=null ) : void 
+	public function build( $scrollBar:BaseScrollBar=null, $scrollTrack:BaseScrollTrack=null, $rightBtn:BaseScrollBtn=null, $leftBtn:BaseScrollBtn=null ) : void 
 	{	
 		// If no classes were passed, and useDefaultScroller() has not been called
 		if ( ($scrollBar == null || $scrollTrack == null) && !_useDefaultScroller ) {
@@ -205,7 +205,10 @@ public class Scroller extends Sprite
 		_leftBtn.addEventListener ( BaseScrollBtn.INCRAMENT, _handleButtonClick );
 		_leftBtn.addEventListener ( MouseEvent.CLICK, _resetScrollSpeed );
 		_rightBtn.addEventListener( MouseEvent.CLICK, _resetScrollSpeed );
-
+		
+		_rightBtn.draw();
+		_leftBtn.draw();
+		
 		_drawTrack();
 		updateScrollWindow(0);
 	}   

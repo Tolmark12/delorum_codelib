@@ -10,11 +10,10 @@ public class BaseScrollBtn extends Sprite implements iScrollBtn
 	// Dispatched events
 	public static const INCRAMENT:String = "incrament";
 	
-	//
+	// scrolling speed
 	private static const DELAY:uint 		= 500;
 	private static const SCROLL_SPEED:uint 	= 10;
 
-	private var _color:Number = 0xFFFFFF;
 	private var _isPressed:Boolean;
 	private var _timer:Timer;
 	private var _incrament:int;
@@ -24,18 +23,9 @@ public class BaseScrollBtn extends Sprite implements iScrollBtn
 		this.buttonMode = true;
 	}
 	
-	public function draw ( $size:Number ):void
+	public function draw ():void
 	{
-		// Draw triangle
-		this.graphics.beginFill( _color );
-		this.graphics.moveTo( 0, $size / -2 );
-		this.graphics.lineTo( $size, 0);
-		this.graphics.lineTo( 0, $size / 2 );
-		// Draw hit area
-		this.graphics.beginFill( 0x000000, 0 );
-		this.graphics.drawRect( $size * -2, $size * -2, $size * 4, $size * 4 )
-		// Event Handler
-		this.addEventListener( MouseEvent.MOUSE_DOWN, _mousePress 	);
+		trace( "The draw method in BaseScrollBtn should be overrided" );
 	}
 	
 	// ______________________________________________________________ Event Handlers
@@ -78,7 +68,6 @@ public class BaseScrollBtn extends Sprite implements iScrollBtn
 	
 	// ______________________________________________________________ Getters / Setter
 	
-	public function set color ( $clr:Number ):void{ _color = $clr; };
 	public function set incrament ( $val:int ):void { _incrament = $val; };
 	public function get incrament ():int 			 { return _incrament; };
 }

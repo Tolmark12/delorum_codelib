@@ -30,8 +30,8 @@ public class ScrollerTesterCustomScroller extends Sprite
 		// Create custom scroll bars
 		var csb:CustomScrollBar   = new CustomScrollBar();
 		var cst:CustomScrollTrack = new CustomScrollTrack( 1 );
-		var rb:DefaultScrollBtn   = new DefaultScrollBtn(  );
-		var lb:DefaultScrollBtn   = new DefaultScrollBtn(  );
+		var rb:DefaultScrollBtn   = new DefaultScrollBtn( 14, 0xFF00FF );
+		var lb:DefaultScrollBtn   = new DefaultScrollBtn( 14, 0xFF00FF );
 		lb.scaleX                 = -1;
 		
 		// build Scroller
