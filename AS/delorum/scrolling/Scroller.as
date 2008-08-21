@@ -96,14 +96,14 @@ public class Scroller extends Sprite
 	*	@param		Size of the arrow buttons
 	*	@param		Button Color
 	*/
-	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4, $buttonSize:Number=7, $buttonColor:uint=0xFF0000 ):void
+	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4, $buttonPadding:Number=10, $buttonSize:Number=7, $buttonColor:uint=0xFFFFFF ):void
 	{
 		_useDefaultScroller  = true;
 		_barHeight	 		 = barHeight = _barHeight - $padding;
 		_track				 = new DefaultScrollTrack( $trackFill, $trackStroke, $padding );
 		_scrollBar			 = new DefaultScrollBar( $barFill, 1.2 );
-		_rightBtn			 = new DefaultScrollBtn( $buttonSize, $buttonColor );
-		_leftBtn			 = new DefaultScrollBtn( $buttonSize, $buttonColor );
+		_rightBtn			 = new DefaultScrollBtn( $buttonPadding, $buttonSize, $buttonColor );
+		_leftBtn			 = new DefaultScrollBtn( $buttonPadding, $buttonSize, $buttonColor );
 		_leftBtn.scaleX 	 = -1;
 	}
 	
@@ -258,8 +258,8 @@ public class Scroller extends Sprite
 		
 	private function _positionButtons (  ):void
 	{
-		_rightBtn.x	= trackWidth + 10;
-		_leftBtn.x	= -10;
+		_rightBtn.x	= trackWidth + _rightBtn.buttonPadding;
+		_leftBtn.x	= -_leftBtn.buttonPadding;
 		_rightBtn.y = _leftBtn.y = barHeight / 2;
 	}
 	

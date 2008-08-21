@@ -13,13 +13,17 @@ public class BaseScrollBtn extends Sprite implements iScrollBtn
 	// scrolling speed
 	private static const DELAY:uint 		= 500;
 	private static const SCROLL_SPEED:uint 	= 10;
-
+	
+	// Distance (left or right) from scroll bar
+	public var buttonPadding:Number;
+	
 	private var _isPressed:Boolean;
 	private var _timer:Timer;
 	private var _incrament:int;
 	
-	public function BaseScrollBtn(  ):void
+	public function BaseScrollBtn( $btnPadding:Number = 0 ):void
 	{
+		buttonPadding = $btnPadding;
 		this.buttonMode = true;
 	}
 	
