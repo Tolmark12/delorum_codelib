@@ -39,8 +39,7 @@ public class Scroller extends Sprite
 	public var trackWidth:Number 	= 0;
 	public var barHeight:Number		= 0;
 	
-	// Which scroll assets to use
-	private var _useDefaultScroller:Boolean = false;
+	private var _defaultCreated:Boolean = false;
 	
 	// Horizontal or Vertical
 	private var _orientaion:String;
@@ -93,18 +92,22 @@ public class Scroller extends Sprite
 	*	@param		The scrollbar's color
 	*	@param		the scroll track's color
 	*	@param		The scroll track's stroke color
+	*	@param		The padding between the button and the scrollbar, not the scroll track
 	*	@param		Size of the arrow buttons
 	*	@param		Button Color
 	*/
-	public function styleDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=4, $buttonPadding:Number=10, $buttonSize:Number=7, $buttonColor:uint=0xFFFFFF ):void
+	public function createDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=-1, $buttonPadding:Number=10, $buttonSize:Number=7, $buttonColor:uint=0xFFFFFF ):void
 	{
-		_useDefaultScroller  = true;
-		_barHeight	 		 = barHeight = _barHeight - $padding;
-		_track				 = new DefaultScrollTrack( $trackFill, $trackStroke, $padding );
-		_scrollBar			 = new DefaultScrollBar( $barFill, 1.2 );
-		_rightBtn			 = new DefaultScrollBtn( $buttonPadding, $buttonSize, $buttonColor );
-		_leftBtn			 = new DefaultScrollBtn( $buttonPadding, $buttonSize, $buttonColor );
-		_leftBtn.scaleX 	 = -1;
+		_barHeight	=  barHeight = _barHeight - $padding;
+		$padding	= ( $padding   != -1   )? $padding	 : 4;
+		_track		= ( _track	   != null )? _track	 : new DefaultScrollTrack( $trackFill, $trackStroke, $padding );
+		_scrollBar	= ( _scrollBar != null )? _scrollBar : new DefaultScrollBar( $barFill, 1.2 );
+		_rightBtn	= ( _rightBtn  != null )? _rightBtn  : new DefaultScrollBtn( $buttonPadding, $buttonSize, $buttonColor );
+		_leftBtn	= ( _leftBtn   != null )? _leftBtn   : new DefaultScrollBtn( $buttonPadding, $buttonSize, $buttonColor );
+		
+		_leftBtn.scaleX = -1;
+		
+		_defaultCreated = true;
 	}
 	
 	
@@ -117,18 +120,13 @@ public class Scroller extends Sprite
 	*/
 	public function build( $scrollBar:BaseScrollBar=null, $scrollTrack:BaseScrollTrack=null, $rightBtn:BaseScrollBtn=null, $leftBtn:BaseScrollBtn=null ) : void 
 	{	
-		// If no classes were passed, and useDefaultScroller() has not been called
-		if ( ($scrollBar == null || $scrollTrack == null) && !_useDefaultScroller ) {
-			styleDefaultScroller();
-		}
-		// If these are custom classes..
-		 else if ( !_useDefaultScroller ) {
-			_track		= $scrollTrack;
-			_scrollBar 	= $scrollBar;
-			_leftBtn	= $leftBtn;
-			_rightBtn	= $rightBtn;
-		} 
-
+		_track		= ( _track	   != null )? _track	 : $scrollTrack;
+		_scrollBar	= ( _scrollBar != null )? _scrollBar : $scrollBar;
+		_rightBtn	= ( _rightBtn  != null )? _rightBtn  : $rightBtn;
+		_leftBtn	= ( _leftBtn   != null )? _leftBtn   : $leftBtn;
+		
+		createDefaultScroller();
+		
 		_make();
 		_changeOrientation( _orientaion );
 		_resetScrollSpeed();
@@ -198,7 +196,7 @@ public class Scroller extends Sprite
 		_positionButtons();
 		
 		_scrollBar.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll );
-
+        
 		_rightBtn.incrament = 1;
 		_leftBtn.incrament = -1;
 		_rightBtn.addEventListener( BaseScrollBtn.INCRAMENT, _handleButtonClick );

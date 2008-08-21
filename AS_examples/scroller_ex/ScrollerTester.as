@@ -28,7 +28,7 @@ public class ScrollerTester extends Sprite
 		_scroller.y = 100;
 		
 		// If this is not called, Scroller will build a default scroller
-		_scroller.styleDefaultScroller( 0xFFFFFF, 0xCCCCCC, 0x777777, 4 );
+		_scroller.createDefaultScroller( 0xFFFFFF, 0xCCCCCC, 0x777777, 4 );
 		
 		// build Scroller
 		_scroller.build();
@@ -38,7 +38,7 @@ public class ScrollerTester extends Sprite
 		this.addChild(_scroller)
 		
 		// sets the size of the scroll tab
-		_scroller.updateScrollWindow( this.stage.stageWidth / _scrolledObject.width );
+		//_scroller.updateScrollWindow( this.stage.stageWidth / _scrolledObject.width );
 	}
 	
 	// ______________________________________________________________ Event handlers

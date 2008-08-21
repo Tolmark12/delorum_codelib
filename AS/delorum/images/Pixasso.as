@@ -25,12 +25,7 @@ import delorum.images.helpers.*;
 
 /**
 * 	An image manipulation class used to create various bitmap effects. 
-* 	
-* 	@example Sample usage:
-* 	<listing version=3.0>
-* 		// Sample code here
-* 	</listing>
-* 	
+*	
 * 	@language ActionScript 3, Flash 9.0.0
 * 	@author   Mark Parson. 2008-08-14
 * 	@rights	  Copyright (c) Delorum 2008. All rights reserved	
@@ -61,11 +56,11 @@ public class Pixasso extends EventDispatcher
 	
 	// Bitmap data that gets modified by the various effects
 	private var _bmData:BitmapData;
-	// Used to hold an effect chain
+	
+	// Effect chain
 	private var _effects:EffectList;
 	
-	// Vars used in the various methods
-	
+	// --- Vars used in the various methods
 	// addExternalImage() ::: 
 	private var _imageHolder:Sprite;
 	private var _imageX:*;
@@ -94,7 +89,8 @@ public class Pixasso extends EventDispatcher
 	*	@param		0-1 : How "shiny" the surface is. ie: how faded the reflection is
 	*	@param		0-1 : How "reflective" the surface is. ie: how much gradient. A value of 1 would show the gradient sitting on a mirror.
 	*	@param		0-1 : Percentage of the original image's height. 1 would have a reflection as tall as the image. 0.2 would reflect teh bottom 20% of the image
-	*	@param		Amount of blur (not implemented yet)
+	*	@param		Amount of blur 
+	*	@param		Vertical Shift - The distance to move the reflection up
 	*/
 	public function reflect ( 	$surfaceShinyness:Number=0.2, 
 							  	$surfaceReflectivity:Number=0, 
