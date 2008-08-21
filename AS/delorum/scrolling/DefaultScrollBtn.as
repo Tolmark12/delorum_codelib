@@ -43,8 +43,6 @@ public class DefaultScrollBtn extends BaseScrollBtn implements iScrollBtn
 		 						-xtraV, 
 								xtraH  + super.buttonPadding*2, 
 								xtraV * 2   );
-		// Event Handler
-		this.addEventListener( MouseEvent.MOUSE_DOWN, _mousePress );
 	}
 
 	// ______________________________________________________________ Getters / setters

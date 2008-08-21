@@ -21,7 +21,7 @@ public class DefaultScrollBar extends BaseScrollBar implements iScrollBar
 		this.graphics.beginFill( _color );
 		this.graphics.drawRoundRect(0, 0, $width, $height, $height, $height);
   		// Draw larger hit area
-		this.graphics.beginFill( 0xFF0000, 1 );
+		this.graphics.beginFill( 0xFF0000, 0 );
 		this.graphics.drawRect(0, $height *-_hitPadding,   $width, $height + ($height * _hitPadding*2) );
 	}
 }

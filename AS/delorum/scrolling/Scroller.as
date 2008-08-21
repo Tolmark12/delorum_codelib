@@ -147,7 +147,6 @@ public class Scroller extends Sprite
 		_scrollWidth = _trackWidth - (_trackWidth * _percentOfContentVisible);
 		Tweener.addTween( this, { barWidth:_trackWidth * _percentOfContentVisible, time:$speed, transition:"EaseInOutQuint", onUpdate:_barTweenUpdate } );
 		changeScrollPosition( _currentPercent, $speed );
-		
 	}
 	
 	/** 

@@ -25,6 +25,7 @@ public class BaseScrollBtn extends Sprite implements iScrollBtn
 	{
 		buttonPadding = $btnPadding;
 		this.buttonMode = true;
+		this.addEventListener( MouseEvent.MOUSE_DOWN, _mousePress );
 	}
 	
 	public function draw ():void

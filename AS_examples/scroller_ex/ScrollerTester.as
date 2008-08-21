@@ -38,7 +38,7 @@ public class ScrollerTester extends Sprite
 		this.addChild(_scroller)
 		
 		// sets the size of the scroll tab
-		//_scroller.updateScrollWindow( this.stage.stageWidth / _scrolledObject.width );
+		_scroller.updateScrollWindow( this.stage.stageWidth / _scrolledObject.width );
 	}
 	
 	// ______________________________________________________________ Event handlers

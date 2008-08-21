@@ -130,6 +130,8 @@ public class Pixasso extends EventDispatcher
 		var tempSprite:Sprite = new Sprite();
 		tempSprite.addChild(spriteReflection);
 		var blurredSprite:Sprite = _blur( spriteReflection, $surfaceBlur );
+		gradientMask.width = blurredSprite.width;
+		gradientMask.x -= $surfaceBlur;
 		blurredSprite.addChild(gradientMask);
 		
 		// mask
@@ -318,7 +320,6 @@ public class Pixasso extends EventDispatcher
 	/// ROUND CORNERS
 	public function roundCorners ( $cornerRadius:Number ):void
 	{
-		trace( $cornerRadius );
 		var sprite:Sprite = new Sprite();
 		var masker:Sprite = new Sprite();
 		var bitmap:Bitmap = new Bitmap( _bmData );
@@ -373,14 +374,14 @@ public class Pixasso extends EventDispatcher
 		blurSprite.addChild( $displayObject );
 		var blurFilter:BlurFilter 	= new BlurFilter( $blurAmount, $blurAmount, BitmapFilterQuality.HIGH );
 		blurSprite.filters 			= [ blurFilter ];
-		blurSprite.cacheAsBitmap = true;
+//		blurSprite.cacheAsBitmap = true;
+
 		// Account for blur bleed
-		
 		var shape:Shape = new Shape();
 		shape.graphics.beginFill(0x000000,0);
-		$displayObject.x = $blurAmount;
-		$displayObject.y = $blurAmount
-		shape.graphics.drawRect( -$blurAmount, -$blurAmount, $displayObject.width + $blurAmount*2, $displayObject.height + $blurAmount*2 );
+		$displayObject.x += $blurAmount*2;
+		$displayObject.y += $blurAmount*2;
+		shape.graphics.drawRect( -$blurAmount, -$blurAmount, $displayObject.width  - $blurAmount, $displayObject.height  - $blurAmount );
 		blurSprite.addChild(shape);
 		return blurSprite;
 	}
@@ -453,6 +454,8 @@ public class Pixasso extends EventDispatcher
 	// ______________________________________________________________ GETTERS / SETTERS
 	
 	public function get bitmapData (  ):BitmapData { return _bmData; };
+	public function get xOffSet (  ):Number{ return _pristinePosition.x; };
+	public function get yOffSet (  ):Number{ return _pristinePosition.y; };
 }
 
 }
