@@ -134,6 +134,16 @@ public class EchoMachine
 		}
 	}
 	
+	public static function clearMessages (  ):void
+	{
+		_messageLog = new Array()
+	}
+	
+	public static function clearErrors (  ):void
+	{
+		_errorLog = new Array()
+	}
+	
 	/** @private 	Send message to output receiver
 	* 	@param		Message
 	* 	@param		Error Mode [FLASH, QUIET, WEB, WEB_ALERT, LOG] */
@@ -218,6 +228,13 @@ public class EchoMachine
 	
 	// ______________________________________________________________ Aliases
 	public static function echo ( $str:* ):void { print($str); };
+	public static function clearMessageLog ( ):void { clearMessages() };
+	public static function clearErrorLog ( ):void { clearErrors() };
+	public static function clearLogs (  ):void
+	{
+		clearMessages();
+		clearErrors();
+	}
 }
 
 }

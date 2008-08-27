@@ -30,7 +30,7 @@ public class Sizer
 	
 	private function _percent ( $numberString:String ):Number
 	{
-		// Chomp off the percent ;-)
+		// Lazy method for Chomping off the percent ;-)
 		var ar:Array = $numberString.split("%");
 		return Number( ar[0] ) / 100;
 	}

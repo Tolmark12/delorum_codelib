@@ -96,7 +96,7 @@ public class Pixasso extends EventDispatcher
 							  	$surfaceReflectivity:Number=0, 
 								$reflectionHeight:Number=1,
 								$surfaceBlur:Number=0,
-								$verticalShift:Number=0			  			):void
+								$verticalShift:Number=0	 ):void
 	{
 		var reflectionHeight:Number 	= $reflectionHeight * _bmData.height;
 		/*var reflectionRectangle:Number	= ( bmData.heigh)bmData.height - reflectionHeight*/
@@ -140,8 +140,6 @@ public class Pixasso extends EventDispatcher
 		gradientMask.cacheAsBitmap = true;
 	    spriteReflection.mask = gradientMask;
 	    spriteReflection.parent.addChild(gradientMask);
-	
-		
 		
 		// Save ne coordinates for the pristine image
 		_pristinePosition = new Point($surfaceBlur/2, originBitmap.y);
@@ -328,11 +326,9 @@ public class Pixasso extends EventDispatcher
 		masker.graphics.drawRoundRect(0,0, _bmData.width, _bmData.height, $cornerRadius);
 		
 		bitmap.mask = masker;
-		bitmap.cacheAsBitmap = true;
 		bitmap.cacheAsBitmap = true
 		sprite.addChild( bitmap );
 		sprite.addChild( masker );
-		
 		
 		_bmData = new BitmapData( sprite.width, sprite.height, true, 0x000000 );
 		_bmData.draw( sprite );
