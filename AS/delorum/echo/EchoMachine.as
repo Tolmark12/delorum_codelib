@@ -1,7 +1,5 @@
 package delorum.echo
 {
-
-import delorum.util.JavaTrace;
 import flash.display.Stage;
 import flash.external.ExternalInterface;
 /**
@@ -165,7 +163,7 @@ public class EchoMachine
 				break
 			
 				case WEB:
-				  JavaTrace.confirm( $str );
+					ExternalInterface.call("confirm", $str);
 				break
 			
 				case LOG:
