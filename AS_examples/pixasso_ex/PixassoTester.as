@@ -41,27 +41,93 @@ public class PixassoTester extends Sprite
 		
 		
 		
+		_pixasso = new Pixasso( myBitmapData );
+		
+		// Three examples of applying effects
+		switch ( "c" ){
+			// Example of adding effects manually
+			case "a" :
+				_addEffectsManually();
+			break;
+			
+			// Example of adding effects via an array (perhaps defined via amfphp)
+			case "b" :
+				var effectListB:EffectList = _effectsListFromArray()
+				_pixasso.runBatch(effectListB);
+			break;
+			
+			// Example of adding effects manually to the effects list
+			case "c" :
+				var effectListC:EffectList = _effectListMadeManually()
+				_pixasso.runBatch(effectListC);
+			break;
+		}
+
+	}
+	
+	// ______________________________________________________________ Different ways of adding effects
+	
+	private function _addEffectsManually (  ):void
+	{
+		_pixasso.roundCorners(200);
+		_pixasso.addShape("elipse", 0x000000, "center", "bottom-15", "95%", "10%", 0.1, 5);
+		_pixasso.addExternalImage("BUG.png","right-30","top+33");
+		_pixasso.addBackgroundColor(0xFFFFAA);
+		_pixasso.scale( 0.5)
+	}
+	
+	private function _effectsListFromArray (  ):EffectList
+	{
+		var ar:Array = [
+			{ 
+				method : "ROUND_CORNERS",
+				params : [200] 
+			}, 
+			{ 
+				method : "REFLECT",
+				params : [0.2,0,0.6,3,6] 
+			},
+			{ 
+				method : "SCALE",
+				params : [1] 
+			},
+			{ 
+				method : "ADD_SHAPE",
+				params : ["elipse", 0x000000, "center", "bottom-9", "110%", "2%", 0.2, 5] 
+			},
+			{ 
+				method : "ADD_SHAPE",
+				params : ["elipse", 0x000000, "center", "bottom-15", "95%", "10%", 0.1, 5 ] 
+			},
+			{ 
+				method : "ADD_SHAPE",
+				params : ["square", 0x000000, "center", "bottom-9", "120%", "2%", 0.1, 5 ] 
+			},
+			{ 
+				method : "BRING_ORIGINAL_IMAGE_TO_FRONT",
+				params : [] 
+			}
+		];
+		
 		var effectList:EffectList = new EffectList();
-//		effectList.addEffect( Pixasso.ROUND_CORNERS, [200] );
+		effectList.addEffectsViaArray( ar );
+		return effectList;
+	}
+	
+	private function _effectListMadeManually (  ):EffectList
+	{
+		var effectList:EffectList = new EffectList();
 		effectList.addEffect( Pixasso.REFLECT, [0.2,0,0.6,3, 6] );
 		effectList.addEffect( Pixasso.SCALE, [ 1 ]);
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-9", "110%", "2%", 0.2, 5 ]);
-// 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-15", "95%", "10%", 0.1, 5 ]);
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-9", "120%", "2%", 0.1, 5 ]);
- 	   	effectList.addEffect( Pixasso.BRING_ORIGINAL_IMAGE_TO_FRONT, [] );
- 	   	effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-3", "100%", 2.6, 0.33, 1.2 ]);
-//	   	effectList.addEffect( Pixasso.ADD_EXTERNAL_IMAGE, ["BUG.png","right-30","top+33",] );
-		//effectList.addEffect( Pixasso.ADD_BACKGROUND_COLOR, [0xFFFFAA] );
- 	   	//effectList.addEffect( Pixasso.SCALE, [ "50%" ]);
-		
-		_pixasso = new Pixasso( myBitmapData );
-		_pixasso.runBatch(effectList);
-		trace( _pixasso );
-		//_pixasso.setHeight(1230);
-		
-		//_pixasso.reflect( 0.2, 0, 1, 0.5 );
-		//_pixasso.addBackgroundColor(0xFFFFAA);
+		effectList.addEffect( Pixasso.ADD_SHAPE, ["elipse", 0x000000, "center", "bottom-9", "110%", "2%", 0.2, 5 ]);
+		effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-9", "120%", "2%", 0.1, 5 ]);
+		effectList.addEffect( Pixasso.BRING_ORIGINAL_IMAGE_TO_FRONT, [] );
+		effectList.addEffect( Pixasso.ADD_SHAPE, ["square", 0x000000, "center", "bottom-3", "100%", 2.6, 0.33, 1.2 ]);
+		return effectList;
 	}
+	
+	
+	// ______________________________________________________________ Uploading image
 	
 	private function _handleClick ( e:Event ):void
 	{

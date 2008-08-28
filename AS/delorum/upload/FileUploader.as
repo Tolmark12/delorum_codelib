@@ -15,7 +15,7 @@ import flash.net.*;
 /*
 
 Todo:
-- create api for different image types.
+- create api for different file types.
 	
 */
 

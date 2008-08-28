@@ -20,8 +20,18 @@ public class EffectList
 	public function getNextEffect (  ):Object
 	{
 		return { method:effects.shift(), params:effectParams.shift() };
+		trace( effects.length + '  :  ' + params.length );
 	}
 	
+	public function addEffectsViaArray ( $effects:Array ):void
+	{
+		var len:uint = $effects.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			trace( Pixasso[ $effects[i].method ] );
+			addEffect(Pixasso[ $effects[i].method ], $effects[i].params );
+		}
+	}
 	
 	public function get isEffectsLeft (  ):Boolean{ return ( effects.length > 0)? true : false; };
 }
