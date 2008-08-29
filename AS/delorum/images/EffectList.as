@@ -28,7 +28,6 @@ public class EffectList
 		var len:uint = $effects.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			trace( Pixasso[ $effects[i].method ] );
 			addEffect(Pixasso[ $effects[i].method ], $effects[i].params );
 		}
 	}
