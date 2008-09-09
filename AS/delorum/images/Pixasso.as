@@ -11,6 +11,12 @@ addDisplayObject
 addExternalImage
 bringOriginalImageToFront
 
+FUTURE IDEAS
+- Tiling a background image, wide, tall, checkers
+- Combine filter sets
+
+BUGS
+
 */
 
 package delorum.images 
@@ -48,7 +54,7 @@ public class Pixasso extends EventDispatcher
 	public static const SET_WIDTH:String 						= "setWidth";
 	public static const SET_HEIGHT:String 						= "setHeight";
 	public static const ROUND_CORNERS:String 					= "round_corners";
-	
+	public static const CROP:String 							= "crop";
 	
 	// Copy of the original image
 	private var _pristineBmData:BitmapData;
@@ -88,7 +94,7 @@ public class Pixasso extends EventDispatcher
 	*	
 	*	@param		0-1 : How "shiny" the surface is. ie: how faded the reflection is
 	*	@param		0-1 : How "reflective" the surface is. ie: how much gradient. A value of 1 would show the gradient sitting on a mirror.
-	*	@param		0-1 : Percentage of the original image's height. 1 would have a reflection as tall as the image. 0.2 would reflect teh bottom 20% of the image
+	*	@param		0-1 : Percentage of the original image's height. 1 would have a reflection as tall as the image. 0.2 would reflect the bottom 20% of the image
 	*	@param		Amount of blur 
 	*	@param		Vertical Shift - The distance to move the reflection up
 	*/
@@ -167,6 +173,24 @@ public class Pixasso extends EventDispatcher
 		sprite.addChild(bitmap);
 		_bmData = new BitmapData(_bmData.width, _bmData.height, true, 0x000000)
 		_bmData.draw(sprite);
+		_fireEffectComplete();
+	}
+	
+	/// CROP
+	
+	public function crop ( $x:*, $y:*, $width:Number, $height:Number ):void
+	{
+		var tempRectangle:Rectangle = new Rectangle(0,0,$width,$height);
+
+		var aligner = new Aligner();
+		var x:Number = aligner.getX($x, _bmData, tempRectangle );
+		var y:Number = aligner.getY($y, _bmData, tempRectangle );
+		
+		var tempBM:BitmapData = _bmData;
+		tempBM.copyPixels( _bmData, new Rectangle(x,y,$width,$height), new Point(0,0) );
+		_pristinePosition = new Point(0, 0);
+		_bmData = new BitmapData( $width, $width, true, 0x000000 );
+		_bmData.draw( tempBM );
 		_fireEffectComplete();
 	}
 	
@@ -281,13 +305,13 @@ public class Pixasso extends EventDispatcher
 	public function scale ( $newScale:Number ):void
 	{
 		var scaleMatrix:Matrix = new Matrix();
-		scaleMatrix.a = $newScale;
-		scaleMatrix.d = $newScale;
+		scaleMatrix.scale($newScale, $newScale);
 		
 		// Scale the active bitmap data
-		var bitmap = new Bitmap( _bmData );
-		_bmData = new BitmapData(bitmap.width * $newScale, bitmap.height * $newScale, true, 0x000000);		
-		_bmData.draw(bitmap, scaleMatrix);
+		var _snapShot:BitmapData = _bmData;
+		
+		_bmData = new BitmapData(_bmData.width * $newScale, _bmData.height * $newScale, true, 0x000000);		
+		_bmData.draw(_snapShot, scaleMatrix, null, null, null, true);
 		
 		// Scale the pristine data
 		var bitmap2 = new Bitmap( _pristineBmData );
@@ -318,20 +342,16 @@ public class Pixasso extends EventDispatcher
 	/// ROUND CORNERS
 	public function roundCorners ( $cornerRadius:Number ):void
 	{
-		var sprite:Sprite = new Sprite();
+		// draw rounded corners shape
 		var masker:Sprite = new Sprite();
-		var bitmap:Bitmap = new Bitmap( _bmData );
-		
 		masker.graphics.beginFill(0xFF0000);
 		masker.graphics.drawRoundRect(0,0, _bmData.width, _bmData.height, $cornerRadius);
 		
-		bitmap.mask = masker;
-		bitmap.cacheAsBitmap = true
-		sprite.addChild( bitmap );
-		sprite.addChild( masker );
+		// use shape to mask current bitmap data 
+		var maskedSprite:Sprite = _addMaskToBitmapData( masker );
 		
-		_bmData = new BitmapData( sprite.width, sprite.height, true, 0x000000 );
-		_bmData.draw( sprite );
+		_bmData = new BitmapData( maskedSprite.width, maskedSprite.height, true, 0x000000 );
+		_bmData.draw( maskedSprite );
 		_fireEffectComplete();
 	}
 	
@@ -380,6 +400,17 @@ public class Pixasso extends EventDispatcher
 		shape.graphics.drawRect( -$blurAmount, -$blurAmount, $displayObject.width  - $blurAmount, $displayObject.height  - $blurAmount );
 		blurSprite.addChild(shape);
 		return blurSprite;
+	}
+	
+	private function _addMaskToBitmapData ( $mask:DisplayObject ):Sprite
+	{
+		var sprite:Sprite = new Sprite();
+		var bitmap:Bitmap = new Bitmap( _bmData );
+		bitmap.mask = $mask;
+		bitmap.cacheAsBitmap = true
+		sprite.addChild( bitmap );
+		sprite.addChild( $mask );
+		return sprite;
 	}
 	
 	/// 
@@ -434,6 +465,9 @@ public class Pixasso extends EventDispatcher
 				break;
 				case ROUND_CORNERS:
 					roundCorners( params[0] ); 
+				break;
+				case CROP:
+					crop( params[0],params[1],params[2],params[3] );
 				break;
 			}
 		}else{
