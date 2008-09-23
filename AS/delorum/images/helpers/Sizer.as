@@ -6,7 +6,7 @@ import flash.display.DisplayObject;
 public class Sizer
 {
 	
-	public function getWidth ( $width:*, $target:DisplayObject ):Number
+	public function getWidth ( $width:*, $target:* ):Number
 	{
 		if( typeof $width == "number" ){
 			return $width;
@@ -17,7 +17,7 @@ public class Sizer
 		}
 	}
 	
-	public function getHeight ( $height:*, $target:DisplayObject ):Number
+	public function getHeight ( $height:*, $target:* ):Number
 	{
 		if( typeof $height == "number" ){
 			return $height;

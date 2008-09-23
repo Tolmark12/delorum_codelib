@@ -177,19 +177,29 @@ public class Pixasso extends EventDispatcher
 	}
 	
 	/// CROP
-	
-	public function crop ( $x:*, $y:*, $width:Number, $height:Number ):void
+	/** 
+	*	Crop
+	*	
+	*	@param		x position. can be a number, or string. valid examples: 25, "right", "left", "left-40", "right+12"
+	*	@param		y position. can be a number, or string. valid examples: 25, "top", "bottom", "top-40", "bottom+12"
+	*	@param		width. can be a number or a string. valid examples: 100, "25%"
+	*	@param		height. can be a number or a string. valid examples: 30, "65%"
+	*/
+	public function crop ( $x:*, $y:*, $width:*, $height:* ):void
 	{
 		var tempRectangle:Rectangle = new Rectangle(0,0,$width,$height);
-
 		var aligner = new Aligner();
+		var sizer	= new Sizer();
+		
 		var x:Number = aligner.getX($x, _bmData, tempRectangle );
 		var y:Number = aligner.getY($y, _bmData, tempRectangle );
+		var wid:Number = sizer.getWidth( $width, _bmData );
+		var tal:Number = sizer.getWidth( $height, _bmData );
 		
 		var tempBM:BitmapData = _bmData;
-		tempBM.copyPixels( _bmData, new Rectangle(x,y,$width,$height), new Point(0,0) );
+		tempBM.copyPixels( _bmData, new Rectangle(x,y,wid,tal), new Point(0,0) );
 		_pristinePosition = new Point(0, 0);
-		_bmData = new BitmapData( $width, $width, true, 0x000000 );
+		_bmData = new BitmapData( wid, tal, true, 0x000000 );
 		_bmData.draw( tempBM );
 		_fireEffectComplete();
 	}

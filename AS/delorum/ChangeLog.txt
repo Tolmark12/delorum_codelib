@@ -1,8 +1,7 @@
-	Sep 09 - Pixasso  : Added crop method 
-	Aug 27 - Pixasso  : EffectList able to parse an array of effects. also improved example
+	Aug 27 - Made pixasso's EffectList able to parse an array of effects. also improved example
 	Aug 27 - Added upload/FileUploader.as
 	Aug 20 - Scroller : modularizing the scroll bar and the scroll track
-	Aug 18 - Pixasso  : Added a roundCorners() method.
+	Aug 18 - Pixasso : Added a roundCorners() method.
 	Aug 19 - added the loading.DataLoader class. Should probably delete the XMLloader. They are the same thing. 
 	Aug 15 - Consolidating the code library into one location.
 	
