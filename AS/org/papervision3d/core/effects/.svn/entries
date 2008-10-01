@@ -1,0 +1,121 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/effects
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+utils
+dir
+
+BitmapMotionEffect.as
+file
+
+
+
+
+2008-09-30T21:42:37.000000Z
+13399ae19c1d2702e5a8e415537013ed
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+BitmapFireEffect.as
+file
+
+
+
+
+2008-09-30T21:42:37.000000Z
+717828f3787d31c6b9c815595fa2f710
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+
+AbstractEffect.as
+file
+
+
+
+
+2008-09-30T21:42:37.000000Z
+f00f911c37139f8a04ef9676b0ed4eed
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+IEffect.as
+file
+
+
+
+
+2008-09-30T21:42:37.000000Z
+7fff2e4456c34a707d3071a30edfb05c
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+BitmapPixelateEffect.as
+file
+
+
+
+
+2008-09-30T21:42:37.000000Z
+898b37c46fafc1b9fa99a707ca3ca4c9
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+BitmapLayerEffect.as
+file
+
+
+
+
+2008-09-30T21:42:37.000000Z
+3813de4213229a6c201648c7749005e5
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+objects
+dir
+
+view
+dir
+
+BitmapColorEffect.as
+file
+
+
+
+
+2008-09-30T21:42:38.000000Z
+9c35dbb1990881f3617d06e861693867
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+

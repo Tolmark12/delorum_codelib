@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/render/shader
+END
+ShaderRenderer.as
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/render/shader/ShaderRenderer.as
+END
+IShaderRenderer.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/render/shader/IShaderRenderer.as
+END
+ShaderObjectData.as
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/render/shader/ShaderObjectData.as
+END

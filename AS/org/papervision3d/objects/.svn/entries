@@ -1,0 +1,49 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/objects
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-28T19:55:53.497940Z
+749
+tim.knip
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+parsers
+dir
+
+special
+dir
+
+DisplayObject3D.as
+file
+
+
+
+
+2008-09-30T21:47:11.000000Z
+b6fb7fbc718ec34d24895f535b2df51a
+2008-09-26T20:22:08.789614Z
+741
+azupko
+
+primitives
+dir
+

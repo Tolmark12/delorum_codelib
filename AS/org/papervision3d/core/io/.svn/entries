@@ -1,0 +1,43 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/io
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-13T00:42:07.162565Z
+727
+johnlindquist
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+exporters
+dir
+
+BasicExporter.as
+file
+
+
+
+
+2008-09-30T21:46:13.000000Z
+9ec8dd03a966514952d478da9d37803a
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+

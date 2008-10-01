@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/animation
+END
+IAnimationDataProvider.as
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/animation/IAnimationDataProvider.as
+END
+IAnimatable.as
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/animation/IAnimatable.as
+END
+AnimationKeyFrame3D.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/animation/AnimationKeyFrame3D.as
+END

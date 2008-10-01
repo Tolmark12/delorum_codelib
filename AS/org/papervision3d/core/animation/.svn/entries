@@ -1,0 +1,67 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/animation
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+IAnimationDataProvider.as
+file
+
+
+
+
+2008-09-30T21:42:19.000000Z
+326cb240687972d4adf6a3f238b5eaa7
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+channel
+dir
+
+IAnimatable.as
+file
+
+
+
+
+2008-09-30T21:42:19.000000Z
+4a641f62c528b0d86ca876628974afcb
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+AnimationKeyFrame3D.as
+file
+
+
+
+
+2008-09-30T21:42:19.000000Z
+8037472e6ea388d0330ce4b71001f025
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+

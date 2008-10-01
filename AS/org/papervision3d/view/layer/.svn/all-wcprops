@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/716/trunk/as3/trunk/src/org/papervision3d/view/layer
+END
+ViewportLayerEvent.as
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/view/layer/ViewportLayerEvent.as
+END
+BitmapEffectLayer.as
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/view/layer/BitmapEffectLayer.as
+END
+ViewportBaseLayer.as
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/view/layer/ViewportBaseLayer.as
+END
+ViewportLayer.as
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/716/trunk/as3/trunk/src/org/papervision3d/view/layer/ViewportLayer.as
+END

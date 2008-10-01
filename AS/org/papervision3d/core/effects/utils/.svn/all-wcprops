@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/effects/utils
+END
+ConvolutionMatrices.as
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/utils/ConvolutionMatrices.as
+END
+BitmapClearMode.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/utils/BitmapClearMode.as
+END
+BitmapDrawCommand.as
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/effects/utils/BitmapDrawCommand.as
+END

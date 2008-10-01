@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/728/trunk/as3/trunk/src/org/papervision3d/core/render/material
+END
+IUpdateBeforeMaterial.as
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/render/material/IUpdateBeforeMaterial.as
+END
+MaterialManager.as
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/728/trunk/as3/trunk/src/org/papervision3d/core/render/material/MaterialManager.as
+END
+IUpdateAfterMaterial.as
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/render/material/IUpdateAfterMaterial.as
+END

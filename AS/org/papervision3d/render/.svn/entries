@@ -1,0 +1,52 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/render
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-26T20:22:08.789614Z
+741
+azupko
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+LazyRenderEngine.as
+file
+
+
+
+
+2008-09-30T21:41:01.000000Z
+698de39b90de812ee5dddc126a5de0c0
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+
+BasicRenderEngine.as
+file
+
+
+
+
+2008-09-30T21:41:01.000000Z
+a02e232593bb804d24a79938a56750e3
+2008-09-26T20:22:08.789614Z
+741
+azupko
+

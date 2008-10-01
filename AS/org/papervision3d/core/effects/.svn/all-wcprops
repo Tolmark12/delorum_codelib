@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/effects
+END
+BitmapMotionEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/BitmapMotionEffect.as
+END
+BitmapFireEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/effects/BitmapFireEffect.as
+END
+AbstractEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/AbstractEffect.as
+END
+IEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/IEffect.as
+END
+BitmapPixelateEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/BitmapPixelateEffect.as
+END
+BitmapLayerEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/effects/BitmapLayerEffect.as
+END
+BitmapColorEffect.as
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/effects/BitmapColorEffect.as
+END
