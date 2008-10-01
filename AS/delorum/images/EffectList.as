@@ -20,7 +20,6 @@ public class EffectList
 	public function getNextEffect (  ):Object
 	{
 		return { method:effects.shift(), params:effectParams.shift() };
-		trace( effects.length + '  :  ' + params.length );
 	}
 	
 	public function addEffectsViaArray ( $effects:Array ):void

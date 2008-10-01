@@ -21,7 +21,11 @@ public class SlideShowFacade extends Facade implements IFacade
 	                                               
 	public static const START_AUTOPLAY:String	   		= "start_autoplay";
 	public static const STOP_AUTOPLAY:String 	   		= "stop_autoplay";
-
+	
+	// TransitionSpeed
+	public static const TRANSITION_SPEED_TO_CLICK		= "transition_speed_to_click"
+	public static const TRANSITION_SPEED_TO_AUTO		= "transition_speed_to_auto"
+	
 	// Example: var myFacade:SlideShowFacade = SlideShowFacade.getInstance( 'slide_show_facade' );
 	public function SlideShowFacade( key:String ):void
 	{
@@ -60,15 +64,38 @@ public class SlideShowFacade extends Facade implements IFacade
 		registerCommand( BUILD_SLIDES, BuildSlides );
 		registerCommand( NEXT_SLIDE, 	 IncramentSlide );
 		registerCommand( PREV_SLIDE, 	 IncramentSlide );
-		registerCommand( CHANGE_SLIDE_BY_INDEX, ChangeSlideByIndex);
+		registerCommand( CHANGE_SLIDE_BY_INDEX, ChangeSlideByIndex );
+		registerCommand( TRANSITION_SPEED_TO_AUTO, ChangeTransitionSpeed  );
+		registerCommand( TRANSITION_SPEED_TO_CLICK, ChangeTransitionSpeed );
 	}
+	
+	// ______________________________________________________________ API
+
+	public function stop (  ):void{ sendNotification(TRANSITION_SPEED_TO_AUTO);  sendNotification(STOP_AUTOPLAY); };
+	public function start (  ):void{ sendNotification(TRANSITION_SPEED_TO_AUTO); sendNotification(START_AUTOPLAY); };
+	public function reset (  ):void{ sendNotification(TRANSITION_SPEED_TO_AUTO); sendNotification(CHANGE_SLIDE_BY_INDEX, 0); };
+	public function gotoSlide ( $slideIndex:uint ):void{ 
+		sendNotification(TRANSITION_SPEED_TO_AUTO);
+		sendNotification(CHANGE_SLIDE_BY_INDEX, $slideIndex); 
+	};
+	
 	
 	// ______________________________________________________________ Application wide vars
 	
+	public static function getTransitionSpeed (  ):Number
+	{
+		if( useAutoSpeed ) 
+			return transitionSpeed;
+		else
+			return clickTransitionSpeed;
+	}
+	
+	public static var useAutoSpeed:Boolean = false;
 	public static var slidesWidth:Number;
 	public static var slidesHeight:Number;
 	public static var slideDisplayTime:Number;
 	public static var transitionSpeed:Number;
+	public static var clickTransitionSpeed:Number;
 
 }
 }
