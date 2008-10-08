@@ -29,10 +29,15 @@ import caurina.transitions.Tweener;
 public class Scroller extends Sprite
 {
 	// NOTE: all var names assume a horizontal scrollbar orientation
+
+	// Events
+	public static const SCROLL_RELEASED:String 	= "scroll_released";
+	public static const SCROLL_PRESSED:String 	= "scroll_pressed";
+	public static const SCROLL:String 			= "scroll";
 	
-	public static const SCROLL:String 		= "scroll";
-	public static const VERTICAL:String 	= "vertical";
-	public static const HORIZONTAL:String 	= "horizontal";
+	// Constants
+	public static const VERTICAL:String 		= "vertical";
+	public static const HORIZONTAL:String 		= "horizontal";
 	
 	// For tweening the bar
 	public var barWidth:Number 		= 0;
@@ -269,6 +274,7 @@ public class Scroller extends Sprite
 		_scrollBar.startDrag( false, _dragArea );
 		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );
 		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
+		this.dispatchEvent( new Event( SCROLL_PRESSED, true ) );
 	}
 	
 	private function _stopScrolling ( e:Event ):void
@@ -279,6 +285,7 @@ public class Scroller extends Sprite
 			_scrollBar.stopDrag();
 			_scrollBar.stage.removeEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );1
 			_scrollBar.stage.removeEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
+			this.dispatchEvent( new Event( SCROLL_RELEASED, true ) );
 		}
 	}
 	
