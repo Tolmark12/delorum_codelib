@@ -1,0 +1,29 @@
+body {
+	background-color: white;
+}
+
+#scroller {
+	background:#FFFFFF url(www.panic.com/img/content_pane-gradient.gif) repeat-x scroll center bottom;
+	border-top:1px solid #FFFFFF;
+	margin:0pt auto;
+	overflow:hidden;
+	height: 500px;
+	width:750px;
+}
+
+#content {
+	/*width:5250px;*/
+}
+
+.section {
+	float:left;
+	margin:20px;
+	width:710px;
+	height: 90%;
+	border: 1px solid black;
+}
+
+.button {
+	float: left;
+	left: 47%;
+}
