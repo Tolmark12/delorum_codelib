@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/749/trunk/as3/trunk/src/org/papervision3d/objects/parsers
+END
+Max3DS.as
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/objects/parsers/Max3DS.as
+END
+Collada.as
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/objects/parsers/Collada.as
+END
+KMZ.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/objects/parsers/KMZ.as
+END
+MD2.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/objects/parsers/MD2.as
+END
+Sketchup.as
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/objects/parsers/Sketchup.as
+END
+SketchupCollada.as
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/objects/parsers/SketchupCollada.as
+END
+Ase.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/objects/parsers/Ase.as
+END
+DAE.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/749/trunk/as3/trunk/src/org/papervision3d/objects/parsers/DAE.as
+END

@@ -1,0 +1,52 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/view
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+IViewport3D.as
+file
+
+
+
+
+2008-09-30T21:46:23.000000Z
+3a5b3f676e06f83db1c7e842885e9777
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+IView.as
+file
+
+
+
+
+2008-09-30T21:46:23.000000Z
+cc553417adb5f4d930ec07c7cbd8d170
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+

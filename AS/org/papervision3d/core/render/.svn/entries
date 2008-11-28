@@ -1,0 +1,76 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/render
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-27T00:35:35.077315Z
+743
+tim.knip
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+IRenderEngine.as
+file
+
+
+
+
+2008-09-30T21:43:43.000000Z
+cf286a585ce52dfd31e7206844d654a9
+2008-09-13T00:42:07.162565Z
+727
+johnlindquist
+
+filter
+dir
+
+project
+dir
+
+shader
+dir
+
+sort
+dir
+
+data
+dir
+
+AbstractRenderEngine.as
+file
+
+
+
+
+2008-09-30T21:43:43.000000Z
+ab76790a7065b27c8ad7d2eeeb5b201c
+2008-09-13T00:42:07.162565Z
+727
+johnlindquist
+
+draw
+dir
+
+command
+dir
+
+material
+dir
+

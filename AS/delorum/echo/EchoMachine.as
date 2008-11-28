@@ -1,7 +1,5 @@
 package delorum.echo
 {
-
-import delorum.util.JavaTrace;
 import flash.display.Stage;
 import flash.external.ExternalInterface;
 /**
@@ -134,6 +132,16 @@ public class EchoMachine
 		}
 	}
 	
+	public static function clearMessages (  ):void
+	{
+		_messageLog = new Array()
+	}
+	
+	public static function clearErrors (  ):void
+	{
+		_errorLog = new Array()
+	}
+	
 	/** @private 	Send message to output receiver
 	* 	@param		Message
 	* 	@param		Error Mode [FLASH, QUIET, WEB, WEB_ALERT, LOG] */
@@ -155,7 +163,7 @@ public class EchoMachine
 				break
 			
 				case WEB:
-				  JavaTrace.confirm( $str );
+					ExternalInterface.call("confirm", $str);
 				break
 			
 				case LOG:
@@ -218,6 +226,13 @@ public class EchoMachine
 	
 	// ______________________________________________________________ Aliases
 	public static function echo ( $str:* ):void { print($str); };
+	public static function clearMessageLog ( ):void { clearMessages() };
+	public static function clearErrorLog ( ):void { clearErrors() };
+	public static function clearLogs (  ):void
+	{
+		clearMessages();
+		clearErrors();
+	}
 }
 
 }

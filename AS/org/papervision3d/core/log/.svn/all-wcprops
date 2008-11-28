@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/log
+END
+PaperLogVO.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/log/PaperLogVO.as
+END
+IPaperLogger.as
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/log/IPaperLogger.as
+END
+PaperTraceLogger.as
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/log/PaperTraceLogger.as
+END
+PaperLogger.as
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/core/log/PaperLogger.as
+END
+LogLevel.as
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/log/LogLevel.as
+END
+AbstractPaperLogger.as
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/log/AbstractPaperLogger.as
+END

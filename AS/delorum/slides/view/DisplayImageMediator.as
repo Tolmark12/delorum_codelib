@@ -3,10 +3,10 @@ package delorum.slides.view
 import org.puremvc.as3.multicore.interfaces.*;
 import org.puremvc.as3.multicore.patterns.mediator.Mediator;
 import org.puremvc.as3.multicore.patterns.observer.Notification;
-import flash.display.Sprite;
+import flash.display.*;
 import flash.events.*;
 import delorum.slides.*;
-import delorum.slides.model.vo.*;
+import delorum.slides.view.components.Slide;
 import caurina.transitions.Tweener;
 import delorum.loading.ImageLoader;
 
@@ -17,13 +17,16 @@ public class DisplayImageMediator extends Mediator implements IMediator
 	// Display
 	private var _slideHolder:Sprite;
 	private var _slides:Object = new Object();
-	private var _newSlide:Sprite;
-	private var _oldSlide:Sprite;
+	private var _newSlide:Slide;
+	private var _oldSlide:Slide;
+	private var _bgBitmapHolder:Sprite;
 	
 	public function DisplayImageMediator( $holderMc:Sprite ):void
 	{
 		super( NAME );
+		_bgBitmapHolder = new Sprite();
 		_slideHolder = new Sprite();
+		$holderMc.addChild(_bgBitmapHolder);
 		$holderMc.addChild(_slideHolder);
    	}
 	
@@ -59,14 +62,22 @@ public class DisplayImageMediator extends Mediator implements IMediator
 		if( _slides[id] == null )
 		{
 			//...create it...
-			_slides[id] = new Sprite();
+			_slides[id] = new Slide();
+			_slides.imageUrl = $slide.imagePath;
 			_newSlide = _slides[id];
-			_slideHolder.addChild( _slides[id] );
+			_newSlide.isBlank = $slide.imagePath.indexOf("__blank__") != -1;
 			
-			// load image
-			var ldr:ImageLoader = new ImageLoader( $slide.imagePath, _slides[id] );
-			ldr.onComplete = _showNewSlide;
-			ldr.loadItem();
+			_slideHolder.addChild( _slides[id] );
+
+			if( !_newSlide.isBlank )
+			{
+				// load image
+				var ldr:ImageLoader = new ImageLoader( $slide.imagePath, _slides[id] );
+				ldr.onComplete = _showNewSlide;
+				ldr.loadItem();
+			} else {
+				_showNewSlide();
+			}
 		}
 		else
 		{
@@ -80,8 +91,32 @@ public class DisplayImageMediator extends Mediator implements IMediator
 	private function _showNewSlide ( e:Event = null ):void
 	{
 		_newSlide.alpha = 0;
-		Tweener.addTween(_newSlide, {alpha:1, time:SlideShowFacade.transitionSpeed} );
+		
+		// Take snapshot of currentdisplay
+		_bgBitmapHolder.alpha = 1;
+		_bgBitmapHolder.visible = true;
+		var bmd:BitmapData = new BitmapData( SlideShowFacade.slidesWidth, SlideShowFacade.slidesHeight, true, 0x000000 );
+		bmd.draw(_slideHolder);
+		var bitmap:Bitmap = new Bitmap(bmd);
+		if( _bgBitmapHolder.numChildren != 0 ) 
+			_bgBitmapHolder.removeChildAt(0);
+		_bgBitmapHolder.addChildAt( bitmap, 0 );
+		if( _oldSlide != null ) 
+			_oldSlide.visible = false;
+		
+		if( !_newSlide.isBlank ) {
+			_newSlide.alpha = 0;
+			_newSlide.visible = true;
+			Tweener.addTween(_newSlide, {alpha:1, time:SlideShowFacade.getTransitionSpeed(), onComplete:_hidePreviousSlide} );
+		} else {
+			Tweener.addTween(_bgBitmapHolder, {alpha:0, time:SlideShowFacade.getTransitionSpeed(), onComplete:_hidePreviousSlide} );
+		}
 	}	
+	
+	private function _hidePreviousSlide (  ):void
+	{
+		//_bgBitmapHolder.visible = false;
+	}
 	
 	private function _setStackOrder():void
 	{

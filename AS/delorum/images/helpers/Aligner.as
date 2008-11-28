@@ -10,7 +10,7 @@ public class Aligner
 	private var _extra:uint;
 	private var _pos:Number;
 	
-	public function getX ( $position:*, $bitmap:BitmapData, $newSprite:DisplayObject ):Number
+	public function getX ( $position:*, $bitmap:BitmapData, $newSprite:* ):Number
 	{
 		if( typeof $position == "number" ){
 			return $position;
@@ -29,13 +29,19 @@ public class Aligner
 				case "center" :
 					_pos = $bitmap.width/2 - $newSprite.width/2;
 				break;
+				case "right_edge" :
+					_pos = $bitmap.width - $newSprite.width;
+				break;
+				case "left_edge" :
+					_pos = 0;
+				break;
 			}
 			_addExtra();
 			return _pos;
 		}
 	}
 	
-	public function getY ( $position:*, $bitmap:BitmapData, $newSprite:DisplayObject ):Number
+	public function getY ( $position:*, $bitmap:BitmapData, $newSprite:* ):Number
 	{
 		if( typeof $position == "number" ){
 			return $position;
@@ -53,6 +59,12 @@ public class Aligner
 				case "middle":
 				case "center":
 					_pos = $bitmap.height/2 - $newSprite.height/2
+				break;
+				case "top_edge" :
+					_pos = 0;
+				break;
+				case "bottom_edge" :
+					_pos = $bitmap.height - $newSprite.height;
 				break;
 			}
 			_addExtra();

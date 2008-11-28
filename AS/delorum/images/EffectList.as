@@ -22,6 +22,14 @@ public class EffectList
 		return { method:effects.shift(), params:effectParams.shift() };
 	}
 	
+	public function addEffectsViaArray ( $effects:Array ):void
+	{
+		var len:uint = $effects.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			addEffect(Pixasso[ $effects[i].method ], $effects[i].params );
+		}
+	}
 	
 	public function get isEffectsLeft (  ):Boolean{ return ( effects.length > 0)? true : false; };
 }

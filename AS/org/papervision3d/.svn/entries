@@ -1,0 +1,67 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-30T17:44:15.464025Z
+751
+sebstar55
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+render
+dir
+
+scenes
+dir
+
+materials
+dir
+
+events
+dir
+
+core
+dir
+
+Papervision3D.as
+file
+
+
+
+
+2008-09-30T21:47:44.000000Z
+b81bcd248313746ffcf573b6553b9b51
+2008-09-10T07:25:32.715394Z
+721
+johnlindquist
+
+objects
+dir
+
+lights
+dir
+
+view
+dir
+
+cameras
+dir
+

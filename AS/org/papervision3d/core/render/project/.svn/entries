@@ -1,0 +1,55 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/render/project
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-27T00:35:35.077315Z
+743
+tim.knip
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+basic
+dir
+
+ProjectionPipeline.as
+file
+
+
+
+
+2008-09-30T21:42:58.000000Z
+745a9c5db8974b0ff9b2f11c07f5ff27
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+BasicProjectionPipeline.as
+file
+
+
+
+
+2008-09-30T21:42:58.000000Z
+3daba9d2eddb096f4dc7eeea42d4d44f
+2008-09-27T00:35:35.077315Z
+743
+tim.knip
+

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/751/trunk/as3/trunk/src/org/papervision3d/cameras
+END
+Camera3D.as
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/751/trunk/as3/trunk/src/org/papervision3d/cameras/Camera3D.as
+END
+DebugCamera3D.as
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/cameras/DebugCamera3D.as
+END
+CameraType.as
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/720/trunk/as3/trunk/src/org/papervision3d/cameras/CameraType.as
+END

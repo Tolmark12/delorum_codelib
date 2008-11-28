@@ -1,0 +1,52 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/clipping
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-26T20:22:08.789614Z
+741
+azupko
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+DefaultClipping.as
+file
+
+
+
+
+2008-09-30T21:46:06.000000Z
+9108c1c27e06fceab52dbf80f46713dc
+2008-09-26T20:22:08.789614Z
+741
+azupko
+
+FrustumClipping.as
+file
+
+
+
+
+2008-09-30T21:46:06.000000Z
+0e0e8896e6007bbb55034b52e93e46d6
+2008-09-26T20:22:08.789614Z
+741
+azupko
+

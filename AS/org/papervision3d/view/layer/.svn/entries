@@ -1,0 +1,79 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/view/layer
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-09T13:02:03.885715Z
+716
+azupko
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+ViewportLayerEvent.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+739b74924716ff5d3afffe57eeab954c
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+BitmapEffectLayer.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+3dae467f15a31b2dbd256dfc2c42960b
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+ViewportBaseLayer.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+8f07956767b96a17e5c0b08f1953ec4f
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+util
+dir
+
+ViewportLayer.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+3083b427966f6f5e00532e01193adb35
+2008-09-09T13:02:03.885715Z
+716
+azupko
+

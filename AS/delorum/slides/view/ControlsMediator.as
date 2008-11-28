@@ -93,8 +93,8 @@ public class ControlsMediator extends Mediator implements IMediator
 		// Create previous and next buttons
 		var rightBtn:ArrowBtn = new ArrowBtn( ArrowBtn.RIGHT );
 		var leftBtn:ArrowBtn  = new ArrowBtn( ArrowBtn.LEFT  );
-		rightBtn.x = SlideShowFacade.slidesWidth - rightBtn.width/4;
-		leftBtn.x  = SlideShowFacade.slidesWidth - leftBtn.width;
+		rightBtn.x = SlideShowFacade.slidesWidth - rightBtn.width/4 - 5;
+		leftBtn.x  = SlideShowFacade.slidesWidth - leftBtn.width - 5;
 		rightBtn.addEventListener( MouseEvent.CLICK, _handleArrowBtnClick );
 		leftBtn.addEventListener(  MouseEvent.CLICK, _handleArrowBtnClick );
 		
@@ -114,6 +114,7 @@ public class ControlsMediator extends Mediator implements IMediator
 	// ______________________________________________________________ Event Handlers
 	
 	private function _handleBtnClick ( e:Event ):void{
+		facade.sendNotification( SlideShowFacade.TRANSITION_SPEED_TO_CLICK );
 		facade.sendNotification( SlideShowFacade.CHANGE_SLIDE_BY_INDEX, e.currentTarget.slideIndex );
 	}
 	
@@ -123,10 +124,12 @@ public class ControlsMediator extends Mediator implements IMediator
 	
 	private function _playShow ( e:Event ):void{
 		facade.sendNotification( SlideShowFacade.START_AUTOPLAY );
+		facade.sendNotification( SlideShowFacade.TRANSITION_SPEED_TO_CLICK );
 		facade.sendNotification( SlideShowFacade.NEXT_SLIDE, true );
 	}
 	
 	private function _handleArrowBtnClick ( e:Event ):void{
+		facade.sendNotification( SlideShowFacade.TRANSITION_SPEED_TO_CLICK );
 		facade.sendNotification( SlideShowFacade.STOP_AUTOPLAY );
 		
 		if( e.currentTarget.direction == ArrowBtn.RIGHT )

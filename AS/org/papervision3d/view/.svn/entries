@@ -1,0 +1,82 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/view
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-10T16:37:29.128770Z
+723
+johnlindquist
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+AbstractView.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+5eacb5c028fe2d3104bdd012fd700540
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+BitmapViewport3D.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+8753cf37bedefa050aa1a3ac288345ad
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
+Viewport3D.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+0b3637c97549606f593e78b6173d8509
+2008-09-10T16:37:29.128770Z
+723
+johnlindquist
+
+layer
+dir
+
+stats
+dir
+
+BasicView.as
+file
+
+
+
+
+2008-09-30T21:47:35.000000Z
+d2a4c49d07636c8a531cf6dd985e0da0
+2008-09-10T06:31:32.292151Z
+719
+johnlindquist
+

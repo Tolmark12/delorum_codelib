@@ -5,6 +5,7 @@ import flash.net.URLRequest;
 import flash.display.Loader;
 import flash.display.DisplayObjectContainer;
 import flash.events.*;
+import flash.system.LoaderContext;
 
 /**
 * 	Used to load an image into a Sprite immediately,
@@ -40,6 +41,9 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 	private var _holderMc:DisplayObjectContainer;
 	private var _loader:Loader;
 	
+	/**	Set this to true if you are loading images from a separate domain, and you need programatic access to their pixels  */
+	public var checkCrossDomainXml:Boolean = false;
+	
 	// ______________________________________________________________ Constructor
 	/** Constructor
 	* 	
@@ -70,7 +74,11 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 	/** Loads item immediately */
 	override public function loadItem (  ):void
 	{
-        _loader.load( _itemURL );
+		// Cross domain xml:
+		var loaderContext:LoaderContext = new LoaderContext ();
+		loaderContext.checkPolicyFile = checkCrossDomainXml;
+		
+        _loader.load( _itemURL, loaderContext );
 		_holderMc.addChild( _loader );
 	}
 	

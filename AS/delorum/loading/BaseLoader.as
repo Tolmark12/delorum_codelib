@@ -31,7 +31,6 @@ public class BaseLoader extends EventDispatcher
 	*/
 	public function addItemToLoadQueue (  ):String
 	{
-		//_loadQueue.push( this );
 		_queueNumber = _loadCount;
 		_loadQueue[ _queueNumber ] = this;
 		_loadCount++;

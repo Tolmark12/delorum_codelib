@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics
+END
+DaePhysicsModel.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaePhysicsModel.as
+END
+DaeRigidConstraint.as
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeRigidConstraint.as
+END
+DaeCylinder.as
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeCylinder.as
+END
+DaeRigidBody.as
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeRigidBody.as
+END
+DaeTaperedCylinder.as
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeTaperedCylinder.as
+END
+DaeConvexMesh.as
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/ascollada/physics/DaeConvexMesh.as
+END
+DaeInstancePhysicsMaterial.as
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeInstancePhysicsMaterial.as
+END
+DaeSphere.as
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeSphere.as
+END
+DaeInstanceForceField.as
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeInstanceForceField.as
+END
+DaeBox.as
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/ascollada/physics/DaeBox.as
+END
+DaeInstancePhysicsModel.as
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeInstancePhysicsModel.as
+END
+DaeCapsule.as
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeCapsule.as
+END
+DaePlane.as
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaePlane.as
+END
+DaeShape.as
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeShape.as
+END
+DaePhysicsScene.as
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaePhysicsScene.as
+END
+DaePhysicsMaterial.as
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaePhysicsMaterial.as
+END
+DaeTaperedCapsule.as
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeTaperedCapsule.as
+END
+DaeInstanceRigidBody.as
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeInstanceRigidBody.as
+END
+DaeForceField.as
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/ascollada/physics/DaeForceField.as
+END

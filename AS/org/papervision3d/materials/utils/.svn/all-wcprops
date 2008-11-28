@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/materials/utils
+END
+MaterialsList.as
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/utils/MaterialsList.as
+END
+RenderRecStorage.as
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/utils/RenderRecStorage.as
+END
+LightMaps.as
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/717/trunk/as3/trunk/src/org/papervision3d/materials/utils/LightMaps.as
+END
+BumpmapGenerator.as
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/utils/BumpmapGenerator.as
+END
+LightMatrix.as
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/utils/LightMatrix.as
+END
+BitmapMaterialTools.as
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/utils/BitmapMaterialTools.as
+END

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/750/trunk/as3/trunk/src/org/papervision3d/materials/shaders
+END
+EnvMapShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/EnvMapShader.as
+END
+GouraudShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/GouraudShader.as
+END
+FlatShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/FlatShader.as
+END
+LightShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/LightShader.as
+END
+IShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/IShader.as
+END
+ShaderCompositeModes.as
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/ShaderCompositeModes.as
+END
+PhongShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/PhongShader.as
+END
+CellShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/CellShader.as
+END
+Shader.as
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/Shader.as
+END
+ShadedMaterial.as
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/750/trunk/as3/trunk/src/org/papervision3d/materials/shaders/ShadedMaterial.as
+END
+ILightShader.as
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/materials/shaders/ILightShader.as
+END

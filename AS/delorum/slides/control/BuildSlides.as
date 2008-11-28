@@ -4,7 +4,7 @@ import org.puremvc.as3.multicore.interfaces.*;
 import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 import delorum.slides.view.*;
 import delorum.slides.model.*;
-import delorum.slides.model.vo.*;
+
 import delorum.slides.SlideShow_VO;
 
 public class BuildSlides extends SimpleCommand implements ICommand

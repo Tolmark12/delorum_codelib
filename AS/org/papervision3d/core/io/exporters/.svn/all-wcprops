@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/727/trunk/as3/trunk/src/org/papervision3d/core/io/exporters
+END
+ExportCollada.as
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/727/trunk/as3/trunk/src/org/papervision3d/core/io/exporters/ExportCollada.as
+END
+ExportFileFormat.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/708/trunk/as3/trunk/src/org/papervision3d/core/io/exporters/ExportFileFormat.as
+END

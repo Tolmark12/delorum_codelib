@@ -1,0 +1,52 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/ascollada/io
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+DaeWriter.as
+file
+
+
+
+
+2008-09-30T21:40:19.000000Z
+f95d6a85c62534ab9abdcc2556abc099
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+
+DaeReader.as
+file
+
+
+
+
+2008-09-30T21:40:19.000000Z
+b85deb34047ca8c0532e9f3e82ce9be5
+2008-09-09T16:46:19.322458Z
+717
+r.hauwert@gmail.com
+

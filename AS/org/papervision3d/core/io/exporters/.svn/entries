@@ -1,0 +1,52 @@
+8
+
+dir
+751
+http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/core/io/exporters
+http://papervision3d.googlecode.com/svn
+
+
+
+2008-09-13T00:42:07.162565Z
+727
+johnlindquist
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+071aa1e1-232a-0410-a790-59abb25ab4c3
+
+ExportCollada.as
+file
+
+
+
+
+2008-09-30T21:46:13.000000Z
+32393bc4ab4f7a24a0dbd4ac0b3ef0ed
+2008-09-13T00:42:07.162565Z
+727
+johnlindquist
+
+ExportFileFormat.as
+file
+
+
+
+
+2008-09-30T21:46:13.000000Z
+153b5fed81ddb4c1218196372b0b4408
+2008-08-25T13:13:47.483717Z
+708
+neoriley
+
