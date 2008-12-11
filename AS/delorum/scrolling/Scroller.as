@@ -136,6 +136,7 @@ public class Scroller extends Sprite
 		_changeOrientation( _orientaion );
 		_resetScrollSpeed();
 		changeWidth( _trackWidth );
+		_activateMouseScrollWheel();
 	}
 	
 	// ______________________________________________________________ API
@@ -187,6 +188,22 @@ public class Scroller extends Sprite
 	{
 		_currentPercent = $percent;
 		Tweener.addTween( _scrollBar, { x:_scrollWidth * $percent,time:$speed, transition:"EaseInOutQuint"} );
+	}
+	
+	public function show ( $speed:Number=1 ):void
+	{
+		this.visible = true;
+		Tweener.addTween( this, { alpha:1, time:$speed, transition:"EaseInOutQuint"} );
+	}
+	
+	public function hide ( $speed:Number=1 ):void
+	{
+		Tweener.addTween( this, { alpha:0, time:$speed, transition:"EaseInOutQuint", onComplete:_makeInvisible} );
+	}
+	
+	private function _makeInvisible (  ):void
+	{
+		this.visible = false;
 	}
 	
 	// ______________________________________________________________ Make
@@ -311,6 +328,24 @@ public class Scroller extends Sprite
 		_barTarget = _scrollBar.x;
 	}
 	
+	// ______________________________________________________________ Mouse Scroll Wheel
+	
+	/* This isn't working yet, for some reasont, the event linteners never file... */
+	
+	 private function _activateMouseScrollWheel (  ):void
+	 {
+	 	this.stage.addEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheelEvent);
+	 }
+	
+	private function _deactivateMouseScrollWheel (  ):void
+	{
+		//this.removeEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheelEvent);
+	}
+	
+	private function _onMouseWheelEvent ( e:MouseEvent ):void
+	{
+		trace( e.delta );
+	}
 	
 	// ______________________________________________________________ Arrow Button click
 	
@@ -333,6 +368,10 @@ public class Scroller extends Sprite
 	{
 		_scrollSpeed = _scrollIncrament;
 	}
+	
+	// ______________________________________________________________ Getters Setters
+	
+	public function get scrollPosition (  ):Number	{ return _currentPercent; };
 }
 
 }

@@ -2,6 +2,10 @@ package delorum.echo
 {
 import flash.display.Stage;
 import flash.external.ExternalInterface;
+import flash.utils.Timer;
+import flash.events.Event;
+import flash.system.System;
+
 /**
  *	This class is used to report errors or other messages independent
  *	of how the swf has been deployed. For instance, if the swf has been
@@ -108,7 +112,7 @@ public class EchoMachine
 	*/
 	public static function isOnWeb ( $stage:Stage ):Boolean
 	{
-		return ( $stage.loaderInfo.url.indexOf("http://") == 0 )? true : false;
+		return ( $stage.loaderInfo.url.indexOf("http") == 0 )? true : false;
 	}
 	
 	
@@ -141,6 +145,34 @@ public class EchoMachine
 	{
 		_errorLog = new Array()
 	}
+	
+	
+	// ______________________________________________________________ Memory
+	
+	private static var _memoryEchoCount:uint = 0;
+	private static var _memoryTimer:Timer;
+	
+	/**	Echo out the amount of memory used by flash every 1 second. */
+	public static function startMemoryEcho ( $seconds:Number = 1 ):void
+	{
+		if( _memoryTimer == null ) 
+			_memoryTimer = new Timer( $seconds * 1 );
+
+		_memoryTimer.addEventListener("timer", _echoMemory, false, 0, true);
+		_memoryTimer.start();
+	}
+	
+	public static function stopMemoryEcho (  ):void
+	{
+		_memoryTimer.stop();
+	}
+	
+	private static function _echoMemory ( e:Event ):void
+	{
+		trace( _memoryEchoCount++ + ") " + System.totalMemory );
+	}
+	
+	// ______________________________________________________________ Memory END
 	
 	/** @private 	Send message to output receiver
 	* 	@param		Message
