@@ -5,6 +5,8 @@ import flash.external.ExternalInterface;
 import flash.utils.Timer;
 import flash.events.Event;
 import flash.system.System;
+import flash.net.LocalConnection;
+import flash.events.StatusEvent;
 
 /**
  *	This class is used to report errors or other messages independent
@@ -49,7 +51,8 @@ public class EchoMachine
 	public static const WEB:String 			= "web";
 	/** Error Mode: For saving errors to a log (not implemented yet) */
 	public static const LOG:String 			= "log";
-	
+	/**	Error Mode: Ooutputs to the AIR application */
+	public static const AIR:String 			= "air";
 
 	/**	Set the errorMode to indicate how errors should be reported 
 	*	
@@ -197,7 +200,13 @@ public class EchoMachine
 				case WEB:
 					ExternalInterface.call("confirm", $str);
 				break
-			
+				
+				case AIR :
+					var conn:LocalConnection = new LocalConnection();
+					conn.addEventListener(StatusEvent.STATUS, _onStatus);
+					conn.send( "_delorum_air_connect", "echo", $str );
+				break;
+				
 				case LOG:
 					// Nothing here yet :-D
 				break
@@ -206,7 +215,11 @@ public class EchoMachine
 				break
 			}
 		}
-		
+	}
+	
+	private static function _onStatus ( e:StatusEvent ):void
+	{
+		//trace( e.level );
 	}
 	
 	public static function get errorLog 	(  ):Array{ return _errorLog; };

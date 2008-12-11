@@ -1,0 +1,19 @@
+<?xml version ="1.0" encoding="utf-8" ?>
+<application xmlns="http://ns.adobe.com/air/application/1.0">
+	<id>com.adobe.example.EchoPanel</id>
+	<version>1.0</version>
+	<filename>EchoPanel</filename>
+	<description></description>
+	<name>EchoPanel</name>
+	<copyright></copyright>
+	<initialWindow>
+		<content>EchoPanel.swf</content>
+		<systemChrome>none</systemChrome>
+		<transparent>true</transparent>
+		<visible>true</visible>
+	</initialWindow>
+	<customUpdateUI>false</customUpdateUI>
+	<allowBrowserInvocation>false</allowBrowserInvocation>
+	<icon>
+	<image16x16>AppIconsForAIRPublish/AirApp_16.png</image16x16><image32x32>AppIconsForAIRPublish/AirApp_32.png</image32x32><image48x48>AppIconsForAIRPublish/AirApp_48.png</image48x48><image128x128>AppIconsForAIRPublish/AirApp_128.png</image128x128></icon>
+</application>
