@@ -38,13 +38,20 @@ public class Content extends Sprite
 		    _conn.connect("_delorum_air_connect");
 		} catch (error:ArgumentError) {
 		    addText("Can't connect...the connection name is already being used by another SWF");
-		}
+		}		
 	}
 	
 	// TEMP
 	public function echo ( $str:String ):void
 	{
 		addText( $str);
+	}
+	
+	public function clear (  ):void
+	{
+		_count = 1;
+		_displayText.text = "";
+		_totalString = "";
 	}
 	
 	public function addText ( $str:String ):void

@@ -61,8 +61,9 @@ public class StageManager extends Sprite
 		this.stage.nativeWindow.alwaysInFront = true;
 		_onResize(null)
 		
-		_content.addText("-- Echo Air Initialized --");
-		_content.addText("")
+		// Kick the formating in
+		_content.addText("");
+		_content.clear();
 	}
 	
 	// ______________________________________________________________ Event Listeners

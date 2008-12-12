@@ -18,9 +18,9 @@ import flash.events.StatusEvent;
  *	<listing version="3.0">
  *	
  *	// Determine what mode to output errors and messages
- *	ErrorMachine.setErrorModeAutomatically( this.stage );
+ *	ErrorMachine.setechoModeAutomatically( this.stage );
  *	// or, to set the error mode manually... 
- *	// ErrorMachine.errorMode = ErrorMachine.FLASH;
+ *	// ErrorMachine.echoMode = ErrorMachine.FLASH;
  *	
  *	// Add a sample error
  *	ErrorMachine.addErrorToLog( "This is a fake error." );
@@ -54,16 +54,17 @@ public class EchoMachine
 	/**	Error Mode: Ooutputs to the AIR application */
 	public static const AIR:String 			= "air";
 
-	/**	Set the errorMode to indicate how errors should be reported 
+	/**	Set the echoMode to indicate how errors should be reported 
 	*	
 	*	@default    EchoMachine.QUIET 							 */
-	public static var errorMode:String		= QUIET;
+	private static var _echoMode:String		= QUIET;
 
 	/**	@private 	Store Messages here for later output */ 
 	private static var _messageLog:Array 	= new Array();
 	/**	@private 	Store Errors here for later output */ 
 	private static var _errorLog:Array 		= new Array();
-	
+	/**	@private 	Local Connection to the AIR application */
+	private static var _airConnection:LocalConnection;
 	
 	// ______________________________________________________________ PUBLIC FUNCTIONS
 	
@@ -107,7 +108,7 @@ public class EchoMachine
 	/** Automatically detect if flash is embedded in html, and set error mode appropriately 	*/
 	public static function setEchoModeAutomatically ( $stage:Stage ):void
 	{
-		errorMode = ( isOnWeb( $stage ) )? EchoMachine.WEB : EchoMachine.FLASH 
+		echoMode = ( isOnWeb( $stage ) )? EchoMachine.WEB : EchoMachine.FLASH 
 	}
 	
 	/** 
@@ -149,6 +150,16 @@ public class EchoMachine
 		_errorLog = new Array()
 	}
 	
+	// ______________________________________________________________ AIR specific 
+	
+	private static function _initForAIR (  ):void
+	{
+		_airConnection = new LocalConnection();
+		_airConnection.addEventListener(StatusEvent.STATUS, _onStatus);
+		_airConnection.send( "_delorum_air_connect", "clear" );
+	}
+	
+	// ______________________________________________________________ AIR specific END
 	
 	// ______________________________________________________________ Memory
 	
@@ -182,8 +193,8 @@ public class EchoMachine
 	* 	@param		Error Mode [FLASH, QUIET, WEB, WEB_ALERT, LOG] */
 	private static function outputMessage( $str:String,  $emode:String = null ):void
 	{
-		// If no error mode sent, use the static errorMode
-		$emode = ( $emode == null )? errorMode : $emode ;
+		// If no error mode sent, use the static echoMode
+		$emode = ( $emode == null )? echoMode : $emode ;
 				
 		if( $str.length != 0 ) 
 		{
@@ -202,9 +213,7 @@ public class EchoMachine
 				break
 				
 				case AIR :
-					var conn:LocalConnection = new LocalConnection();
-					conn.addEventListener(StatusEvent.STATUS, _onStatus);
-					conn.send( "_delorum_air_connect", "echo", $str );
+					_airConnection.send( "_delorum_air_connect", "echo", $str );
 				break;
 				
 				case LOG:
@@ -234,7 +243,7 @@ public class EchoMachine
 	
 	private static function getErrorsAsString():String
 	{
-		var newLine:String 		= (errorMode == WEB)? "\n" : "\n";
+		var newLine:String 		= (echoMode == WEB)? "\n" : "\n";
 		var lineStart:String	= ""
 		var preamble:String		= ">> Errors" + newLine;
 		var conclusion:String	= "<< End";
@@ -255,7 +264,7 @@ public class EchoMachine
 	*/
 	private static function getMessagesAsString():String
 	{
-		var newLine:String 		= (errorMode == WEB)? "\n" : "\n";
+		var newLine:String 		= (echoMode == WEB)? "\n" : "\n";
 		var lineStart:String	= ""
 		var preamble:String		= ">> Message Log" + newLine;
 		var conclusion:String	= "<< End";
@@ -267,6 +276,14 @@ public class EchoMachine
 			str += lineStart + _messageLog[ i ] + newLine;
 		}
 		return str + conclusion;
+	}
+	
+	// ______________________________________________________________ Getters + Setters
+	public static function get echoMode (  ):String { return _echoMode; }
+	public static function set echoMode ( $str:String ):void { 
+		_echoMode = $str;
+		if( _echoMode == AIR ) 
+			_initForAIR();
 	}
 	
 	// ______________________________________________________________ Aliases

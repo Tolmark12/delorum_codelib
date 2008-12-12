@@ -2,7 +2,7 @@ package delorum.loading
 {
 
 import flash.events.*;
-import delorum.loading.progress.BaseProgressDisplay;
+//import delorum.loading.progress.BaseProgressDisplay;
 
 public class BaseLoader extends EventDispatcher
 {
@@ -140,14 +140,6 @@ public class BaseLoader extends EventDispatcher
 			delete _loadQueue[ _queueNumber ];
 	}
 	
-	// ______________________________________________________________ Associate with a progress indicator
-	
-	public function connectToProgressDisplay ( $progressDisplay:BaseProgressDisplay ):void
-	{
-		_eventListener.addEventListener( ProgressEvent.PROGRESS, $progressDisplay.updateHandler );
-		_eventListener.addEventListener( Event.INIT, $progressDisplay.completeHandler );
-	}
-	
 	// ______________________________________________________________ Set Event Handlers
 	/** Set callback function to be triggered on Load Complete */
 	public function set onComplete	($f:Function):void { _eventListener.addEventListener( Event.COMPLETE, $f);  };
@@ -160,6 +152,9 @@ public class BaseLoader extends EventDispatcher
 	
 	/** Set callback function to be triggered on Load initialization */
 	public function set onInit		($f:Function):void { _eventListener.addEventListener( Event.INIT, $f); };
+	
+	/** Set callback function to be triggered on Load initialization */
+	public function set onOpen		($f:Function):void { _eventListener.addEventListener( Event.OPEN, $f); };
 	
 	public function get tester (  ):String{ return "yeah"; };
 	
