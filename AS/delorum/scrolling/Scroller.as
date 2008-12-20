@@ -136,7 +136,7 @@ public class Scroller extends Sprite
 		_changeOrientation( _orientaion );
 		_resetScrollSpeed();
 		changeWidth( _trackWidth );
-		_activateMouseScrollWheel();
+		//_activateMouseScrollWheel();
 	}
 	
 	// ______________________________________________________________ API

@@ -9,9 +9,11 @@ public class DragBar extends MovieClip
 {
 	public static const SHOW_CONTENT:String = "show_content";
 	public static const HIDE_CONTENT:String = "hide_content";
+	public static const RESET:String = "clear";
 	
 	private var _bgBar:MovieClip;
 	private var _closeBtn:MovieClip;
+	private var _clearBtn:MovieClip;
 	private var _isOpen:Boolean = true;
 	private var _clickPoint:Point;
 	
@@ -21,6 +23,10 @@ public class DragBar extends MovieClip
 		_closeBtn = this.getChildByName("closeBtn") as MovieClip;
 		_closeBtn.addEventListener( MouseEvent.MOUSE_DOWN, _onClose );
 		_closeBtn.buttonMode = true;
+
+		_clearBtn = this.getChildByName("clearBtn") as MovieClip;
+		_clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _onClear );
+		_clearBtn.buttonMode = true;
 		
 		_bgBar.x = 1;
 		_bgBar.y = 1;
@@ -76,6 +82,11 @@ public class DragBar extends MovieClip
 	private function _onClose ( e:Event ):void
 	{
 		this.stage.nativeWindow.close();
+	}
+	
+	private function _onClear ( e:Event ):void
+	{
+		this.dispatchEvent( new Event(RESET) );
 	}
 	
 	private function _onDoubleClick ( e:Event ):void

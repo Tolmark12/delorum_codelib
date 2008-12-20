@@ -20,7 +20,7 @@ public class DefaultScrollTrack extends BaseScrollTrack implements iScrollTrack
 	{
 	   this.graphics.clear();
 	   this.graphics.beginFill( trackFill );
-	   this.graphics.lineStyle( 1, trackStroke );
+	   this.graphics.lineStyle( 0, trackStroke );
 	   this.graphics.drawRoundRect(-barPadding, -barPadding, $trackWidth + barPadding * 1.8, $barHeight + barPadding * 1.8, $barHeight + barPadding, $barHeight + barPadding);
 	}
 }

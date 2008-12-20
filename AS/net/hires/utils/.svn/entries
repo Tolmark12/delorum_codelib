@@ -1,0 +1,55 @@
+8
+
+dir
+125
+http://mrdoob.googlecode.com/svn/trunk/libs/net/hires/utils
+http://mrdoob.googlecode.com/svn
+
+
+
+2008-12-14T13:52:28.507781Z
+119
+info@mrdoob.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+dfce5319-9e44-0410-96e0-5f9b019a5953
+
+ColorUtils.as
+file
+
+
+
+
+2008-12-17T18:11:41.000000Z
+f845dc395757ab239452a2ae2a8305b9
+2008-04-06T19:44:07.980864Z
+97
+info@mrdoob.com
+
+display
+dir
+
+SpriteUtils.as
+file
+
+
+
+
+2008-12-17T18:11:41.000000Z
+d6f11331e87ea15c344ec9c636c384f0
+2008-01-30T18:26:40.045104Z
+19
+gwhaat
+

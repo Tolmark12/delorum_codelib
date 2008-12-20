@@ -44,7 +44,7 @@ public class Resizer extends MovieClip
 	private function _onMouseUp ( e:Event ):void
 	{
 		this.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
-		this.dispatchEvent( new Event( NEW_WINDOW_SIZE ) );
+		this.dispatchEvent( new Event( NEW_WINDOW_SIZE, true ) );
 	}
 	
 	private function _onEnterFrame ( e:Event ):void
@@ -53,7 +53,7 @@ public class Resizer extends MovieClip
 		var yTarg:Number = this.parent.mouseY - _dragOffsetY;
 		this.x = ( xTarg < 100 )? 100 : xTarg ;
 		this.y = ( yTarg < 40 )? 40 : yTarg ;
-		this.dispatchEvent( new Event( NEW_WINDOW_SIZE ) );
+		this.dispatchEvent( new Event( NEW_WINDOW_SIZE, true ) );
 	}
 	
 	public function get appWidth  (  ):Number{ return this.x + this.width;  };

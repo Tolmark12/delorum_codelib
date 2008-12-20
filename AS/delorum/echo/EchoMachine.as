@@ -1,6 +1,6 @@
 package delorum.echo
 {
-import flash.display.Stage;
+import flash.display.*;
 import flash.external.ExternalInterface;
 import flash.utils.Timer;
 import flash.events.Event;
@@ -65,6 +65,8 @@ public class EchoMachine
 	private static var _errorLog:Array 		= new Array();
 	/**	@private 	Local Connection to the AIR application */
 	private static var _airConnection:LocalConnection;
+	
+	private static var _connectionId:String;
 	
 	// ______________________________________________________________ PUBLIC FUNCTIONS
 	
@@ -154,9 +156,27 @@ public class EchoMachine
 	
 	private static function _initForAIR (  ):void
 	{
+		// Connection id
+		_connectionId = String( new Date().getTime() );
+		
+		// Allow the air app to talk to this swf
+		var conn:LocalConnection = new LocalConnection();
+		conn.client = EchoMachine;
+		conn.allowDomain('*');
+		try {
+		    conn.connect(_connectionId);
+		} catch (error:ArgumentError) {
+		}
+		
+		// Connect to the air app
 		_airConnection = new LocalConnection();
-		_airConnection.addEventListener(StatusEvent.STATUS, _onStatus);
-		_airConnection.send( "_delorum_air_connect", "clear" );
+		_airConnection.addEventListener(StatusEvent.STATUS, _onAirStaus);
+		_airConnection.send( "_delorum_air_connect", "clear", _connectionId );
+	}
+	
+	private static function _onAirStaus ( e:Event ):void
+	{
+		
 	}
 	
 	// ______________________________________________________________ AIR specific END
@@ -213,7 +233,7 @@ public class EchoMachine
 				break
 				
 				case AIR :
-					_airConnection.send( "_delorum_air_connect", "echo", $str );
+					_airConnection.send( "_delorum_air_connect", "echo", _connectionId, $str );
 				break;
 				
 				case LOG:
@@ -226,9 +246,20 @@ public class EchoMachine
 		}
 	}
 	
-	private static function _onStatus ( e:StatusEvent ):void
+	// ______________________________________________________________ Stats
+	private static var _statsHarvester:StatsHarvester;
+	
+	public static function startLogging ( $stage:DisplayObjectContainer ):void
 	{
-		//trace( e.level );
+		_statsHarvester = new StatsHarvester( $stage );
+		_statsHarvester.addEventListener( StatsHarvester.STATS, _onStats );
+		var str:String = $stage.stage.loaderInfo.loaderURL;
+		_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId );
+	}
+	
+	private static function _onStats ( e:Event ):void
+	{
+		_airConnection.send( "_delorum_air_connect", "stats", _connectionId, _statsHarvester.statsObject );
 	}
 	
 	public static function get errorLog 	(  ):Array{ return _errorLog; };

@@ -4,15 +4,18 @@ package ui
 import flash.display.Sprite;
 import flash.text.*;
 import flash.geom.ColorTransform;
-import flash.net.LocalConnection;
+import delorum.scrolling.*;
+import flash.events.*;
+import delorum.echo.EchoMachine;
 
 public class Content extends Sprite
 {
 	private var _displayText:TextField;
 	private var _count:Number = 1;
-	private var _conn:LocalConnection;
-	private var _appHeight:Number;
+	private var _appHeight:Number = 100;
 	private var _totalString:String = "";
+	private var _scroller:Scroller;
+	private var _isScrolling:Boolean = false;
 	
 	public function Content():void
 	{
@@ -30,23 +33,10 @@ public class Content extends Sprite
 		_displayText.antiAliasType = "advanced";
 		_displayText.transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 225, 0);
 		this.addChild(_displayText);
-		// TEMP - and this
-		_conn = new LocalConnection();
-		_conn.client = this;
-		_conn.allowDomain('*');
-		try {
-		    _conn.connect("_delorum_air_connect");
-		} catch (error:ArgumentError) {
-		    addText("Can't connect...the connection name is already being used by another SWF");
-		}		
+		
+		_addScrollBar();
 	}
-	
-	// TEMP
-	public function echo ( $str:String ):void
-	{
-		addText( $str);
-	}
-	
+
 	public function clear (  ):void
 	{
 		_count = 1;
@@ -81,21 +71,59 @@ public class Content extends Sprite
 		setPosition();
 	}
 	
+	private function _addScrollBar (  ):void
+	{
+		// Create scrollbar
+		_scroller = new Scroller( _appHeight, 13, "vertical" );
+		_scroller.y = 2;
+		// If this is not called, Scroller will build a default scroller
+		_scroller.createDefaultScroller( 0x333333, 0x000000, 0x000000, 1 );
+		
+		// build Scroller
+		_scroller.build();
+		
+		// set event handlers
+		_scroller.addEventListener( Scroller.SCROLL, _onScroll );
+		this.addChild(_scroller)
+		
+		// sets the size of the scroll tab
+		_scroller.updateScrollWindow( 0.5 );
+	}
+	
+	private function _onScroll ( e:ScrollEvent ):void
+	{
+		_isScrolling = ( e.percent < 0.95 )? true : false ;
+		if( _isScrolling ) 
+			_displayText.y = 0 - ( (_displayText.height - _appHeight) * e.percent );
+		else
+			setPosition();
+	}
+	
 	public function resize ( $width:Number, $height:Number ):void
 	{
+		_scroller.x = $width + 10;
 		_appHeight = $height;
 		_displayText.width = $width
+		_scroller.changeWidth($height - 40, 0);
 		setPosition();
 	}
 	
 	public function setPosition (  ):void
 	{
-		if( this.height > _appHeight - this.parent.y ) 
-			this.y = _appHeight - this.height - this.parent.y;
-		else
-			this.y = 0;
-		
-		
+		_scroller.updateScrollWindow(_appHeight / _displayText.height);
+
+		if( !_isScrolling )
+		{
+			if( _displayText.height > _appHeight - this.parent.y ) {
+				_displayText.y = _appHeight - _displayText.height - this.parent.y;
+				_scroller.changeScrollPosition(1);
+				_scroller.visible = true;
+			}
+			else{
+				this.y = 0;
+				_scroller.visible = false;
+			}
+		}
 	}
 }
 
