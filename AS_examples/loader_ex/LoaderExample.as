@@ -7,34 +7,28 @@ import flash.events.*;
 
 public class LoaderExample extends MovieClip
 {
-	public function LoaderExample():void
-	{
+	public function LoaderExample():void{
 		_loadImages();
 	}
 
-	private function _loadImages (  ):void
-	{
-		var imageList:Array = [ "img1.jpg",
-								"img2.jpg",
-								"img3.jpg",
-								"img4.jpg",
-								"img5.jpg" ];
+	private function _loadImages (  ):void{
+		var imageList:Array = [ "img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg" ];
 		
 		var len:uint = imageList.length;
-		for ( var i:uint=0; i<len; i++ ) 
-		{
+		for ( var i:uint=0; i<len; i++ ) {
 			// Create holder for images
 			var imageHolder:Sprite = new Sprite();
+			// Position the holder sprite
 			imageHolder.x = i * 140;
+			// Add to display list
 			this.addChild(imageHolder);
 			
 			// Create image loader, and add to load queue
 			var ldr:ImageLoader = new ImageLoader( "images/" + imageList[i], imageHolder );
 			
-			// Event listeners
+			// Add event listeners
 			ldr.addEventListener( Event.OPEN, _onOpen );
 			ldr.addEventListener( ProgressEvent.PROGRESS, _onProgress );
-			ldr.addEventListener( Event.INIT, _onInit );
 			ldr.addEventListener( Event.COMPLETE, _handleImageLoaded );
 			
 			// Add to queue
@@ -43,35 +37,20 @@ public class LoaderExample extends MovieClip
 	}
 	
 	// ______________________________________________________________ Event Handlers
-	// placed in the orter tha they will fire
 	
-	// 1st
-	private function _onOpen ( e:Event ):void
-	{
+	// Called when load starts
+	private function _onOpen ( e:Event ):void{
 		trace( "opening..." );
 	}
 	
-	// 2nd, 3rd, 4th.....
-	private function _onProgress ( e:ProgressEvent ):void
-	{
+	// Called as load progresses
+	private function _onProgress ( e:ProgressEvent ):void{
 		trace( "progress..." + e.bytesLoaded + '  :  ' + e.bytesTotal );
 	}
 	
-	// 5th, not sure how this is diff fom COMPLETE
-	private function _onInit ( e:Event ):void
-	{
-		trace( "initialized" );
-	}
-	
-	// 6TH, last
-	private function _handleImageLoaded ( e:Event ):void
-	{
+	// Called when load is complete
+	private function _handleImageLoaded ( e:Event ):void{
 		trace( "load complete" );
-	}
-	
-	
-	
-
+	}	
 }
-
 }
