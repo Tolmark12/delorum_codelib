@@ -33,6 +33,7 @@ public class OutputMediator extends Mediator implements IMediator
 		 			AppFacade.APP_RESIZE,
 					AppFacade.MINIMIZE,
 					AppFacade.MAXIMIZE,
+					AppFacade.STATS,
 					];
 	}
 	
@@ -41,6 +42,10 @@ public class OutputMediator extends Mediator implements IMediator
 	{
 		switch ( note.getName() )
 		{
+			case AppFacade.STATS :
+				var statsVo:StatsVO = note.getBody() as StatsVO;
+				_getWindowById( statsVo.id ).updateStats( statsVo.fps, statsVo.frameRate, statsVo.memoryUsed, statsVo.ms );      
+			break;
 			case AppFacade.ECHO_MESSAGE :
 				var echoVo:EchoVO = note.getBody() as EchoVO;
 			   _getWindowById( echoVo.id ).addTextToStack( echoVo.echoTxt );

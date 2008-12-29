@@ -75,6 +75,7 @@ public class Pixasso extends EventDispatcher
 	
 	/**	
 	*	Constructor 
+	*	
 	*	@param		BitmapData object to be manipulated
 	*/
 	public function Pixasso ( $bitmapData:BitmapData ):void
@@ -308,7 +309,7 @@ public class Pixasso extends EventDispatcher
 	
 	// CHANGE THE SCALE
 	/** 
-	*	Rescale the bitmap
+	*	Rescale the bitmap - Note, Scaling to very small percentages of the original creates less than desirable effects
 	*	
 	*	@param		0-1.  The new percentage to scale to ex: 0.8
 	*/
@@ -350,6 +351,11 @@ public class Pixasso extends EventDispatcher
 	}
 	
 	/// ROUND CORNERS
+	/** 
+	*	Round the corners of the image
+	*	
+	*	@param		The radius of the rounded corner
+	*/
 	public function roundCorners ( $cornerRadius:Number ):void
 	{
 		// draw rounded corners shape
@@ -427,6 +433,11 @@ public class Pixasso extends EventDispatcher
 	/// ______________________________________________________________ Batching
 	///
 	
+	/** 
+	*	Run a series of effects
+	*	
+	*	@param		A list of effects to run
+	*/
 	public function runBatch ( $effectList:EffectList ):void{
 		_effects = $effectList;
 		this.addEventListener( EFFECT_COMPLETE, _runNextEffect );
@@ -493,6 +504,7 @@ public class Pixasso extends EventDispatcher
 	
 	// ______________________________________________________________ GETTERS / SETTERS
 	
+	/**	The Bitmap Data object */
 	public function get bitmapData (  ):BitmapData { return _bmData; };
 	public function get xOffSet (  ):Number{ return _pristinePosition.x; };
 	public function get yOffSet (  ):Number{ return _pristinePosition.y; };

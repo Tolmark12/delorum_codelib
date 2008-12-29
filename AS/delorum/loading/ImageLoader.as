@@ -1,9 +1,8 @@
 /*
 
-
 The MIT License
 
-Copyright (c) <year> <copyright holders>
+Copyright (c) Delorum 2008 - www.delorum.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +58,7 @@ import flash.system.LoaderContext;
 * 	
 *	@language ActionScript 3, Flash 9.0.0
 * 	@author   Mark Parson. 2008-03-24
-* 	@rights	  Copyright (c) Delorum 2008. All rights reserved
+* 	@rights	  Copyright (c) Delorum 2008 - www.delorum.com
 */
 
 
@@ -69,12 +68,13 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 	private var _holderMc:DisplayObjectContainer;
 	private var _loader:Loader;
 	
-	/**	Set this to true if you are loading images from a separate domain, and you need programatic access to their pixels  */
+	/**	Set this to true if you are loading images from a separate domain, 
+	*	and you need programatic access to their pixels  */
 	public var checkCrossDomainXml:Boolean = false;
 	
 	// ______________________________________________________________ Constructor
-	/** Constructor
-	* 	
+	/** 
+	*	Constructor
 	* 	@param		Path to the image
 	* 	@param		Sprite or MovieClip to load image into  */
 	public function ImageLoader( $loadPath:String, $parent:DisplayObjectContainer ):void
@@ -113,7 +113,6 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 	// ______________________________________________________________ Getters / Setters
 	/** 
 	* 	Gets the holder Sprite
-	* 	
 	* 	@return	The sprite that will hold the image
 	*/
 	public function get holder():DisplayObjectContainer {return _holderMc; };

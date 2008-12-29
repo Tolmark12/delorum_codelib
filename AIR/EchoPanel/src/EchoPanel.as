@@ -15,26 +15,26 @@ public class EchoPanel extends Sprite
 		_createMvcApp();
 		//stage.quality = "low"
 		EchoMachine.echoMode = EchoMachine.AIR;
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
+		//EchoMachine.echo( "hi" );
 		EchoMachine.startLogging(this);		
 	}
 	

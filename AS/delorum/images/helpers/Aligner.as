@@ -5,11 +5,22 @@ import flash.display.*;
 
 public class Aligner
 {
+	/**	@private "+" or "-" ie:add or subtract*/
 	private var _modifyer:String;
+	/**	@private How it should be aligned. top, bottom, right, etc */
 	private var _alignString:String;
+	/**	@private The extra distance (if any) that should be added after aligning */
 	private var _extra:uint;
+	/**	@private The return value */
 	private var _pos:Number;
 	
+	/** 
+	*	Find the x position based on a string
+	*	
+	*	@param		Can be string or number. valid examples: 24, "left+100", "center-24"
+	*	@param		The Bitmap data we are aligning to
+	*	@param		The display object we are adding
+	*/
 	public function getX ( $position:*, $bitmap:BitmapData, $newSprite:* ):Number
 	{
 		if( typeof $position == "number" ){
@@ -41,6 +52,13 @@ public class Aligner
 		}
 	}
 	
+	/** 
+	*	Find the x position based on a string
+	*	
+	*	@param		Can be string or number. valid examples: 24, "top+100", "center-24"
+	*	@param		The Bitmap data we are aligning to
+	*	@param		The display object we are adding
+	*/
 	public function getY ( $position:*, $bitmap:BitmapData, $newSprite:* ):Number
 	{
 		if( typeof $position == "number" ){
@@ -74,6 +92,10 @@ public class Aligner
 	
 	// ______________________________________________________________ Helpers
 	
+	/** 
+	*	@private	Set the _alignString var, and the _extra var
+	*	@param		The position. Examples:  x="left+20", y="top", x="center-25"
+	*/
 	private function _setVars ( $position:String ):void
 	{
 		_modifyer = ( $position.indexOf("+") == -1 )? "-" : "+";
@@ -82,6 +104,11 @@ public class Aligner
 		_extra = uint(ar[1]);
 	}
 	
+	/** 
+	*	@private	
+	*	Add any extra space to the position. Forinstancex="center+20" 
+	*	would add 20 pixels after centering the image.
+	*/
 	private function _addExtra (  ):void
 	{
 		if( _modifyer == "+" ) 

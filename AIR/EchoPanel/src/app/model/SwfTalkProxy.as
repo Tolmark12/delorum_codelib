@@ -92,10 +92,10 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	public function stats ( $id:String, $statsObj:Object ):void
 	{
 		_checkIfOutputWindowExists( $id );
-		// Todo: make a value object here
-		//_stats.update( $statsObj.fps, $statsObj.mem, $statsObj.fr, $statsObj.ms );
-		sendNotification( AppFacade.STATS, $statsObj );
-		echo($id, "bump")
+		var statsObj:StatsVO = new StatsVO( $statsObj );
+		statsObj.id = $id;
+		EchoMachine.echo( $id );
+		sendNotification( AppFacade.STATS, statsObj );
 	}
 	
 	public function clear ( $id:String ):void
@@ -111,6 +111,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	private function _checkIfOutputWindowExists ( $id:String ):void
 	{
 		if( _idObject[$id] == null ) {
+			EchoMachine.echo( $id + ": create output" );
 			_createNewSwf( $id );
 		}
 	}
