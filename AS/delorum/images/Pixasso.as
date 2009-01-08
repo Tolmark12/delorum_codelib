@@ -40,10 +40,11 @@ import delorum.images.helpers.*;
 
 public class Pixasso extends EventDispatcher
 {
+	// Events
 	public static const EFFECT_COMPLETE:String = "effect_complete";
 	public static const BATCH_COMPLETE:String = "batch_complete";
 	
-	//Methods list
+	// Methods list
 	public static const ADD_BACKGROUND_COLOR:String 			= "addBackgroundColor";
 	public static const REFLECT:String              			= "reflect";
 	public static const ADD_DISPLAY_OBJECT:String				= "addDisplayObject";
@@ -110,20 +111,20 @@ public class Pixasso extends EventDispatcher
 		
 		// Image bitmap
 		var sprite:Sprite = new Sprite();
-		var originBitmap = new Bitmap( _bmData );
+		var originBitmap:Bitmap = new Bitmap( _bmData );
 		// add bitmap
 		sprite.addChild(originBitmap);
 				
 		// Reflection bitmap
-		var tempBitmapData = new BitmapData( _bmData.width, reflectionHeight );
+		var tempBitmapData:BitmapData = new BitmapData( _bmData.width, reflectionHeight );
 		// Copy the image's bottom pixels we're reflecting
 		tempBitmapData.copyPixels( _bmData, new Rectangle(0, _bmData.height - reflectionHeight, _bmData.width, reflectionHeight), new Point(0,0) )
-		var reflectBitmap = new Bitmap( tempBitmapData );
+		var reflectBitmap:Bitmap = new Bitmap( tempBitmapData );
 		reflectBitmap.scaleY = -1;
 		reflectBitmap.y = reflectBitmap.height
 		
 		// Sprite to hold reflection bitmap
-		var spriteReflection = new Sprite()
+		var spriteReflection:Sprite = new Sprite()
 		spriteReflection.addChild(reflectBitmap);
 		
 		// Create gradient & gradient mask
@@ -212,8 +213,13 @@ public class Pixasso extends EventDispatcher
 	*	@param		Display object to add to the graphic
 	*	@param		x position. can be a number, or string. valid examples: 25, "right", "left", "left-40", "right+12"
 	*	@param		y position. can be a number, or string. valid examples: 25, "top", "bottom", "top-40", "bottom+12"
+	*	@param		Set to false if you want the added item to be behine the existing bitmap
+	*	@param		Set to false if you want the align point to be 0,0
 	*/
-	public function addDisplayObject ( $displayObject:DisplayObject, $x:*=0, $y:*=0, $addToFront:Boolean=true, $alignToPristine:Boolean=true  ):void
+	public function addDisplayObject ( 	$displayObject:DisplayObject, 
+										$x:*=0, $y:*=0, 
+										$addToFront:Boolean=true, 
+										$alignToPristine:Boolean=true  ):void
 	{
 		var sprite:Sprite = new Sprite();
 		var bitmap:Bitmap = new Bitmap( _bmData );
@@ -255,6 +261,7 @@ public class Pixasso extends EventDispatcher
 	*	@param		Path to the image
 	*	@param		x position. can be a number, or string. valid examples: 25, "right", "left", "left-40", "right+12"
 	*	@param		y position. can be a number, or string. valid examples: 25, "top", "bottom", "top-40", "bottom+12"
+	*	@param		Set to false to place image behind existing image data
 	*/
 	public function addExternalImage ( $imagePath:String, $x:*=0, $y:*=0, $addToFront:Boolean=true ):void
 	{
@@ -310,7 +317,6 @@ public class Pixasso extends EventDispatcher
 	// CHANGE THE SCALE
 	/** 
 	*	Rescale the bitmap - Note, Scaling to very small percentages of the original creates less than desirable effects
-	*	
 	*	@param		0-1.  The new percentage to scale to ex: 0.8
 	*/
 	public function scale ( $newScale:Number ):void
@@ -353,7 +359,6 @@ public class Pixasso extends EventDispatcher
 	/// ROUND CORNERS
 	/** 
 	*	Round the corners of the image
-	*	
 	*	@param		The radius of the rounded corner
 	*/
 	public function roundCorners ( $cornerRadius:Number ):void
@@ -435,7 +440,6 @@ public class Pixasso extends EventDispatcher
 	
 	/** 
 	*	Run a series of effects
-	*	
 	*	@param		A list of effects to run
 	*/
 	public function runBatch ( $effectList:EffectList ):void{

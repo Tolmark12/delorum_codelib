@@ -99,7 +99,7 @@ public class Aligner
 	private function _setVars ( $position:String ):void
 	{
 		_modifyer = ( $position.indexOf("+") == -1 )? "-" : "+";
-		var ar = $position.split(_modifyer);
+		var ar:Array = $position.split(_modifyer);
 		_alignString = ar[0];
 		_extra = uint(ar[1]);
 	}
