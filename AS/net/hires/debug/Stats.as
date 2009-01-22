@@ -39,9 +39,12 @@ package net.hires.debug
 	{	
 		
 		private static const BG_COLOR:Number = 0xFF000000;
-		private static const MEM_COLOR:Number = 0xFFFF0000;
-		private static const FRAME_COLOR:Number = 0xFF00FF00;
+		private static const MEM_COLOR:Number = 0xFFDD1F26;
+		private static const FRAME_COLOR:Number = 0xFF69B5E4;
 		private static const MS_TO_RENDER_FRAME_COLOR:Number = 0xFF0000FF;
+		public static const GRAPH_WIDTH:Number = 84;
+		public static const GRAPH_HEIGHT:Number = 50;
+		
 		
 		private var graph : BitmapData;
 		private var ver : Sprite;
@@ -82,7 +85,7 @@ package net.hires.debug
 			format = new TextFormat( "_sans", 9 );
 			
 			verText.defaultTextFormat = fpsText.defaultTextFormat = msText.defaultTextFormat = memText.defaultTextFormat = format;
-			verText.width = fpsText.width = msText.width = memText.width = 65;
+			verText.width = fpsText.width = msText.width = memText.width = GRAPH_WIDTH;
 			verText.selectable = fpsText.selectable = msText.selectable = memText.selectable = false;
 			
 			verText.textColor = 0xFFFFFF;
@@ -105,7 +108,7 @@ package net.hires.debug
 			
 			
 			graph = null;
-			graph = new BitmapData( 65, 50, true, 0xFFFFFF );
+			graph = new BitmapData( GRAPH_WIDTH, GRAPH_HEIGHT, true, 0xFFFFFF );
 			var gBitmap:Bitmap = new Bitmap(graph);
 			gBitmap.y = 40;
 			addChild(gBitmap);
@@ -120,8 +123,8 @@ package net.hires.debug
 		
 		public function update( $fps:Number, $mem:Number, $fr:Number, $ms:Number ) : void
 		{
-			var fpsGraph:int = Math.min( 50, 50 / stage.frameRate * $fps );
-			var memGraph:Number =  Math.min( 50, Math.sqrt( Math.sqrt( $mem * 5000 ) ) ) - 2;
+			var fpsGraph:int = Math.min( GRAPH_HEIGHT, GRAPH_HEIGHT / stage.frameRate * $fps );
+			var memGraph:Number =  Math.min( GRAPH_HEIGHT, Math.sqrt( Math.sqrt( $mem * 5000 ) ) ) - 2;
 			
 			graph.scroll( -1, 0 );
 			

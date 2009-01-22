@@ -26,6 +26,11 @@ public class Resizer extends MovieClip
 	
 	// ______________________________________________________________ API
 	
+	/** 
+	*	Move to a specified point
+	*	@param		x position to move to
+	*	@param		y position to move to
+	*/
 	public function moveTo ( $x:Number, $y:Number ):void
 	{
 		this.x = $x - this.width;

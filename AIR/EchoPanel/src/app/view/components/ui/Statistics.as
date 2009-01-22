@@ -20,15 +20,19 @@ public class Statistics extends Sprite
 	public function Statistics():void
 	{
 		_stats =  new Stats();
-		_clearMemoryBtn = new Xbutton_swc();
-		_clearMemoryBtn.x = 80;
-		_clearMemoryBtn.addEventListener( MouseEvent.CLICK, _onClearMemoryClick, false,0,true );
-		_clearMemoryBtn.buttonMode = true;
-		
-		this.addChild( _clearMemoryBtn );
+		_stats.x = 4;
+		_stats.y = 4;
+		this.graphics.lineStyle(1,0x151515);
+		this.graphics.drawRoundRect(-4,-4,84,89,10)
+		//_clearMemoryBtn = new Xbutton_swc();
+		//_clearMemoryBtn.x = 80;
+		//_clearMemoryBtn.addEventListener( MouseEvent.CLICK, _onClearMemoryClick, false,0,true );
+		//_clearMemoryBtn.buttonMode = true;
+		//
+		//this.addChild( _clearMemoryBtn );
 		this.addChild( _stats );
 	}		
-
+	
 	public function update( $fps:Number, $fr:Number, $mem:Number, $ms:Number ):void
 	{
 		_stats.update( $fps, $mem, $fr, $ms )

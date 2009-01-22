@@ -44,8 +44,8 @@ public class DragBar extends MovieClip
 		//_bgBar.addEventListener( MouseEvent.DOUBLE_CLICK, _onDoubleClick);
 		
 		// ############## TEMP
-		_clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _clearEnterFrame, false,0,true );
-		_clearBtn.addEventListener( Event.ENTER_FRAME, _tempEcho, false,0,true );
+		// _clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _clearEnterFrame, false,0,true );
+		// _clearBtn.addEventListener( Event.ENTER_FRAME, _tempEcho, false,0,true );
 		// ############## TEMP
 	}
 	

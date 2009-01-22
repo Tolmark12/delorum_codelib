@@ -14,8 +14,7 @@ public class QuickText extends Sprite
 	private var _styleSheet:StyleSheet;
 	private var _baseStyle:Object;
 	
-	// Bitmap Data
-	private var _bmData:BitmapData = new BitmapData(400, 400, true, 0x000000);
+//	private var _bmData:BitmapData = new BitmapData(400, 2000, true, 0x000000);
 	private var _bitmap:Bitmap;
 	
 	public function QuickText():void
@@ -30,8 +29,8 @@ public class QuickText extends Sprite
 		this.addEventListener( Event.RENDER, _updateFormat )
 		clearAllFormatting();
 		
-		_bitmap = new Bitmap( _bmData );
-		this.addChild( _bitmap );
+//		_bitmap = new Bitmap( _bmData );
+//		this.addChild( _bitmap );
 	}
 	
 	// ______________________________________________________________ API
@@ -95,7 +94,7 @@ public class QuickText extends Sprite
 	// Convert text into a bitmap for performance improvement
 	private function _addBitmap ( e:Event = null ):void
 	{
-		if( _useBitmap && this.width + this.height != 0 ) 
+		if( _useBitmap && textWidth + textHeight != 0 ) 
 		{
 			// Make textfield visible for drawing
 			//_textField.visible = true;
@@ -105,9 +104,9 @@ public class QuickText extends Sprite
 			//	this.removeChild(_bitmap);
 			
 			// draws
-			//var _bmData:BitmapData = new BitmapData(400, 400, true, 0x000000);
-			_bmData.fillRect(_bmData.rect,0x00FFFFFF);
-			_bmData.draw( _textField, null, null, null, new Rectangle(0,0,400,400) );
+			//var _bmData:BitmapData = new BitmapData(100, 400, true, 0x000000);
+			//_bmData.fillRect(_bmData.rect,0x00FFFFFF);
+			//_bmData.draw( _textField, null, null, null, new Rectangle(0,0,_textField.width, _textField.height) );
 			
 			// Create bitmap to display
 			//_bitmap = new Bitmap( _bmData );
@@ -115,6 +114,13 @@ public class QuickText extends Sprite
 			
 			// hide text
 			//_textField.visible = false;
+			if( _bitmap != null ) 
+				this.removeChild(_bitmap);
+			
+			var bmd:BitmapData = new BitmapData( _textField.width, _textField.height, true, 0x000000 );
+			bmd.draw( _textField );
+			_bitmap = new Bitmap( bmd );
+			this.addChild(_bitmap);
 		}
 		else
 		{
@@ -150,6 +156,7 @@ public class QuickText extends Sprite
 	public function get txtField (  ):TextField 	 { return _textField; };
 	public function set textWidth ( $val:uint ):void { _textField.width = $val; _addBitmap(); };
 	public function get textWidth ():uint 			 { return _textField.textWidth; };
+	public function get textHeight ():uint 			 { return _textField.textHeight; };
 	
 	// Manually setting formatting
 	public function set size ( $size:Number ):void 		 { _baseStyle.fontSize = $size; _updateFormat();  };
