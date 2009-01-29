@@ -1,9 +1,8 @@
 /*
 
-
 The MIT License
 
-Copyright (c) <year> <copyright holders>
+Copyright (c) Delorum 2008 - www.delorum.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -49,10 +48,9 @@ public class BaseLoader extends EventDispatcher
 		return null;
 	}
 	
-	// ______________________________________________________________ Loading Handles
+	// ______________________________________________________________ Loading 
 	/** 
 	*	Adds an item to the end of the load queue. 
-	*	
 	*	@return 	Returns an identification for use in <code>loadItemNow</code>
 	*/
 	public function addItemToLoadQueue (  ):String
@@ -74,7 +72,6 @@ public class BaseLoader extends EventDispatcher
 	
 	/** 
 	*	no matter where this item is in the load queue, it is loaded immediately
-	*	
 	*	@param		The id string returned from <code>addItemToLoadQueue()</code>
 	*/
 	public static function loadItemNow ( $id:String ):void
@@ -109,7 +106,7 @@ public class BaseLoader extends EventDispatcher
 	// ______________________________________________________________ Static functions, the meat of the loading done here. 
 	
 	/** 
-	* 	@private Moving through the load queue
+	* 	@private 	Moving through the load queue
  	*/
 	private function loadNextItem ():void
 	{
@@ -131,7 +128,9 @@ public class BaseLoader extends EventDispatcher
 	}
 	
 	
-	// Get the next item in the load queue
+	/** 
+	*	@private 	Get the next item in the load queue
+	*/
 	private function _getNextLoad (  ):BaseLoader
 	{
 		var ar:Array = new Array();
@@ -145,7 +144,9 @@ public class BaseLoader extends EventDispatcher
 		return ldr;
 	}
 	
-	// check if there are more items to load
+	/** 
+	*	@private	check if there are more items to load
+	*/
 	private function _loadQueueIsEmpty (  ):Boolean
 	{
 		// If there are no more loads, return false...
@@ -156,8 +157,9 @@ public class BaseLoader extends EventDispatcher
 		return true;
 	}
 	
-	
-	// Event hanlder on load complete.
+	/** 
+	*	@private   Check if there are still items needing to be loaded, and load them. 
+	*/
 	private function _loadComplete ( e:Event ):void
 	{
 		_currentlyLoading = false;
@@ -166,7 +168,7 @@ public class BaseLoader extends EventDispatcher
 			delete _loadQueue[ _queueNumber ];
 	}
 	
-	// ______________________________________________________________ Set Event Handlers
+	// ______________________________________________________________ Backwards compatible event listening
 	/** Set callback function to be triggered on Load Complete */
 	public function set onComplete	($f:Function):void { _eventListener.addEventListener( Event.COMPLETE, $f);  };
 	

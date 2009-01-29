@@ -4,6 +4,7 @@ package app.view.components.ui
 import flash.display.*;
 import flash.events.*;
 import flash.geom.Point;
+import delorum.echo.EchoMachine;
 
 public class DragBar extends MovieClip
 {
@@ -30,7 +31,7 @@ public class DragBar extends MovieClip
 		_minimizeBtn.buttonMode = true;
 
 		_clearBtn = this.getChildByName("clearBtn") as MovieClip;
-		_clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _onClear );
+		//_clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _onClear );
 		_clearBtn.buttonMode = true;
 		
 		_bgBar.x = 1;
@@ -41,7 +42,24 @@ public class DragBar extends MovieClip
 		_bgBar.addEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown );
 		_bgBar.addEventListener( MouseEvent.MOUSE_UP, _onMouseUp );
 		//_bgBar.addEventListener( MouseEvent.DOUBLE_CLICK, _onDoubleClick);
+		
+		// ############## TEMP
+		// _clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _clearEnterFrame, false,0,true );
+		// _clearBtn.addEventListener( Event.ENTER_FRAME, _tempEcho, false,0,true );
+		// ############## TEMP
 	}
+	
+	// ############## TEMP
+	private function _clearEnterFrame ( e:Event ):void
+	{
+		_clearBtn.removeEventListener( Event.ENTER_FRAME, _tempEcho );
+	}
+
+	private function _tempEcho ( e:Event ):void
+	{
+		EchoMachine.echo( "This is simply a long message to make flash render." );
+	}
+	// ############## TEMP
 	
 	// ______________________________________________________________ API
 	

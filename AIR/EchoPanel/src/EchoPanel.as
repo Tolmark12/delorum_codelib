@@ -15,27 +15,9 @@ public class EchoPanel extends Sprite
 		_createMvcApp();
 		//stage.quality = "low"
 		EchoMachine.echoMode = EchoMachine.AIR;
+		EchoMachine.startLogging(this);	
 		EchoMachine.echo( "hi" );
 		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
-		EchoMachine.startLogging(this);		
 	}
 	
 	private function _init (  ):void

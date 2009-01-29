@@ -9,6 +9,7 @@ import app.view.components.*;
 import app.view.components.ui.*;
 import flash.display.Sprite;
 import flash.events.*;
+import delorum.echo.EchoMachine;
 
 public class ChromeMediator extends Mediator implements IMediator
 {	
@@ -34,7 +35,8 @@ public class ChromeMediator extends Mediator implements IMediator
 					AppFacade.MAXIMIZE,
 					AppFacade.APP_RESIZE,
 					AppFacade.CLEAR_TEXT,
-					AppFacade.CLEAR_STATS	];
+					AppFacade.CLEAR_STATS,
+					AppFacade.WINDOW_INFO	];
 	}
 	
 	// PureMVC: Handle notifications
@@ -59,6 +61,10 @@ public class ChromeMediator extends Mediator implements IMediator
 				var obj:Object = note.getBody() as Object;
 				_chrome.resize( obj.width, obj.height );
 			break;
+			case AppFacade.WINDOW_INFO :
+				var windowInfo:WindowInfoVO = note.getBody() as WindowInfoVO;
+				_chrome.setTabInfo( windowInfo )
+			break;
 		}
 	}
 	
@@ -70,6 +76,8 @@ public class ChromeMediator extends Mediator implements IMediator
 		_chrome.addEventListener( DragBar.SHOW_CONTENT, _onContentToggle, false,0,true );
 		_chrome.addEventListener( Resizer.WINDOW_RESIZE, _onResize, false,0,true );
 		_chrome.addEventListener( DragBar.RESET, _onClear, false,0,true  );
+		_chrome.addEventListener( Tab.TAB_CLICK, _onTabClick, false,0,true );
+		_chrome.addEventListener( Tab.TAB_CLOSE, _onTabCloseClick, false,0,true );
 		_chrome.make( ORIG_WIDTH, ORIG_HEIGHT );
 	}
 	
@@ -77,7 +85,7 @@ public class ChromeMediator extends Mediator implements IMediator
 	*	Resize the application to the default size
 	*/
 	public function firstResize (  ):void{
-		sendNotification( AppFacade.APP_RESIZE, {width:_chrome.appWidth, height:_chrome.appHeight} );
+		_onResize( new Event("none") );
 	}
 	
 	// ______________________________________________________________ Event Handlers
@@ -95,7 +103,7 @@ public class ChromeMediator extends Mediator implements IMediator
 	*	@private Called when Resizer.NEW_WINDOW_SIZE triggers
 	*/
 	private function _onResize ( e:Event ):void{
-		sendNotification( AppFacade.APP_RESIZE, {width:_chrome.appWidth, height:_chrome.appHeight} );
+		sendNotification( AppFacade.APP_RESIZE, {width:_chrome.appWidth, height:_chrome.appHeight, barHeight:_chrome.barHeight } );
 	}
 	
 	/** 
@@ -106,7 +114,19 @@ public class ChromeMediator extends Mediator implements IMediator
 		sendNotification( AppFacade.CLEAR_STATS );
 	}
 	
-	// ______________________________________________________________ Getters / Settrees
+	/** 
+	*	@private Called when one of the tabs are clicked in the chrome
+	*/
+	private function _onTabClick ( e:Event ):void{
+		sendNotification( AppFacade.TAB_CLICK, _chrome.activeTabId );
+	}
+	
+	private function _onTabCloseClick ( e:Event ):void{
+		sendNotification( AppFacade.TAB_CLOSE_CLICK, _chrome.activeTabId );
+	}
+	
+	// ______________________________________________________________ Getters / Setters
+	
 	public function get height (  ):Object{ return _chrome.dragBarHeight; };
 	
 }

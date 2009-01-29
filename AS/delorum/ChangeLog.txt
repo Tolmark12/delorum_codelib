@@ -1,3 +1,6 @@
+	Dec 29 - Major updates to the echo Machine to output to AIR app.
+	Dec 23 - Created text package for an easy bitmap text class
+	Dec xx - Scrolling package needs some work
 	Aug 27 - Made pixasso's EffectList able to parse an array of effects. also improved example
 	Aug 27 - Added upload/FileUploader.as
 	Aug 20 - Scroller : modularizing the scroll bar and the scroll track
