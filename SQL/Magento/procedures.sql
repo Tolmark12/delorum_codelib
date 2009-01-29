@@ -235,6 +235,18 @@ END//
 
 
 
+--CREATE UPDATE PRODUCT INVENTORY PROCEDURE
+
+DROP PROCEDURE IF EXISTS updateProductInventory//
+
+CREATE PROCEDURE updateProductInventory
+	(product_id		INT,
+	qty				DECIMAL(12, 4),
+	is_in_stock		tinyint)
+BEGIN
+END//
+
+
 
 
 
