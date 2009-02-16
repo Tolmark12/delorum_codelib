@@ -13,7 +13,6 @@ public class Output extends Sprite
 	public var windowId:String;
 	
 	// Content
-	private var _bg:Background;
 	private var _content:DisplayText;
 	private var _mask:Sprite;
 	private var _stats:Statistics;
@@ -34,10 +33,6 @@ public class Output extends Sprite
 	*/
 	public function make ():void
 	{
-		// Background color
-		_bg = new Background();
-		this.addChild( _bg );
-		
 		// Text
 		_content = new DisplayText();
 		this.addChild( _content );
@@ -49,6 +44,7 @@ public class Output extends Sprite
 		
 		// Stats
 		_stats = new Statistics();
+		_stats.y = 15;
 		//_stats.addEventListener( Statistics.RUN_GC, _onRunGarbageColl, false,0,true );
 		_content.addChild(_stats);
 		
@@ -73,16 +69,13 @@ public class Output extends Sprite
 	*/
 	public function resize ( $width:Number, $height:Number ):void
 	{
-		// background
-		_bg.draw($width, $height);
-		
 		//  mask
 		_mask.graphics.clear();
 		_mask.graphics.beginFill(0xFF0000, 0.2);
 		_mask.graphics.drawRect(0,0,$width, $height);
 		
 		// Stats
-		_stats.x = $width - _stats.width;
+		_stats.x = $width - _stats.width - 20;
 		
 		_content.resize($width, $height);
 	}

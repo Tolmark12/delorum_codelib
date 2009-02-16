@@ -34,6 +34,9 @@ public class DisplayText extends Sprite
 		_addScrollBar();
 	}
 
+	/** 
+	*	Clear the text field
+	*/
 	public function clear (  ):void
 	{
 		_count = 1;
@@ -41,8 +44,14 @@ public class DisplayText extends Sprite
 		_totalString = "";
 	}
 	
-	
-	private var _tempAr:Array = new Array();
+	/** 
+	*	Add a String to the text
+	*	@param		Text to add
+	*	
+	*	Todo: Eventually, this will be done completely differently. I imagine
+	*	some sort of scenario where we are only rendering the visible chunk of
+	*	text. (that which is not masked). 
+	*/
 	public function addText ( $str:String ):void
 	{
 		var nm:String   = String(_count++);
@@ -53,14 +62,14 @@ public class DisplayText extends Sprite
 			space += " ";
 		}
 		
-		//	_bigString += "<p><n>" + nm + "</n>" + space + $str + "\n</p>";
-		var newObj:MessageVO = new MessageVO( "<p><n>" + nm + "</n>" + space + $str + "\n</p>", 24 );
-		_tempAr.push(newObj)
+		_bigString += "<p><n>" + nm + "</n>" + space + $str + "\n</p>";
+		//var newObj:MessageVO = new MessageVO( "<p><n>" + nm + "</n>" + space + $str + "\n</p>", 24 );
+		//_tempAr.push(newObj)
 		
-		if( _totalString.length < 2000 ) 
-			_totalString += "<p><n>" + nm + "</n>" + space + $str + "\n</p>";
-		else
-			_totalString = "reset";
+		//if( _totalString.length < 2000 ) 
+		//	_totalString += "<p><n>" + nm + "</n>" + space + $str + "\n</p>";
+		//else
+			//_totalString = "reset";
 		
 		// Prevent the display from refreshing too many times
 		// a second and slowing down the app
@@ -77,17 +86,25 @@ public class DisplayText extends Sprite
 		setPosition();
 	}
 	
+	/** 
+	*	@private Called via timer. Updates the text display
+	*/
 	private function _onRefreshTimer ( e:Event ):void
 	{
 		_refreshText();
 	}
 	
-	// Refresh the display
+	/** 
+	*	@private Refresh the display
+	*/
 	private function _refreshText (  ):void
 	{
-		_quickText.htmlText = _totalString;
+		_quickText.htmlText = _bigString;
 	}
 	
+	/** 
+	*	@private Create the scrollbar
+	*/
 	private function _addScrollBar (  ):void
 	{
 		// Create scrollbar
@@ -100,6 +117,8 @@ public class DisplayText extends Sprite
 		_scroller.build();
 		
 		// set event handlers
+		_scroller.addEventListener( Scroller.SCROLL_START, _onScrollStart );
+		_scroller.addEventListener( Scroller.SCROLL_END, _onScrollEnd );
 		_scroller.addEventListener( Scroller.SCROLL, _onScroll );
 		this.addChild(_scroller)
 		
@@ -107,15 +126,41 @@ public class DisplayText extends Sprite
 		_scroller.updateScrollWindow( 0.5 );
 	}
 	
-	private function _onScroll ( e:ScrollEvent ):void
-	{
-		_isScrolling = ( e.percent < 0.95 )? true : false ;
+	// ______________________________________________________________ Scroll Events
+	
+	/** 
+	*	@private Called when scrolling
+	*/
+	private function _onScroll ( e:ScrollEvent ):void {
+		_isScrolling = true;
 		if( _isScrolling ) 
 			_quickText.y = 0 - ( (_quickText.height - _appHeight) * e.percent );
 		else
 			setPosition();
 	}
 	
+	/** 
+	*	@private Called when scrollbar is pressed
+	*/
+	private function _onScrollStart ( e:Event ):void{
+		_isScrolling = true;
+	}
+	
+	/** 
+	*	@private Called when scrollbar is released
+	*/
+	private function _onScrollEnd ( e:Event ):void{
+		EchoMachine.echo( _scroller.scrollPosition );
+		_isScrolling = (_scroller.scrollPosition > 0.9 )? false : true ;
+	}
+	
+	// ______________________________________________________________ Size and Positiong
+	
+	/** 
+	*	Resize the text field
+	*	@param		Width
+	*	@param		Height
+	*/
 	public function resize ( $width:Number, $height:Number ):void
 	{
 		_scroller.x = $width -12;
@@ -125,22 +170,32 @@ public class DisplayText extends Sprite
 		setPosition();
 	}
 	
+	/** 
+	*	- Determines if scrollbar should be visible
+	*	- Sets the Scroll Window
+	*	- Sets the scrollbar position
+	*/
 	public function setPosition (  ):void
 	{
-		_scroller.updateScrollWindow(_appHeight / _quickText.height);
-
+		// update the scrollbar's scroll window
+		_scroller.updateScrollWindow(_appHeight / _quickText.textHeight, 0);
+		
+		// whether we should show the scrollbar or not
+		var doNeedScrollBar:Boolean = _quickText.textHeight > (_appHeight - this.parent.y);
+		
+		// If the user is not dragging, or dragged the scrollbar somewhere
 		if( !_isScrolling )
 		{
-			if( _quickText.height > _appHeight - this.parent.y ) {
-				_quickText.y = _appHeight - _quickText.height - this.parent.y;
+			if( doNeedScrollBar ) {
+				_quickText.y = _appHeight - _quickText.textHeight - this.parent.y;
 				_scroller.changeScrollPosition(1);
-				_scroller.visible = true;
 			}
 			else{
 				this.y = 0;
-				_scroller.visible = false;
 			}
 		}
+		
+		_scroller.visible = doNeedScrollBar;
 	}
 }
 

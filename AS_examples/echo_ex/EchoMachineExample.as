@@ -12,8 +12,9 @@ public class EchoMachineExample extends Sprite
 	public function EchoMachineExample():void
 	{
 		EchoMachine.echoMode = EchoMachine.AIR;
-		EchoMachine.startLogging(this);
-		EchoMachine.echo("This message is coming from the Echo Machine Document Class constructor");
+		EchoMachine.startLogging(this);	
+		EchoMachine.echo( "low" );
+		EchoMachine.echo( "low" );
 		this.stage.addEventListener(MouseEvent.CLICK, _onClick);
 	}
 	

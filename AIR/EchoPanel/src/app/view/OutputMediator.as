@@ -55,11 +55,12 @@ public class OutputMediator extends Mediator implements IMediator
 				_addWindow( vo.id );
 			break;
 			case AppFacade.ACTIVATE_WINDOW :
-				_activateOutputWindow( note.getBody() as String)
+				_activateOutputWindow( note.getBody() as String);
 			break;
 			case AppFacade.APP_RESIZE :
 				var obj:Object = note.getBody() as Object;
 				_currentAppSize = obj;
+				_windowsHolder.y = obj.barHeight
 				if( _activeWindowId != null ) {
 					currentWindow.resize( obj.width, obj.height );
 				}
@@ -74,14 +75,21 @@ public class OutputMediator extends Mediator implements IMediator
 	}
 	
 	// ______________________________________________________________ Make
-	public function make ( $rootSprite:Sprite, $y:Number ):void
+	
+	/** 
+	*	Creates window holder and adds to stage
+	*/
+	public function make ( $rootSprite:Sprite ):void
 	{
-		$rootSprite.addChildAt( _windowsHolder, 0 );
-		_windowsHolder.y = $y;
+		$rootSprite.addChildAt( _windowsHolder, 1 );
 	}
 	
 	// ______________________________________________________________ Output Windows
-	// Crate a new Outputter
+	
+	/** 
+	*	Create a new Output window
+	*	@param		Output window id
+	*/
 	private function _addWindow ( $windowId:String ):void
 	{
 		var output:Output = new Output( $windowId );
@@ -94,12 +102,17 @@ public class OutputMediator extends Mediator implements IMediator
 			_activateOutputWindow( $windowId );
 	} 
 	
+	/** 
+	*	Activate a particular window
+	*	@param		Id of window to activate
+	*/
 	private function _activateOutputWindow ( $windowId:String ):void
 	{
 		// Hide current window
-		if( _activeWindowId != null && _activeWindowId != $windowId ) 
-			var x;
-//			currentWindow.visible = false;
+		if( _activeWindowId != null && _activeWindowId != $windowId ) {
+			if( currentWindow != null ) 
+				currentWindow.visible = false;
+		}
 		
 		// Show new window
 		_activeWindowId = $windowId;
@@ -107,6 +120,12 @@ public class OutputMediator extends Mediator implements IMediator
 	}
 	
 	// ______________________________________________________________ Helpers
+	
+	/** 
+	*	Get a particular Output
+	*	@param		Id of Output to return
+	*	@return		Output window with particular id
+	*/
 	private function _getWindowById ( $windowId:String ):Output
 	{
 		var len:uint = _windows.length;
@@ -118,6 +137,9 @@ public class OutputMediator extends Mediator implements IMediator
 		return null;
 	}
 	
+	/** 
+	*	@return		Returns the active Outpu
+	*/
 	public function get currentWindow (  ):Output { return _getWindowById( _activeWindowId ); };
 	
 }

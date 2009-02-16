@@ -67,6 +67,9 @@ public class EchoMachine
 	private static var _airConnection:LocalConnection;
 	
 	private static var _connectionId:String;
+	private static var _conn:LocalConnection;
+	private static var _stage:Stage;
+	private static var _doSend:Boolean = true;
 	
 	// ______________________________________________________________ PUBLIC FUNCTIONS
 	
@@ -157,27 +160,51 @@ public class EchoMachine
 	private static function _initForAIR (  ):void
 	{
 		// Connection id
-		_connectionId = String( new Date().getTime() );
+		_connectionId = "_" +  String( new Date().getTime() );
 		
 		// Allow the air app to talk to this swf
-		var conn:LocalConnection = new LocalConnection();
-		conn.client = EchoMachine;
-		conn.allowDomain('*');
+		_conn = new LocalConnection();
+		_conn.client = EchoMachine;
+		_conn.allowDomain('*');
 		try {
-		    conn.connect(_connectionId);
+		    _conn.connect(_connectionId);
 		} catch (error:ArgumentError) {
 		}
 		
 		// Connect to the air app
 		_airConnection = new LocalConnection();
 		_airConnection.addEventListener(StatusEvent.STATUS, _onAirStaus);
-		_airConnection.send( "_delorum_air_connect", "clear", _connectionId );
+		
+		if( _doSend )
+			_airConnection.send( "_delorum_air_connect", "clear", _connectionId );
 	}
 	
-	private static function _onAirStaus ( e:Event ):void
+	/** 
+	*	Called by tha AIR app
+	*/
+	public static function sendSwfInfo (  ):void
 	{
+		// Find name of the swf
+		var myPattern:RegExp = /\b\w+\.swf/;
+		var swfName = String( myPattern.exec( _stage.loaderInfo.url ) );
 		
+		// Send name of the swf
+		var infoObj:Object = {
+			swfName 	: swfName,
+			name 		: swfName.split(".")[0]
+		}
+		
+		if( _doSend )
+			_airConnection.send( "_delorum_air_connect", "infoAboutSwf", _connectionId, infoObj );
 	}
+	
+	
+	public static function stopBroadcasting (  ):void
+	{
+		_doSend = false;
+	}
+	
+	private static function _onAirStaus ( e:Event ):void {};
 	
 	// ______________________________________________________________ AIR specific END
 	
@@ -233,7 +260,8 @@ public class EchoMachine
 				break
 				
 				case AIR :
-					_airConnection.send( "_delorum_air_connect", "echo", _connectionId, $str );
+					if( _doSend )
+						_airConnection.send( "_delorum_air_connect", "echo", _connectionId, $str );
 				break;
 				
 				case LOG:
@@ -251,15 +279,18 @@ public class EchoMachine
 	
 	public static function startLogging ( $stage:DisplayObjectContainer ):void
 	{
+		_stage = $stage.stage;
 		_statsHarvester = new StatsHarvester( $stage );
 		_statsHarvester.addEventListener( StatsHarvester.STATS, _onStats );
 		var str:String = $stage.stage.loaderInfo.loaderURL;
-		_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId );
+		if( _doSend )
+			_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId );
 	}
 	
 	private static function _onStats ( e:Event ):void
 	{
-		_airConnection.send( "_delorum_air_connect", "stats", _connectionId, _statsHarvester.statsObject );
+		if( _doSend )
+			_airConnection.send( "_delorum_air_connect", "stats", _connectionId, _statsHarvester.statsObject );
 	}
 	
 	public static function get errorLog 	(  ):Array{ return _errorLog; };

@@ -31,9 +31,9 @@ public class Scroller extends Sprite
 	// NOTE: all var names assume a horizontal scrollbar orientation
 
 	// Events
-	public static const SCROLL_RELEASED:String 	= "scroll_released";
-	public static const SCROLL_PRESSED:String 	= "scroll_pressed";
 	public static const SCROLL:String 			= "scroll";
+	public static const SCROLL_START:String 	= "scroll_start";
+	public static const SCROLL_END:String 		= "scroll_end";
 	
 	// Constants
 	public static const VERTICAL:String 		= "vertical";
@@ -291,7 +291,7 @@ public class Scroller extends Sprite
 		_scrollBar.startDrag( false, _dragArea );
 		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );
 		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
-		this.dispatchEvent( new Event( SCROLL_PRESSED, true ) );
+		this.dispatchEvent( new Event( SCROLL_START, true ) );
 	}
 	
 	private function _stopScrolling ( e:Event ):void
@@ -302,7 +302,7 @@ public class Scroller extends Sprite
 			_scrollBar.stopDrag();
 			_scrollBar.stage.removeEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );1
 			_scrollBar.stage.removeEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
-			this.dispatchEvent( new Event( SCROLL_RELEASED, true ) );
+			this.dispatchEvent( new Event( SCROLL_END, true ) );
 		}
 	}
 	

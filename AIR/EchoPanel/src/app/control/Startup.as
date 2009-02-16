@@ -30,7 +30,7 @@ public class Startup extends SimpleCommand implements ICommand
 		
 		// Begin
 		chromeMediator.make( rootSprite );
-		outputMediator.make( rootSprite, chromeMediator.height );
+		outputMediator.make( rootSprite );
 		chromeMediator.firstResize();
 		//swfTalkProxy.tester();
 	}

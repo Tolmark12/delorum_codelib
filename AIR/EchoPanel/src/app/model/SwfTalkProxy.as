@@ -8,6 +8,7 @@ import app.AppFacade;
 import flash.net.LocalConnection;
 import delorum.echo.EchoMachine;
 import flash.display.*;
+import flash.events.*;
 
 public class SwfTalkProxy extends Proxy implements IProxy
 {
@@ -15,7 +16,9 @@ public class SwfTalkProxy extends Proxy implements IProxy
 
 	// Local Connection
 	private var _conn:LocalConnection;
-	private var _idObject:Object = new Object();;
+	private var _idObject:Object = new Object();
+	
+	private var _activeWindowId:String = "";
 	
 	public function SwfTalkProxy( $rootSprite:Sprite ):void
 	{
@@ -107,23 +110,81 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		//_stats.clear();
 	}
 	
-	// ______________________________________________________________ API
+	public function infoAboutSwf ( $id:String, $obj:Object ):void
+	{
+		var vo:WindowInfoVO = new WindowInfoVO();
+		vo.id 	= $id;
+		vo.name = $obj.name;
+		sendNotification( AppFacade.WINDOW_INFO, vo);
+	}
+	
+	// ______________________________________________________________ Windows API
+	
+	/** 
+	*	If not already acive, activates a certain window
+	*	@param		id of window to activate	
+	*/
+	public function activateWindowById ( $id:String ):void
+	{
+		if( _activeWindowId != $id ) {
+			_activeWindowId = $id;
+			sendNotification( AppFacade.ACTIVATE_WINDOW, _activeWindowId );
+			
+		}
+	}
+	
+	/** 
+	*	Used to close a window
+	*	@param		id of window to close
+	*/
+	public function killWindow ( $id:String ):void
+	{
+		var airConnection:LocalConnection = new LocalConnection();
+		airConnection.addEventListener("status", _emptyHandler);
+		airConnection.send( $id, "stopBroadcasting" );
+	}
+	
+	// ______________________________________________________________ Windows helpers
+	
+	/** 
+	*	Checks if a window with the new id string currently exists. If not, it creates it
+	*	@param		Id of window to check
+	*/
 	private function _checkIfOutputWindowExists ( $id:String ):void
 	{
 		if( _idObject[$id] == null ) {
-			EchoMachine.echo( $id + ": create output" );
 			_createNewSwf( $id );
 		}
 	}
 	
+	/** 
+	*	Creates a new window with a certain id
+	*	@param		Id of window to create	
+	*/
 	private function _createNewSwf ( $id:String ):void
 	{
 		var vo:OutputerVO = new OutputerVO();
 		vo.id = $id;
-		vo.shortName = "temp_data";
+		vo.shortName = "$obj.name";
 		vo.swfName = "temp_name.swf";
 		_idObject[$id] = "";
 		sendNotification( AppFacade.NEW_OUTPUTTER, vo );
+		activateWindowById( vo.id );
+		
+		try
+		{
+			// Connect to new swf, and have it send the swf info
+			var airConnection:LocalConnection = new LocalConnection();
+			airConnection.addEventListener("status", _emptyHandler);
+			airConnection.send( $id, "sendSwfInfo" );			
+		} 
+		catch (e:Error)
+		{
+			EchoMachine.echo( e );
+		}
+
 	}
+	
+	private function _emptyHandler ( e:Event ):void{};
 }
 }
