@@ -110,6 +110,17 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 		_holderMc.addChild( _loader );
 	}
 	
+	override public function cancelLoad (  ):void
+	{
+		super.removeItemFromLoadQueue();
+		try {
+			_loader.close();
+		} catch (e:Error) {
+			
+		}
+			
+	}
+	
 	// ______________________________________________________________ Getters / Setters
 	/** 
 	* 	Gets the holder Sprite

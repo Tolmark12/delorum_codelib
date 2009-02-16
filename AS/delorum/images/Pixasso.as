@@ -147,7 +147,7 @@ public class Pixasso extends EventDispatcher
 		spriteReflection.cacheAsBitmap = true;
 		gradientMask.cacheAsBitmap = true;
 	    spriteReflection.mask = gradientMask;
-	    spriteReflection.parent.addChild(gradientMask);
+	    //spriteReflection.parent.addChild(gradientMask);
 		
 		// Save ne coordinates for the pristine image
 		_pristinePosition = new Point($surfaceBlur/2, originBitmap.y);
@@ -312,6 +312,106 @@ public class Pixasso extends EventDispatcher
 		
 		var blurredShape:Sprite = _blur( shape, $blur );
 		addDisplayObject(blurredShape,$x,$y);
+	}
+	
+	/// ADD A BORDER
+	/** 
+	*	Create a border mask based on a long transparent bitmap data. The border width will cut into the 
+	*	image. It's width will be equal to the height of the border texture image. 
+	*	@param		Bitmap data of the border texture. Black will be opaque, white transparent. 
+	*/
+	public function addBorderTexture ( $border:BitmapData ):void
+	{
+		// dimmensions
+		var borderWidth:Number  = $border.height;
+		var wid:Number			= _bmData.width;
+		var tal:Number			= _bmData.height;
+		
+		// Set up a holder sprite with the border image, 
+		// and a mask sprite. 
+		var borderMask:Shape    = new Shape();
+		var borderBitmap:Bitmap = new Bitmap($border);
+		var borderHolder:Sprite = new Sprite();
+		borderHolder.addChild(borderBitmap);
+		borderHolder.addChild(borderMask);
+		borderBitmap.mask = borderMask;
+		
+		var borderBmd:BitmapData;
+		var maskBmData:BitmapData = new BitmapData(wid, tal, true, 0x000000);
+		
+		// Inner Fill
+		maskBmData.fillRect( new Rectangle(borderWidth-1, borderWidth-1, wid - ( borderWidth-1 )*2, tal - (borderWidth-1) *2), 0xFF000000 );
+		// Top Border
+		borderMask.graphics.clear();
+		borderMask.graphics.beginFill(0x000000)
+		borderMask.graphics.moveTo(0,0);
+		borderMask.graphics.lineTo(wid,0);
+		borderMask.graphics.lineTo(wid - borderWidth, borderWidth);
+		borderMask.graphics.lineTo(borderWidth, borderWidth);
+		borderMask.graphics.lineTo(0,0)
+		borderBmd = new BitmapData(borderHolder.width, borderHolder.height, true, 0x000000);
+		borderBmd.draw(borderHolder);
+		maskBmData.copyPixels( borderBmd, new Rectangle(0,0,borderBmd.width, borderBmd.height), new Point(0,0),null, null, true )
+		
+		// Right Border
+		borderBitmap.rotation = 90;
+		borderBitmap.x = borderWidth;
+		borderMask.graphics.clear();
+		borderMask.graphics.beginFill(0x000000);
+		borderMask.graphics.moveTo(borderWidth,0);
+		borderMask.graphics.lineTo(0,borderWidth);
+		borderMask.graphics.lineTo(0,tal - borderWidth);
+		borderMask.graphics.lineTo(borderWidth,tal);
+		borderBmd = new BitmapData(borderHolder.width, borderHolder.height, true, 0x000000);
+		borderBmd.draw(borderHolder);
+		maskBmData.copyPixels( borderBmd, new Rectangle(0,0,borderBmd.width, borderBmd.height), new Point(wid - borderWidth,0),null, null, true)
+		
+		// Bottom Border
+		borderBitmap.rotation = 180;
+		borderBitmap.x = borderBitmap.width;
+		borderBitmap.y = borderWidth;
+		borderMask.graphics.clear();
+		borderMask.graphics.beginFill(0x000000);
+		borderMask.graphics.moveTo(0,borderWidth);
+		borderMask.graphics.lineTo(borderWidth,0);
+		borderMask.graphics.lineTo(wid - borderWidth,0);
+		borderMask.graphics.lineTo(wid,borderWidth);
+		borderBmd = new BitmapData(borderHolder.width, borderHolder.height, true, 0x000000);
+		borderBmd.draw(borderHolder);
+		maskBmData.copyPixels( borderBmd, new Rectangle(0,0,borderBmd.width, borderBmd.height), new Point(0,tal - borderWidth),null, null, true)
+		
+		// Left Border
+		borderBitmap.rotation = -90;
+		borderBitmap.y = borderBitmap.height;
+		borderBitmap.x = 0
+		borderMask.graphics.clear();
+		borderMask.graphics.beginFill(0x000000);
+		borderMask.graphics.moveTo(0,0);
+		borderMask.graphics.lineTo(borderWidth,borderWidth);
+		borderMask.graphics.lineTo(borderWidth,tal-borderWidth);
+		borderMask.graphics.lineTo(0,tal);
+		borderBmd = new BitmapData(borderHolder.width, borderHolder.height, true, 0x000000);
+		borderBmd.draw(borderHolder);
+		maskBmData.copyPixels( borderBmd, new Rectangle(0,0,borderHolder.width, borderHolder.height), new Point(0,0),null, null, true)
+		
+		
+		// Create masker and bitmap
+		var holder:Sprite = new Sprite();
+		var masker:Bitmap = new Bitmap(maskBmData);
+		var image:Bitmap = new Bitmap(_bmData);
+		holder.addChild(image);
+		holder.addChild(masker);
+		
+		// Add Mask
+		masker.cacheAsBitmap = true;
+		image.cacheAsBitmap = true;
+		image.mask = masker;
+		
+		// Draw completed image
+		_bmData = new BitmapData(wid, tal, true, 0x000000);
+		_bmData.draw( holder );
+		_fireEffectComplete();
+		borderBmd.dispose()
 	}
 	
 	// CHANGE THE SCALE
