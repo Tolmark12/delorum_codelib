@@ -1,3 +1,5 @@
+	Feb 23 - utils.Inspector : New class for inspecting public vars
+	Fev 23 - utils.* : Created new package
 	Feb 16 - Pixasso : Added the border texture method
 	Feb 13 - loading.* : Added the cancelLoad(), removeItemFromLoadQueue(), etc methods.
 
