@@ -154,7 +154,6 @@ public class DisplayText extends Sprite
 	*	@private Called when scrollbar is released
 	*/
 	private function _onScrollEnd ( e:Event ):void{
-		EchoMachine.echo( _scroller.scrollPosition );
 		_isScrolling = (_scroller.scrollPosition > 0.9 )? false : true ;
 	}
 	

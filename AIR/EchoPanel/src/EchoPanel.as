@@ -16,8 +16,6 @@ public class EchoPanel extends Sprite
 		//stage.quality = "low"
 		EchoMachine.echoMode = EchoMachine.AIR;
 		EchoMachine.startLogging(this);	
-		EchoMachine.echo( "hi" );
-		EchoMachine.echo( "hi" );
 	}
 	
 	private function _init (  ):void

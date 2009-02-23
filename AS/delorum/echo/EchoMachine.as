@@ -176,9 +176,9 @@ public class EchoMachine
 		_airConnection = new LocalConnection();
 		_airConnection.addEventListener(StatusEvent.STATUS, _onAirStaus);
 		
-		if( _doSend ) {
-			_airConnection.send( "_delorum_air_connect", "clear", _connectionId );
-		}
+		//if( _doSend ) {
+		//	_airConnection.send( "_delorum_air_connect", "clear", _connectionId );
+		//}
 	}
 	
 	/** 
@@ -188,7 +188,7 @@ public class EchoMachine
 	{
 		// Find name of the swf
 		var myPattern:RegExp = /\b\w+\.swf/;
-		var swfName = String( myPattern.exec( _stage.loaderInfo.url ) );
+		var swfName:String = String( myPattern.exec( _stage.loaderInfo.url ) );
 		
 		// Send name of the swf
 		var infoObj:Object = {
@@ -284,9 +284,10 @@ public class EchoMachine
 		_stage = $stage.stage;
 		_statsHarvester = new StatsHarvester( $stage );
 		_statsHarvester.addEventListener( StatsHarvester.STATS, _onStats );
-		var str:String = $stage.stage.loaderInfo.loaderURL;
+		var filePath:String = $stage.stage.loaderInfo.loaderURL;
+
 		if( _doSend )
-			_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId );
+			_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId, filePath );
 	}
 	
 	private static function _onStats ( e:Event ):void

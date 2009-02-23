@@ -10,6 +10,14 @@ import delorum.echo.EchoMachine;
 import flash.display.*;
 import flash.events.*;
 
+/** 
+*	TODO: Either don't accept communications from previously initt-ed swfs or force swfs to send their url with every communication so we can initialize a new windwo at any point
+*	TODO: Refresh scolling after each change? 
+*	TODO: Think of creating a singleton method like Echo("asdf"); instead of EchoMachine.echo("asdf");
+*	TODO: Rewrite the client side echo-er
+*	
+*/
+
 public class SwfTalkProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "swf_talk_proxy";
@@ -45,10 +53,10 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	// ______________________________________________________________ Local Connection API
 	
 	// These are called by EchoMachine swf
-	
-	public function initNewSwf ( $id:String ):void
+	public function initNewSwf ( $id:String, $swfUrl:String ):void
 	{
-		_checkIfOutputWindowExists( $id );
+		EchoMachine.echo( "init it" );
+		_checkIfOutputWindowExists( $id, $swfUrl );
 	}
 	
 	/** 
@@ -99,7 +107,6 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		_checkIfOutputWindowExists( $id );
 		var statsObj:StatsVO = new StatsVO( $statsObj );
 		statsObj.id = $id;
-		EchoMachine.echo( $id );
 		sendNotification( AppFacade.STATS, statsObj );
 	}
 	
@@ -114,6 +121,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	
 	public function infoAboutSwf ( $id:String, $obj:Object ):void
 	{
+		
 		var vo:WindowInfoVO = new WindowInfoVO();
 		vo.id 	= $id;
 		vo.name = $obj.name;
@@ -141,6 +149,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*/
 	public function killWindow ( $id:String ):void
 	{
+		delete _idObject[$id];
 		// Tell the swf to stop broadcasting
 		var airConnection:LocalConnection = new LocalConnection();
 		airConnection.addEventListener("status", _emptyHandler);
@@ -155,10 +164,12 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Checks if a window with the new id string currently exists. If not, it creates it
 	*	@param		Id of window to check
 	*/
-	private function _checkIfOutputWindowExists ( $id:String ):void
+	private function _checkIfOutputWindowExists ( $id:String, $swfUrl:String=null ):void
 	{
+		if( _idObject[$id] == null ) 
+			EchoMachine.echo( "Is this window null: " + ( _idObject[$id] == null )  + '  :  ' +  $id  + '  :  ' + $swfUrl );
 		if( _idObject[$id] == null ) {
-			_createNewSwf( $id );
+			_createNewSwf( $id, $swfUrl );
 		}
 	}
 	
@@ -166,13 +177,22 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Creates a new window with a certain id
 	*	@param		Id of window to create	
 	*/
-	private function _createNewSwf ( $id:String ):void
+	private function _createNewSwf ( $id:String, $swfUrl:String ):void
 	{
-		var vo:OutputerVO = new OutputerVO();
-		vo.id = $id;
-		vo.shortName = "$obj.name";
-		vo.swfName = "temp_name.swf";
-		_idObject[$id] = "";
+		// See if a swf in this location already exists..
+		for( var i:String in _idObject ){
+			if( _idObject[i] == $swfUrl ){
+				killWindow(i);
+			}
+		}
+			
+		var vo:OutputerVO 	= new OutputerVO();
+		vo.id          		= $id;
+		vo.shortName   		= "$obj.name";
+		vo.url         		= $swfUrl
+		vo.swfName     		= "temp_name.swf";
+		_idObject[$id] 		= $swfUrl;
+		
 		sendNotification( AppFacade.NEW_OUTPUTTER, vo );
 		activateWindowById( vo.id );
 		
@@ -187,7 +207,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		{
 			EchoMachine.echo( e );
 		}
-
+		EchoMachine.echo( "IT IS CREATED!!!!!!!!!" + '  :  ' + $id );
 	}
 	
 	private function _emptyHandler ( e:Event ):void{};

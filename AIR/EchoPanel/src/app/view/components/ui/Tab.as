@@ -53,7 +53,6 @@ public class Tab extends Sprite
 	*/
 	public function setInfo ( $vo:WindowInfoVO ):void
 	{
-		EchoMachine.echo( "set info: " + '  :  ' + $vo.name );
 		_name = $vo.name
 		_drawTextAndBg();
 	}
