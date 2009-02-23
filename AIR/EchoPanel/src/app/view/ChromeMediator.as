@@ -36,7 +36,8 @@ public class ChromeMediator extends Mediator implements IMediator
 					AppFacade.APP_RESIZE,
 					AppFacade.CLEAR_TEXT,
 					AppFacade.CLEAR_STATS,
-					AppFacade.WINDOW_INFO	];
+					AppFacade.WINDOW_INFO,
+					AppFacade.KILL_WINDOW	];
 	}
 	
 	// PureMVC: Handle notifications
@@ -46,6 +47,9 @@ public class ChromeMediator extends Mediator implements IMediator
 		{
 			case AppFacade.ACTIVATE_WINDOW :
 				_chrome.activateTab( note.getBody() as String );
+			break;
+			case AppFacade.KILL_WINDOW :
+				_chrome.killTab( note.getBody() as String );
 			break;
 			case AppFacade.NEW_OUTPUTTER :
 				var vo:OutputerVO = note.getBody() as OutputerVO;
@@ -122,7 +126,8 @@ public class ChromeMediator extends Mediator implements IMediator
 	}
 	
 	private function _onTabCloseClick ( e:Event ):void{
-		sendNotification( AppFacade.TAB_CLOSE_CLICK, _chrome.activeTabId );
+		var tab:Tab = e.target as Tab;
+		sendNotification( AppFacade.TAB_CLOSE_CLICK, tab.id );
 	}
 	
 	// ______________________________________________________________ Getters / Setters

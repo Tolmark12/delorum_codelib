@@ -5,6 +5,7 @@ import flash.display.*;
 import flash.events.*;
 import flash.geom.Point;
 import delorum.echo.EchoMachine;
+import flash.display.NativeWindow;
 
 public class DragBar extends MovieClip
 {
@@ -18,6 +19,7 @@ public class DragBar extends MovieClip
 	private var _clearBtn:MovieClip;
 	private var _isOpen:Boolean = true;
 	private var _clickPoint:Point;
+	private var _pinBtn:MovieClip;
 	
 	public function DragBar():void
 	{
@@ -27,9 +29,13 @@ public class DragBar extends MovieClip
 		_closeBtn.buttonMode = true;
 		
 		_minimizeBtn = this.getChildByName("minimizeBtn") as MovieClip;
-		_minimizeBtn.addEventListener( MouseEvent.MOUSE_DOWN, _onMinimize );
+		_minimizeBtn.addEventListener( MouseEvent.CLICK, _onMinimize );
 		_minimizeBtn.buttonMode = true;
-
+		
+		_pinBtn = this.getChildByName("pinBtn") as MovieClip;
+		_pinBtn.addEventListener( MouseEvent.CLICK, _onToggleAlwaysInFront, false,0,true );
+		_pinBtn.buttonMode = true;
+		
 		_clearBtn = this.getChildByName("clearBtn") as MovieClip;
 		//_clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _onClear );
 		_clearBtn.buttonMode = true;
@@ -41,7 +47,7 @@ public class DragBar extends MovieClip
 		_bgBar.mouseEnabled = true;
 		_bgBar.addEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown );
 		_bgBar.addEventListener( MouseEvent.MOUSE_UP, _onMouseUp );
-		//_bgBar.addEventListener( MouseEvent.DOUBLE_CLICK, _onDoubleClick);
+		_bgBar.addEventListener( MouseEvent.DOUBLE_CLICK, _onDoubleClick);
 		
 		// ############## TEMP
 		// _clearBtn.addEventListener( MouseEvent.MOUSE_DOWN, _clearEnterFrame, false,0,true );
@@ -65,10 +71,12 @@ public class DragBar extends MovieClip
 	
 	public function resize ( $width:Number ):void
 	{
-		_bgBar.width = $width - 2;
-		_minimizeBtn.x = $width - 30;
-		_clearBtn.x = $width - 50;
-		_closeBtn.x = $width - 10;
+		_bgBar.width	= $width - 2;
+		_minimizeBtn.x	= $width - 30;
+		_clearBtn.x    	= $width - 50;
+		_closeBtn.x    	= $width - 10;
+		_pinBtn.x      	= $width - 70;
+
 	}
 	
 	// ______________________________________________________________ Event Handlers
@@ -83,29 +91,28 @@ public class DragBar extends MovieClip
 	private function _onEnterFrame ( e:Event ):void
 	{
 		if( this.stage.nativeWindow.x != _clickPoint.x || this.stage.nativeWindow.y != _clickPoint.y ) {
-			this.parent.alpha = 0.99;
+			this.parent.alpha = 0.90;
 			this.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
 		}
 	}
 	
-	private function _onMinimize ( e:Event ):void
-	{
-		
+	private function _onMinimize ( e:Event ):void{
+		this.stage.nativeWindow.minimize();
 	}
 	
 	private function _onMouseUp ( e:Event ):void
-	{
-		if( this.parent.alpha == 1 ) {
-			if( _isOpen ) 
-				this.dispatchEvent( new Event(HIDE_CONTENT, true) );
-			else
-				this.dispatchEvent( new Event(SHOW_CONTENT, true) );
-				
-			_isOpen = (_isOpen)? false : true ;
-		}
-			
+	{		
 		this.parent.alpha = 1;
 		this.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
+	}
+	
+	private function _onDoubleClick ( e:Event ):void {
+		if( _isOpen ) 
+			this.dispatchEvent( new Event(HIDE_CONTENT, true) );
+		else
+			this.dispatchEvent( new Event(SHOW_CONTENT, true) );
+			
+		_isOpen = (_isOpen)? false : true ;
 	}
 	
 	private function _onClose ( e:Event ):void
@@ -118,16 +125,12 @@ public class DragBar extends MovieClip
 		this.dispatchEvent( new Event(RESET, true) );
 	}
 	
-	private function _onDoubleClick ( e:Event ):void
-	{
-		if( _isOpen ) 
-			this.dispatchEvent( new Event(HIDE_CONTENT, true) );
-		else
-			this.dispatchEvent( new Event(SHOW_CONTENT, true) );
-			
-		_isOpen = (_isOpen)? false : true ;
+	private function _onToggleAlwaysInFront ( e:Event ):void {
+		if( this.stage.nativeWindow.alwaysInFront ) 
+			this.stage.nativeWindow.alwaysInFront = false;
+		else	
+			this.stage.nativeWindow.alwaysInFront = true;
 	}
-
 }
 
 }

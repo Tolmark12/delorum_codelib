@@ -76,6 +76,51 @@ public class Chrome extends Sprite
 	}
 	
 	/** 
+	*	Deaactivates the specified tab
+	*	@param		Id of the tab to deactivate
+	*/
+	public function killTab ( $id:String ):void
+	{
+		EchoMachine.echo( "a" );
+		// If killing the active tab...
+		if( activeTabId == $id ){
+			EchoMachine.echo( "b" );
+			//...activate the tab to the left of it
+			var ind:int = _getTabIndex($id);
+			var len:int = _tabs.length;
+			EchoMachine.echo( "c" );
+			// if there is more than one tab, activate 
+			// the tab to the right or left of it
+			if( len > 1){
+				EchoMachine.echo( "d" );
+				var newTab:Tab;
+				if( ind > 0 ) {
+					EchoMachine.echo( "e" );
+					newTab = _tabs[ind-1] as Tab;
+				} else {
+					EchoMachine.echo( "f" );
+					newTab = _tabs[ind+1] as Tab;
+				}
+				EchoMachine.echo( "g"  + '  :  ' + newTab + '  :  ' + ind + '  :  ' + len);
+				newTab.fireActivation();
+				EchoMachine.echo( "h" );
+			} 
+			// else, there are no tabs...
+			else 
+			{
+				
+			}
+		} 
+		
+		EchoMachine.echo( "i" );
+		var dyingTab:Tab = _getTabById($id);
+		dyingTab.visible = false;
+		_removeTabFromList($id);
+		_stackTabs();
+		EchoMachine.echo( "z" );
+	}
+	
+	/** 
 	*	Add a new output window
 	*	@param		The title of the window
 	*	@param		this window id
@@ -134,20 +179,53 @@ public class Chrome extends Sprite
 		return null;
 	}
 	
+	/** 
+	*	@return		The index in the tab array of the specified tab
+	*	@param		The id of the tab
+	*/
+	private function _getTabIndex ( $id:String ):int
+	{
+		var len:uint = _tabs.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			var tab:Tab = _tabs[i];
+			if( tab.id == $id ) 
+				return i;
+		}
+		return -1;
+	}
+	
+	/** 
+	*	Removes a tab from the display list
+	*	@param		The id of the tab to remove
+	*/
+	private function _removeTabFromList ( $id:String ):void
+	{
+		var len:uint = _tabs.length;
+		looper:for ( var i:uint=0; i<len; i++ ) 
+		{
+			var tab:Tab = _tabs[i];
+			if( tab.id == $id ) {
+				_tabs.splice(i,1);
+				break looper;
+			}
+		}
+	}
+	
 	// ______________________________________________________________ Display
 	
 	/** 
 	*	Hide the content
 	*/
 	public function minimize ():void {
-		_resizer.visible = false;
+		_bg.visible = _resizer.visible = false;
 	}
 	
 	/** 
 	*	Show the content
 	*/
 	public function maximize ():void {
-		_resizer.visible = true;
+		_bg.visible = _resizer.visible = true;
 	}
 	
 	/** 

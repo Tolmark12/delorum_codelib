@@ -166,6 +166,7 @@ public class EchoMachine
 		_conn = new LocalConnection();
 		_conn.client = EchoMachine;
 		_conn.allowDomain('*');
+		_conn.allowInsecureDomain('localhost');
 		try {
 		    _conn.connect(_connectionId);
 		} catch (error:ArgumentError) {
@@ -175,8 +176,9 @@ public class EchoMachine
 		_airConnection = new LocalConnection();
 		_airConnection.addEventListener(StatusEvent.STATUS, _onAirStaus);
 		
-		if( _doSend )
+		if( _doSend ) {
 			_airConnection.send( "_delorum_air_connect", "clear", _connectionId );
+		}
 	}
 	
 	/** 

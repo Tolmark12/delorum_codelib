@@ -14,6 +14,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const WINDOW_INFO:String       	= "window_info";
 	public static const NEW_OUTPUTTER:String     	= "new_outputer";
 	public static const ACTIVATE_WINDOW:String   	= "activate_window";
+	public static const KILL_WINDOW:String 			= "kill_window";
 	public static const ECHO_MESSAGE:String      	= "echo_message";
 	public static const STATS:String             	= "stats";
 	public static const CLEAR_TEXT:String        	= "clear_text";

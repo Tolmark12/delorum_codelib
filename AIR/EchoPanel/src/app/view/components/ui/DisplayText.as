@@ -71,16 +71,20 @@ public class DisplayText extends Sprite
 		//else
 			//_totalString = "reset";
 		
+//TODO Figure out an intelligent refresher. 
+
 		// Prevent the display from refreshing too many times
 		// a second and slowing down the app
-		var _timer:Number = getTimer();
-		if( _timer - 1000 > _prevTimer )
-		{
-			_prevTimer = _timer;
-			var refreshTimer:Timer = new Timer( 1000,1 );
-			refreshTimer.addEventListener( TimerEvent.TIMER, _onRefreshTimer, false,0,true );
-			_refreshText();
-		} 
+//		var _timer:Number = getTimer();
+//		if( _timer - 1000 > _prevTimer )
+//		{
+//			_prevTimer = _timer;
+//			var refreshTimer:Timer = new Timer( 1000,1 );
+//			refreshTimer.addEventListener( TimerEvent.TIMER, _onRefreshTimer, false,0,true );
+//			_refreshText();
+//		} 
+//		
+		_refreshText();
 		
 		var style:StyleSheet = new StyleSheet();
 		setPosition();

@@ -8,6 +8,8 @@ import flash.geom.Rectangle;
 public class Resizer extends MovieClip
 {
 	public static const WINDOW_RESIZE:String = "window_resize";
+	public static const MIN_WIDTH:Number = 260;
+	public static const MIN_HEIGHT:Number = 65;
 	
 	public var yOffset:Number;
 	
@@ -58,8 +60,8 @@ public class Resizer extends MovieClip
 	{
 		var xTarg:Number = this.parent.mouseX - _dragOffsetX;
 		var yTarg:Number = this.parent.mouseY - _dragOffsetY;
-		this.x = ( xTarg < 100 )? 100 : xTarg ;
-		this.y = ( yTarg < 40 )? 40 : yTarg ;
+		this.x = ( xTarg < MIN_WIDTH )?  MIN_WIDTH : xTarg ;
+		this.y = ( yTarg < MIN_HEIGHT )? MIN_HEIGHT : yTarg ;
 		this.dispatchEvent( new Event( WINDOW_RESIZE, true ) );
 	}
 	

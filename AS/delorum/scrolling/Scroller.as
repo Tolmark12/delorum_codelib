@@ -150,8 +150,16 @@ public class Scroller extends Sprite
 	public function updateScrollWindow ( $percentVisible:Number, $speed:Number=1 ):void
 	{
 		_percentOfContentVisible = $percentVisible;
-		_scrollWidth = _trackWidth - (_trackWidth * _percentOfContentVisible);
-		Tweener.addTween( this, { barWidth:_trackWidth * _percentOfContentVisible, time:$speed, transition:"EaseInOutQuint", onUpdate:_barTweenUpdate } );
+		
+		// Ensure the scrollbar width doesn't go below 22 pixels
+		var newWidth:Number= _trackWidth * _percentOfContentVisible;
+		newWidth = ( newWidth > 22 )? newWidth : 22 ;
+		
+		// Set the scroll width (the area the scroll bar can move in)
+		_scrollWidth = _trackWidth - newWidth;
+		
+		// Tween scrollbar
+		Tweener.addTween( this, { barWidth:newWidth, time:$speed, transition:"EaseInOutQuint", onUpdate:_barTweenUpdate } );
 		changeScrollPosition( _currentPercent, $speed );
 	}
 	

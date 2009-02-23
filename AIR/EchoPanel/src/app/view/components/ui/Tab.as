@@ -59,6 +59,13 @@ public class Tab extends Sprite
 	}
 	
 	/** 
+	*	As if the tab had been clicked
+	*/
+	public function fireActivation (  ):void {
+		_onBgClick(null);
+	}
+	
+	/** 
 	*	Draws the tab and 
 	*/
 	private function _drawTextAndBg (  ):void

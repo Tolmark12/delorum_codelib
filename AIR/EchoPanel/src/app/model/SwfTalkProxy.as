@@ -33,6 +33,8 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		_conn = new LocalConnection();
 		_conn.client = this;
 		_conn.allowDomain('*');
+		//_conn.allowInsecureDomain('localhost')
+		
 		try {
 		    _conn.connect("_delorum_air_connect");
 		} catch (error:ArgumentError) {
@@ -139,9 +141,12 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*/
 	public function killWindow ( $id:String ):void
 	{
+		// Tell the swf to stop broadcasting
 		var airConnection:LocalConnection = new LocalConnection();
 		airConnection.addEventListener("status", _emptyHandler);
 		airConnection.send( $id, "stopBroadcasting" );
+		// Kill the broadcasting window
+		sendNotification( AppFacade.KILL_WINDOW, $id );
 	}
 	
 	// ______________________________________________________________ Windows helpers
