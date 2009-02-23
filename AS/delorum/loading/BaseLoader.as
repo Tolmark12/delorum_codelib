@@ -63,6 +63,15 @@ public class BaseLoader extends EventDispatcher
 	}
 	
 	/** 
+	*	Removes this item from the load queue
+	*/
+	public function removeItemFromLoadQueue (  ):void
+	{
+		if( _loadQueue[ _queueNumber ] != null ) 
+			delete _loadQueue[ _queueNumber ];
+	}
+	
+	/** 
 	*	no matter where this item is in the load queue, it is loaded immediately
 	*/
 	public function budgeAndLoad ( ):void
@@ -76,7 +85,6 @@ public class BaseLoader extends EventDispatcher
 	*/
 	public static function loadItemNow ( $id:String ):void
 	{
-		
 		var newLoader:BaseLoader = _loadQueue[$id];
 		if(newLoader != null)
 		{
@@ -85,10 +93,17 @@ public class BaseLoader extends EventDispatcher
 		}
 	}
 	
+	// ______________________________________________________________ Load / Cancel load
+	
 	/** Loads item immediately */
 	public function loadItem (  ):void
 	{
         trace( "The 'loadItem' function should be overridden in the sub class!!");
+	}
+	
+	public function cancelLoad (  ):void
+	{
+		trace( "override the cancel load method in the sub class." );
 	}
 	
 	// ______________________________________________________________ 
@@ -190,7 +205,12 @@ public class BaseLoader extends EventDispatcher
 	{
 		_eventListener.addEventListener( type, listener );
 	}
-
+	
+	override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
+	{
+		_eventListener.removeEventListener( type, listener );
+	}
+	
 	override public function toString():String 
 	{
 		return String( _queueNumber );

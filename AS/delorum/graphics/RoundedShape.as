@@ -41,7 +41,13 @@ public class RoundedShape extends Sprite
 		_graphics = _shape.graphics;
 	}
 	
-	// Draw based on an array of points
+	/** 
+	*	Draw a rounded shape based on an array of <code>Points</code> 
+	*	
+	*	@param		An array of Points, (each witn an x and y property)
+	*	@param		The color of the shape
+	*	@param		The alpha of the shape
+	*/
 	public function draw ( $points:Array, $color:uint=0xFFAA00, $alpha:Number=1 ):void
 	{
 		_graphics.clear();
@@ -64,6 +70,13 @@ public class RoundedShape extends Sprite
 		}
 	}
 	
+	/** 
+	*	Draw a rounded corner
+	*	
+	*	@param		The previous point
+	*	@param		The corner point
+	*	@param		the Next point
+	*/
 	private function _drawCorner ( $prevPoint:Point, $nowPoint:Point, $nextPoint:Point ):void
 	{
 		var xDirComing:int = _getDirection( "x", $prevPoint.x, $nowPoint.x  );
@@ -101,6 +114,10 @@ public class RoundedShape extends Sprite
 	
 	
 	// ______________________________________________________________  Helpers
+	
+	/** 
+	*	Returns what direction the line is "moving"
+	*/
 	private function _getDirection ( $axis:String, $prev:Number, $next:Number ):int
 	{
 		if( $prev > $next ) 

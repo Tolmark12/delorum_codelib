@@ -21,6 +21,7 @@ public class QuickText extends Sprite
 	{
 		_textField 				= new TextField();
 		_textField.autoSize 	= "left";
+		_textField.embedFonts	= true;
 		_textField.multiline	= true;
 		//_textField.visible 		= false;
 		//this.addChild( _textField );
@@ -123,12 +124,12 @@ public class QuickText extends Sprite
 			this.addChild(_bitmap);
 		}
 		else
-		{
-			//if( this.numChildren == 0)
-			//{
-				//_textField.visible = true;
-				//this.addChild( _textField );
-			//}
+		{   
+			if( this.numChildren == 0)
+			{
+			  _textField.visible = true;
+			  this.addChild( _textField );
+			}
 		}
 		
 	}
@@ -154,7 +155,7 @@ public class QuickText extends Sprite
 	
 	// Setting dimmension
 	public function get txtField (  ):TextField 	 { return _textField; };
-	public function set textWidth ( $val:uint ):void { _textField.width = $val; _addBitmap(); };
+	public function set textWidth ( $val:uint ):void { _textField.width = $val; _textField.wordWrap = true; _addBitmap(); };
 	public function get textWidth ():uint 			 { return _textField.textWidth; };
 	public function get textHeight ():uint 			 { return _textField.textHeight; };
 	

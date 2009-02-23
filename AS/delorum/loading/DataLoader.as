@@ -78,6 +78,18 @@ public class DataLoader extends BaseLoader implements LoaderIF
 		return true;
 	}
 	
+	override public function cancelLoad (  ):void
+	{
+		super.removeItemFromLoadQueue();
+		try {
+			_dataLoader.close();
+		} catch (e:Error) {
+			
+		}
+		
+	}
+	
+	
 	// ______________________________________________________________ Event dispatcher
 	override protected function get _eventListener (  ):EventDispatcher
 	{
