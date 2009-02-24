@@ -7,7 +7,7 @@ import app.AppFacade;
 import app.model.vo.*;
 import app.view.components.*;
 import flash.display.Sprite;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 public class OutputMediator extends Mediator implements IMediator
 {	

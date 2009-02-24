@@ -5,7 +5,7 @@ import app.view.components.ui.*;
 import flash.events.*;
 import flash.display.Sprite;
 import app.view.components.ui.*;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 
 public class Output extends Sprite
@@ -98,7 +98,7 @@ public class Output extends Sprite
 	*	Print a message to the output window
 	*	@param		Message
 	*/
-	public function echo ( $text:String ):void { addTextToStack($text); }
+	public function print ( $text:String ):void { addTextToStack($text); }
 
 }
 

@@ -6,7 +6,7 @@ import flash.text.*;
 import flash.geom.ColorTransform;
 import delorum.scrolling.*;
 import flash.events.*;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 public class Content extends Sprite
 {

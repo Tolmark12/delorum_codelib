@@ -22,8 +22,8 @@
 	<copyright></copyright>
 	<initialWindow>
 		<content>EchoPanel_cs4.swf</content>
-		<systemChrome>standard</systemChrome>
-		<transparent>false</transparent>
+		<systemChrome>none</systemChrome>
+		<transparent>true</transparent>
 		<visible>true</visible>
 	</initialWindow>
 	<customUpdateUI>false</customUpdateUI>

@@ -4,7 +4,7 @@ package app.view.components.ui
 import flash.display.*;
 import flash.events.*;
 import flash.geom.Point;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import flash.display.NativeWindow;
 
 public class DragBar extends MovieClip
@@ -63,7 +63,7 @@ public class DragBar extends MovieClip
 
 	private function _tempEcho ( e:Event ):void
 	{
-		EchoMachine.echo( "This is simply a long message to make flash render." );
+		echo( "This is simply a long message to make flash render." );
 	}
 	// ############## TEMP
 	

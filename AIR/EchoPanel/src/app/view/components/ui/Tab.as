@@ -4,7 +4,7 @@ package app.view.components.ui
 import flash.display.Sprite;
 import delorum.text.QuickText;
 import app.model.vo.WindowInfoVO;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import flash.events.*;
 
 public class Tab extends Sprite

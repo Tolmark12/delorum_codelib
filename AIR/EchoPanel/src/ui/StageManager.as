@@ -6,7 +6,7 @@ import flash.display.Sprite;
 import ui.*;
 import net.hires.debug.Stats;
 import flash.net.LocalConnection;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 public class StageManager extends Sprite
 {

@@ -9,7 +9,7 @@ import app.view.components.*;
 import app.view.components.ui.*;
 import flash.display.Sprite;
 import flash.events.*;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 public class ChromeMediator extends Mediator implements IMediator
 {	

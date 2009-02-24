@@ -6,14 +6,14 @@ import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.model.vo.*;
 import app.AppFacade;
 import flash.net.LocalConnection;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import flash.display.*;
 import flash.events.*;
 
 /** 
 *	TODO: Either don't accept communications from previously initt-ed swfs or force swfs to send their url with every communication so we can initialize a new windwo at any point
 *	TODO: Refresh scolling after each change? 
-*	TODO: Think of creating a singleton method like Echo("asdf"); instead of EchoMachine.echo("asdf");
+*	TODO: Think of creating a singleton method like Echo("asdf"); instead of echo("asdf");
 *	TODO: Rewrite the client side echo-er
 *	
 */
@@ -55,7 +55,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	// These are called by EchoMachine swf
 	public function initNewSwf ( $id:String, $swfUrl:String ):void
 	{
-		EchoMachine.echo( "init it" );
+		echo( "init it" );
 		_checkIfOutputWindowExists( $id, $swfUrl );
 	}
 	
@@ -63,7 +63,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Called as a trace command
 	*	@param		Accepts any kind of parameter. 
 	*/
-	public function echo ( $id:String, ... $message ):void
+	public function print ( $id:String, ... $message ):void
 	{
 		_checkIfOutputWindowExists( $id );
 		
@@ -167,7 +167,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	private function _checkIfOutputWindowExists ( $id:String, $swfUrl:String=null ):void
 	{
 		if( _idObject[$id] == null ) 
-			EchoMachine.echo( "Is this window null: " + ( _idObject[$id] == null )  + '  :  ' +  $id  + '  :  ' + $swfUrl );
+			echo( "Is this window null: " + ( _idObject[$id] == null )  + '  :  ' +  $id  + '  :  ' + $swfUrl );
 		if( _idObject[$id] == null ) {
 			_createNewSwf( $id, $swfUrl );
 		}
@@ -205,9 +205,9 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		} 
 		catch (e:Error)
 		{
-			EchoMachine.echo( e );
+			echo( e );
 		}
-		EchoMachine.echo( "IT IS CREATED!!!!!!!!!" + '  :  ' + $id );
+		echo( "IT IS CREATED!!!!!!!!!" + '  :  ' + $id );
 	}
 	
 	private function _emptyHandler ( e:Event ):void{};

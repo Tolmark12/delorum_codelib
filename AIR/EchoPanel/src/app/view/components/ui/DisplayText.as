@@ -6,9 +6,8 @@ import flash.text.*;
 import flash.geom.ColorTransform;
 import delorum.scrolling.*;
 import flash.events.*;
-import delorum.echo.EchoMachine;
 import delorum.text.QuickText;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import flash.utils.*;
 import app.model.vo.MessageVO;
 
@@ -61,6 +60,7 @@ public class DisplayText extends Sprite
 		{
 			space += " ";
 		}
+		
 		
 		_bigString += "<p><n>" + nm + "</n>" + space + $str + "\n</p>";
 		//var newObj:MessageVO = new MessageVO( "<p><n>" + nm + "</n>" + space + $str + "\n</p>", 24 );
@@ -181,7 +181,8 @@ public class DisplayText extends Sprite
 	public function setPosition (  ):void
 	{
 		// update the scrollbar's scroll window
-		_scroller.updateScrollWindow(_appHeight / _quickText.textHeight, 0);
+		var perc:Number = (_quickText.textHeight != 0)? _appHeight / _quickText.textHeight : 0;
+		_scroller.updateScrollWindow(perc, 0);
 		
 		// whether we should show the scrollbar or not
 		var doNeedScrollBar:Boolean = _quickText.textHeight > (_appHeight - this.parent.y);

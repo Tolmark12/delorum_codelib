@@ -4,7 +4,7 @@ package app.view.components
 import flash.events.*;
 import flash.display.Sprite;
 import app.view.components.ui.*;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import app.model.vo.WindowInfoVO;
 
 public class Chrome extends Sprite

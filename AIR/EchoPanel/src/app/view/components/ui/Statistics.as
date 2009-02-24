@@ -5,9 +5,9 @@ import flash.display.Sprite;
 import net.hires.debug.Stats;
 import flash.events.*;
 import flash.net.LocalConnection;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import net.hires.debug.Stats;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 public class Statistics extends Sprite
 {

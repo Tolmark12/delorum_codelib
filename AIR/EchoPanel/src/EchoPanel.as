@@ -4,7 +4,8 @@ package
 import flash.display.*;
 import flash.events.*;
 import ui.*;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
+import delorum.utils.EchoMachine;
 import app.AppFacade;
 
 public class EchoPanel extends Sprite
@@ -14,8 +15,8 @@ public class EchoPanel extends Sprite
 		_init();
 		_createMvcApp();
 		//stage.quality = "low"
-		EchoMachine.echoMode = EchoMachine.AIR;
-		EchoMachine.startLogging(this);	
+		EchoMachine.register(this.stage);
+		echo( "It works" );
 	}
 	
 	private function _init (  ):void
