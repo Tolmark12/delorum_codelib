@@ -24,6 +24,10 @@ public class OutputMediator extends Mediator implements IMediator
 	{
 		super( NAME );
    	}
+
+	// FLIX: I need to refresh the display on the following events:
+	// Switching tabs
+	// Adding / Removing tabs (doesn't jog down right)
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array

@@ -48,7 +48,7 @@ public class DisplayText extends Sprite
 	*	Add a String to the text
 	*	@param		Text to add
 	*	
-	*	Todo: Eventually, this will be done completely differently. I imagine
+	*	FLIX: Eventually, this will be done completely differently. I imagine
 	*	some sort of scenario where we are only rendering the visible chunk of
 	*	text. (that which is not masked). 
 	*/
@@ -71,7 +71,7 @@ public class DisplayText extends Sprite
 		//else
 			//_totalString = "reset";
 		
-//TODO Figure out an intelligent refresher. 
+//FLIX Figure out an intelligent refresher. 
 
 		// Prevent the display from refreshing too many times
 		// a second and slowing down the app

@@ -20,7 +20,8 @@ public class Tab extends Sprite
 	
 	// Name of the tab
 	private var _name:String = "Name coming...";
-	private var _titleTxt:QuickText;
+//	private var _titleTxt:QuickText;
+	private var _text:Text_swc;
 	// Background
 	private var _bg:Sprite = new Sprite();
 	
@@ -41,9 +42,11 @@ public class Tab extends Sprite
 	public function make (  ):void
 	{
 		this.addChild( _bg );
-	   	_titleTxt = new QuickText();
-	   	_titleTxt.parseCss("p{ font-family:Monaco; color:#CFCFCF; font-size:10  }");
-		this.addChild( _titleTxt );
+//	   	_titleTxt = new QuickText();
+//	   	_titleTxt.parseCss("p{ font-family:Monaco; color:#CFCFCF; font-size:10  }");
+//		this.addChild( _titleTxt );
+		_text = new Text_swc();
+		this.addChild(_text);
 		_drawTextAndBg();
 		_bg.addEventListener( MouseEvent.CLICK, _onBgClick, false,0,true );
 	}
@@ -71,10 +74,16 @@ public class Tab extends Sprite
 	{
 		// Text
 		var pad:Number = 15;
-		_titleTxt.htmlText = "<p>" + _name + "</p>";
-		_titleTxt.x = pad;
-		_titleTxt.mouseEnabled = false;
-		tabWidth = _titleTxt.textWidth + pad*2;
+//		_titleTxt.htmlText = "<p>" + _name + "</p>";
+//		_titleTxt.x = pad;
+//		_titleTxt.mouseEnabled = false;
+//		tabWidth = _titleTxt.textWidth + pad*2;
+		_text.titleTxt.text = _name;
+		_text.x = pad;
+		_text.mouseEnabled = false;
+		_text.mouseChildren = false;
+		_text.titleTxt.selectable = false;
+		tabWidth = _text.titleTxt.textWidth + pad*2;
 		
 		// Background
 		_bg.graphics.clear();

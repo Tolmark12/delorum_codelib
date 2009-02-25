@@ -12,10 +12,10 @@ public class EchoMachineExample extends Sprite
 	{
 		var obj:Object = new Object()
 		EchoMachine.register( this.stage );
-		echo( "some thing " );
-		echo( 123 );
-		echo( obj );
-		trace( obj );
+		for ( var i:uint=0; i<200; i++ ) 
+		{
+			echo( i + '  :  ' +  "example" );
+		}
 	}
 }
 

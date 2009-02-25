@@ -5,6 +5,7 @@ import org.puremvc.as3.multicore.patterns.facade.Facade;
 import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.control.*;
 import flash.display.Sprite;
+import delorum.utils.echo;
 
 public class AppFacade extends Facade implements IFacade
 {
@@ -48,10 +49,6 @@ public class AppFacade extends Facade implements IFacade
 	public function startup($stageSprite:Sprite):void
 	{
 	 	sendNotification( STARTUP, $stageSprite ); 
-		for ( var i:uint=0; i<120; i++ ) 
-		{
-			//trace( "hiasdfasdfasdf asdlf.asd f.asd f" );
-		}
 	}
 
 	/** Register Controller commands */

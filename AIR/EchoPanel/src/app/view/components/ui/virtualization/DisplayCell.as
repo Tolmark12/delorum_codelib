@@ -13,6 +13,7 @@ public class DisplayCell extends Sprite
 	
 	public function DisplayCell():void
 	{
+		_text.titleTxt.autoSize = "left";
 		this.addChild(_text);
 	}
 	

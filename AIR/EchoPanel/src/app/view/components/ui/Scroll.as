@@ -14,7 +14,7 @@ public class Scroll extends Sprite
 	// How tall the app is
 	private var _appHeight:Number;
 	private var _scroller:Scroller;
-	public var scrollPercent:Number = 0;
+	public var scrollPercent:Number = 1;
 	
 	public function Scroll():void
 	{
@@ -56,7 +56,9 @@ public class Scroll extends Sprite
 		this.addChild(_scroller)
 
 		// sets the size of the scroll tab
-		_scroller.updateScrollWindow( 0.75, 0.1 );
+		_scroller.changeScrollPosition(scrollPercent,0);
+		_scroller.updateScrollWindow( 0.5, 0.1 );
+
 	}
 
 	// ______________________________________________________________ Scroll Events

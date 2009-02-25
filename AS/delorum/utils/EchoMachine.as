@@ -59,17 +59,20 @@ public class EchoMachine
 		//set stage var
 		_stage = $stage;
 		
+		var filePath:String = _stage.loaderInfo.loaderURL;
+		
+		if( _doSend ){
+			_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId, filePath );
+			sendSwfInfo()
+		}
+		
 		// Init stats harvester
 		_statsHarvester = new StatsHarvester( _stage );
 		_statsHarvester.addEventListener( StatsHarvester.STATS, _onStats );
-		var filePath:String = _stage.loaderInfo.loaderURL;
-
-		if( _doSend )
-			_airConnection.send( "_delorum_air_connect", "initNewSwf", _connectionId, filePath );
 	}
 	
 	/** 
-	*	Stop sending messages to the AIR app
+	*	Stop sending messages to the AIR app (called by the air app)
 	*/
 	public static function stopBroadcasting (  ):void {
 		_doSend = false;
@@ -102,21 +105,21 @@ public class EchoMachine
 	*	Called by tha AIR app
 	*	!!!!!!!!!! May not be used anymore...
 	*/
-	public static function sendSwfInfo (  ):void
-	{
-		// Find name of the swf
-		var myPattern:RegExp = /\b\w+\.swf/;
-		var swfName:String = String( myPattern.exec( _stage.loaderInfo.url ) );
-		
-		// Send name of the swf
-		var infoObj:Object = {
-			swfName 	: swfName,
-			name 		: swfName.split(".")[0]
-		}
-		
-		if( _doSend )
-			_airConnection.send( "_delorum_air_connect", "infoAboutSwf", _connectionId, infoObj );
-	}
+    public static function sendSwfInfo (  ):void
+    {
+    	// Find name of the swf
+    	var myPattern:RegExp = /\b\w+\.swf/;
+    	var swfName:String = String( myPattern.exec( _stage.loaderInfo.url ) );
+    	
+    	// Send name of the swf
+    	var infoObj:Object = {
+    		swfName 	: swfName,
+    		name 		: swfName.split(".")[0]
+    	}
+    	
+    	if( _doSend )
+    		_airConnection.send( "_delorum_air_connect", "infoAboutSwf", _connectionId, infoObj );
+    }
 
 }
 
