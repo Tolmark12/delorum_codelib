@@ -6,6 +6,7 @@ import flash.text.*;
 import flash.geom.ColorTransform;
 import delorum.scrolling.*;
 import flash.events.*;
+import delorum.utils.echo;
 import delorum.text.QuickText;
 import delorum.utils.echo;
 import flash.utils.*;
@@ -60,7 +61,6 @@ public class DisplayText extends Sprite
 		{
 			space += " ";
 		}
-		
 		
 		_bigString += "<p><n>" + nm + "</n>" + space + $str + "\n</p>";
 		//var newObj:MessageVO = new MessageVO( "<p><n>" + nm + "</n>" + space + $str + "\n</p>", 24 );

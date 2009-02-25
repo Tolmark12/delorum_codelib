@@ -19,7 +19,12 @@ public class AppFacade extends Facade implements IFacade
 	public static const STATS:String             	= "stats";
 	public static const CLEAR_TEXT:String        	= "clear_text";
 	public static const CLEAR_STATS:String       	= "clear_stats";
-	                                             	
+	
+	
+	public static const NEW_MESSAGE:String 			= "new_message";
+	public static const NEW_ITEM_IN_STACK:String 	= "new_item_in_stack";  
+	public static const CELL_DATA_REQUEST:String 	= "cell_data_request";
+	public static const CELL_DATA_TO_ID:String 		= "cell_data_to_id";
 	// UI                                        	
 	public static const BAR_HEIGHT_CHANGE:String 	= "bar_height_change";
 	public static const APP_RESIZE:String        	= "app_resize";
@@ -43,6 +48,10 @@ public class AppFacade extends Facade implements IFacade
 	public function startup($stageSprite:Sprite):void
 	{
 	 	sendNotification( STARTUP, $stageSprite ); 
+		for ( var i:uint=0; i<120; i++ ) 
+		{
+			//trace( "hiasdfasdfasdf asdlf.asd f.asd f" );
+		}
 	}
 
 	/** Register Controller commands */
@@ -52,6 +61,10 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( STARTUP, Startup );
 		registerCommand( TAB_CLICK, Clicks );
 		registerCommand( TAB_CLOSE_CLICK, Clicks );
+		registerCommand( CELL_DATA_REQUEST, Clicks );
+		registerCommand( NEW_MESSAGE, ProxyToProxy );
+		registerCommand( NEW_OUTPUTTER, ProxyToProxy );
+		registerCommand( KILL_WINDOW, ProxyToProxy );
 	}
 
 }

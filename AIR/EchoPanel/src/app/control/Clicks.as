@@ -12,8 +12,8 @@ public class Clicks extends SimpleCommand implements ICommand
 
 	override public function execute( note:INotification ):void
 	{	
-		
 		var swfTalkProxy:SwfTalkProxy = facade.retrieveProxy( SwfTalkProxy.NAME ) as SwfTalkProxy;
+		var logProxy:LogProxy = facade.retrieveProxy( LogProxy.NAME ) as LogProxy;
 		
 		switch ( note.getName() )
 		{
@@ -25,6 +25,11 @@ public class Clicks extends SimpleCommand implements ICommand
 			// Called when a tab is closed	
 			case AppFacade.TAB_CLOSE_CLICK :
 				swfTalkProxy.killWindow( note.getBody() as String );
+			break;
+			
+			case AppFacade.CELL_DATA_REQUEST :
+				var obj:Object = note.getBody() as Object;
+				logProxy.dispatchCellData( obj.id, obj.percent, obj.stackSize );
 			break;
 		}	
 	}

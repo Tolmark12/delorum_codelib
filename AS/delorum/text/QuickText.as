@@ -24,7 +24,7 @@ public class QuickText extends Sprite
 		_textField.embedFonts	= true;
 		_textField.multiline	= true;
 		//_textField.visible 		= false;
-		//this.addChild( _textField );
+		this.addChild( _textField );
 		
 		this.addEventListener( Event.ADDED_TO_STAGE, _addBitmap );
 		this.addEventListener( Event.RENDER, _updateFormat )
@@ -156,8 +156,8 @@ public class QuickText extends Sprite
 	// Setting dimmension
 	public function get txtField (  ):TextField 	 { return _textField; };
 	public function set textWidth ( $val:uint ):void { _textField.width = $val; _textField.wordWrap = true; _addBitmap(); };
-	public function get textWidth ():uint 			 { return _textField.textWidth; };
-	public function get textHeight ():uint 			 { return _textField.textHeight; };
+	public function get textWidth ():uint 			 { return _textField.textWidth;  };
+	public function get textHeight ():uint 			 { return 100; }//_textField.textHeight; };
 	
 	// Manually setting formatting
 	public function set size ( $size:Number ):void 		 { _baseStyle.fontSize = $size; _updateFormat();  };

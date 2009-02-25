@@ -8,6 +8,7 @@ import app.model.vo.*;
 import app.view.components.*;
 import flash.display.Sprite;
 import delorum.utils.echo;
+import flash.events.*;
 
 public class OutputMediator extends Mediator implements IMediator
 {	
@@ -34,6 +35,8 @@ public class OutputMediator extends Mediator implements IMediator
 					AppFacade.MINIMIZE,
 					AppFacade.MAXIMIZE,
 					AppFacade.STATS,
+					AppFacade.CELL_DATA_TO_ID,
+					AppFacade.NEW_ITEM_IN_STACK
 					];
 	}
 	
@@ -46,9 +49,9 @@ public class OutputMediator extends Mediator implements IMediator
 				var statsVo:StatsVO = note.getBody() as StatsVO;
 				_getWindowById( statsVo.id ).updateStats( statsVo.fps, statsVo.frameRate, statsVo.memoryUsed, statsVo.ms );      
 			break;
-			case AppFacade.ECHO_MESSAGE :
-				var echoVo:EchoVO = note.getBody() as EchoVO;
-			   _getWindowById( echoVo.id ).addTextToStack( echoVo.echoTxt );
+			case AppFacade.NEW_ITEM_IN_STACK :
+				var output:Outputter = _getWindowById( note.getBody() as String );
+				sendNotification( AppFacade.CELL_DATA_REQUEST, {id:output.windowId, percent:output.percentOfStack, stackSize:output.stackSize} );
 			break;
 			case AppFacade.NEW_OUTPUTTER:
 				var vo:OutputerVO = note.getBody() as OutputerVO;
@@ -63,6 +66,8 @@ public class OutputMediator extends Mediator implements IMediator
 				_windowsHolder.y = obj.barHeight
 				if( _activeWindowId != null ) {
 					currentWindow.resize( obj.width, obj.height );
+					sendNotification( AppFacade.CELL_DATA_REQUEST, {id:currentWindow.windowId, percent:currentWindow.percentOfStack, stackSize:currentWindow.stackSize} );
+					
 				}
 			break;
 			case AppFacade.MINIMIZE :
@@ -70,6 +75,10 @@ public class OutputMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.MAXIMIZE :
 				_windowsHolder.visible = true;
+			break;
+			case AppFacade.CELL_DATA_TO_ID :
+				var data:CellDataUpdateVO = note.getBody() as CellDataUpdateVO;
+				_getWindowById( data.id ).changeData( data.cellData );
 			break;
 		}
 	}
@@ -94,6 +103,7 @@ public class OutputMediator extends Mediator implements IMediator
 	{
 		var output:Output = new Output( $windowId );
 		output.make()
+		output.addEventListener( Output.CELL_DATA_REQUEST, _onCellDataRequest, false,0,true );
 		_windows.push( output );
 		_windowsHolder.addChild( output );
 		output.resize(_currentAppSize.width, _currentAppSize.height);
@@ -119,6 +129,13 @@ public class OutputMediator extends Mediator implements IMediator
 		currentWindow.visible = true
 	}
 	
+	// ______________________________________________________________ Event Handlers
+	
+	private function _onCellDataRequest ( e:Event ):void {
+		var output:Output = e.target as Output;
+		sendNotification( AppFacade.CELL_DATA_REQUEST, {id:output.windowId, percent:output.percentOfStack, stackSize:output.stackSize} );
+	}
+	
 	// ______________________________________________________________ Helpers
 	
 	/** 
@@ -141,6 +158,5 @@ public class OutputMediator extends Mediator implements IMediator
 	*	@return		Returns the active Outpu
 	*/
 	public function get currentWindow (  ):Output { return _getWindowById( _activeWindowId ); };
-	
 }
 }

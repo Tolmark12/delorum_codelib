@@ -170,7 +170,7 @@ public class Scroller extends Sprite
 	*/
 	public function changeWidth ( $newWidth:Number, $speed:Number=1 ):void
 	{
-		updateScrollWindow(_percentOfContentVisible);
+		updateScrollWindow(_percentOfContentVisible, $speed);
 		_trackWidth	= $newWidth;
 		Tweener.addTween( this, { trackWidth:$newWidth, time:$speed, transition:"EaseInOutQuint", onUpdate:_trackTweenUpdate } );
 	}

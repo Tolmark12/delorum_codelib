@@ -16,7 +16,10 @@ public class EchoPanel extends Sprite
 		_createMvcApp();
 		//stage.quality = "low"
 		EchoMachine.register(this.stage);
-		echo( "It works" );
+		for ( var i:uint=0; i<121; i++ ) 
+		{
+			echo(i + '  :  ' + "Of 120 messages" );
+		}
 	}
 	
 	private function _init (  ):void

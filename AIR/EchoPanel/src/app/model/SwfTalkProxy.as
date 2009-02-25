@@ -55,7 +55,6 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	// These are called by EchoMachine swf
 	public function initNewSwf ( $id:String, $swfUrl:String ):void
 	{
-		echo( "init it" );
 		_checkIfOutputWindowExists( $id, $swfUrl );
 	}
 	
@@ -66,30 +65,11 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	public function print ( $id:String, ... $message ):void
 	{
 		_checkIfOutputWindowExists( $id );
-		
-		//_content.addText( $str);
-		var vo:EchoVO = new EchoVO();
-		vo.id = $id;
-		
 		var len:uint = $message.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			if( $message[i] is String ) {				// String
-				vo.echoTxt   = $message[i];
-				vo.echoColor = 0x0000FF;
-			} else if( $message[i] is Number ) {		// Number
-				vo.echoTxt   = String($message[i]);
-				vo.echoColor = 0xFF0000;
-			} else if( $message[i] is DisplayObject ) {	// Display Object
-				var mc:DisplayObject = $message[i];
-				vo.echoTxt   = String( mc );
-				vo.echoColor = 0x00FF00;
-				vo.metaTxt   = "x:" + mc.x + ", y:" + mc.y + ", width:" + mc.width + 
-								", height:" + mc.height + ", alpha:" + mc.alpha + ", vis:" + 
-								mc.visible + ", added:" + ((mc.parent == null)? "no" : "yes"); 
-				vo.metaColor = 0xCCCCCC;
-			}
-			sendNotification( AppFacade.ECHO_MESSAGE, vo );
+			// Add message to the stack
+			sendNotification( AppFacade.NEW_MESSAGE, {id:$id, message:$message[i]} );
 		}
 		
 		
@@ -108,6 +88,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		var statsObj:StatsVO = new StatsVO( $statsObj );
 		statsObj.id = $id;
 		sendNotification( AppFacade.STATS, statsObj );
+		echo("a bit...");
 	}
 	
 	public function clear ( $id:String ):void
@@ -166,8 +147,6 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*/
 	private function _checkIfOutputWindowExists ( $id:String, $swfUrl:String=null ):void
 	{
-		if( _idObject[$id] == null ) 
-			echo( "Is this window null: " + ( _idObject[$id] == null )  + '  :  ' +  $id  + '  :  ' + $swfUrl );
 		if( _idObject[$id] == null ) {
 			_createNewSwf( $id, $swfUrl );
 		}
@@ -207,7 +186,6 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		{
 			echo( e );
 		}
-		echo( "IT IS CREATED!!!!!!!!!" + '  :  ' + $id );
 	}
 	
 	private function _emptyHandler ( e:Event ):void{};

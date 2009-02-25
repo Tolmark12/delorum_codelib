@@ -16,17 +16,16 @@ public class Startup extends SimpleCommand implements ICommand
 		
 		// Create proxies
 		var swfTalkProxy:SwfTalkProxy = new SwfTalkProxy( rootSprite );
+		var logProxy:LogProxy = new LogProxy();
+		facade.registerProxy( logProxy );
+		facade.registerProxy( swfTalkProxy );
+		
 		
 		// Create Mediators
 		var chromeMediator = new ChromeMediator();
 		var outputMediator = new OutputMediator();
-		
-		// Register Mediators
 		facade.registerMediator( chromeMediator );
 		facade.registerMediator( outputMediator );
-		
-		// Register proxies
-		facade.registerProxy( swfTalkProxy );
 		
 		// Begin
 		chromeMediator.make( rootSprite );

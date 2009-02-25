@@ -6,17 +6,19 @@ import flash.events.*;
 import flash.display.Sprite;
 import app.view.components.ui.*;
 import delorum.utils.echo;
-
+import app.view.components.ui.virtualization.CellManager;
 
 public class Output extends Sprite
 {
+	public static const CELL_DATA_REQUEST:String = "cell_data_request";
 	public var windowId:String;
 	
 	// Content
-	private var _content:DisplayText;
+	//private var _content:DisplayText;
+	private var _content:CellManager;
 	private var _mask:Sprite;
 	private var _stats:Statistics;
-	
+	private var _scroll:Scroll;
 	
 	/** 
 	*	@param		Unique id
@@ -34,7 +36,7 @@ public class Output extends Sprite
 	public function make ():void
 	{
 		// Text
-		_content = new DisplayText();
+		_content = new CellManager();
 		this.addChild( _content );
 		
 		// Text Mask
@@ -48,18 +50,18 @@ public class Output extends Sprite
 		//_stats.addEventListener( Statistics.RUN_GC, _onRunGarbageColl, false,0,true );
 		_content.addChild(_stats);
 		
-		// Kick the formating in
-		_content.addText("");
-		_content.clear();
+		// Scroll
+		_scroll = new Scroll();
+		_scroll.addEventListener( Scroll.SCROLL_CHANGE, _onScrollChange, false,0,true );
+		this.addChild(_scroll);
 	}
 	
 	/** 
-	*	Print a message to the output window
-	*	@param		Message
+	*	
 	*/
-	public function addTextToStack ( $text:String ):void
+	public function changeData ( $ar:Array ):void
 	{
-		_content.addText( $text );
+		_content.changeData($ar);
 	}
 	
 	/** 
@@ -77,7 +79,11 @@ public class Output extends Sprite
 		// Stats
 		_stats.x = $width - _stats.width - 20;
 		
-		_content.resize($width, $height);
+		// Virtualizer
+		_content.changeDimmensions($width, $height);
+		
+		// Scroller
+		_scroll.resize($width, $height);
 	}
 	
 	/** 
@@ -98,8 +104,19 @@ public class Output extends Sprite
 	*	Print a message to the output window
 	*	@param		Message
 	*/
-	public function print ( $text:String ):void { addTextToStack($text); }
-
+	//public function print ( $text:String ):void { addTextToStack($text); }
+	
+	
+	// ______________________________________________________________ Event Handlers
+	private function _onScrollChange ( e:Event ):void {
+		dispatchEvent( new Event(CELL_DATA_REQUEST, true) );
+	}
+	
+	// ______________________________________________________________ Getters / Setters
+	
+	// Called when the scroll fires
+	public function get percentOfStack (  ):Number 	{ return _scroll.scrollPercent; };
+	public function get stackSize (  ):Number 		{ return _content.totalCells; };
 }
 
 }
