@@ -71,6 +71,7 @@ public class Output extends Sprite
 	*/
 	public function resize ( $width:Number, $height:Number ):void
 	{
+		echo( "resizing the scroll bar" );
 		//  mask
 		_mask.graphics.clear();
 		_mask.graphics.beginFill(0xFF0000, 0.2);
@@ -117,6 +118,27 @@ public class Output extends Sprite
 	// Called when the scroll fires
 	public function get percentOfStack (  ):Number 	{ return _scroll.scrollPercent; };
 	public function get stackSize (  ):Number 		{ return _content.totalCells; };
+	
+	// ______________________________________________________________ Destruct
+	
+	public function destruct (  ):void
+	{
+		this.windowId = null;
+		
+		_scroll.removeEventListener( Scroll.SCROLL_CHANGE, _onScrollChange );
+	   	
+		// Destruct these
+		//_content = new CellManager();
+	   	//_mask = new Sprite();
+	   	//_stats = new Statistics();
+	   	//_scroll = new Scroll
+		
+		var len:uint = this.numChildren;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			this.removeChildAt( 0 );
+		}
+	}
 }
 
 }

@@ -2,13 +2,12 @@ package app.view
 {
 import org.puremvc.as3.multicore.interfaces.*;
 import org.puremvc.as3.multicore.patterns.mediator.Mediator;
-import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.AppFacade;
 import app.model.vo.*;
 import app.view.components.*;
 import flash.display.Sprite;
-import delorum.utils.echo;
 import flash.events.*;
+import delorum.utils.echo;
 
 public class OutputMediator extends Mediator implements IMediator
 {	
@@ -40,8 +39,9 @@ public class OutputMediator extends Mediator implements IMediator
 					AppFacade.MAXIMIZE,
 					AppFacade.STATS,
 					AppFacade.CELL_DATA_TO_ID,
-					AppFacade.NEW_ITEM_IN_STACK
-					];
+					AppFacade.NEW_ITEM_IN_STACK,
+					AppFacade.REFRESH_WINDOW,
+				];
 	}
 	
 	// PureMVC: Handle notifications
@@ -63,13 +63,13 @@ public class OutputMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.ACTIVATE_WINDOW :
 				_activateOutputWindow( note.getBody() as String);
+				sendNotification( AppFacade.REFRESH_WINDOW );
 			break;
 			case AppFacade.APP_RESIZE :
-				var obj:Object = note.getBody() as Object;
-				_currentAppSize = obj;
-				_windowsHolder.y = obj.barHeight
+				_currentAppSize = note.getBody() as Object;
+				_windowsHolder.y = _currentAppSize.barHeight
 				if( _activeWindowId != null ) {
-					currentWindow.resize( obj.width, obj.height );
+					currentWindow.resize( _currentAppSize.width, _currentAppSize.height );
 					sendNotification( AppFacade.CELL_DATA_REQUEST, {id:currentWindow.windowId, percent:currentWindow.percentOfStack, stackSize:currentWindow.stackSize} );
 					
 				}
@@ -83,6 +83,19 @@ public class OutputMediator extends Mediator implements IMediator
 			case AppFacade.CELL_DATA_TO_ID :
 				var data:CellDataUpdateVO = note.getBody() as CellDataUpdateVO;
 				_getWindowById( data.id ).changeData( data.cellData );
+			break;
+			case AppFacade.REFRESH_WINDOW :
+				if( _currentAppSize != null ){
+					sendNotification( AppFacade.APP_RESIZE, _currentAppSize );
+				}
+			break;
+			case AppFacade.KILL_WINDOW :
+				// NOT COMPLETE, sub objects not deallocated
+				var id:String = note.getBody() as String;
+				var out:Output = _getWindowById( id );
+				_windowsHolder.removeChild( out );
+				_removeOutputFromArray( id );
+				output.destruct();
 			break;
 		}
 	}
@@ -131,6 +144,7 @@ public class OutputMediator extends Mediator implements IMediator
 		// Show new window
 		_activeWindowId = $windowId;
 		currentWindow.visible = true
+		echo( "new window is active" )
 	}
 	
 	// ______________________________________________________________ Event Handlers
@@ -156,6 +170,20 @@ public class OutputMediator extends Mediator implements IMediator
 				return _windows[i] as Output;
 		}
 		return null;
+	}
+	
+	/** 
+	*	Remove an Output from the array by id
+	*	@param		id of Output window
+	*/
+	private function _removeOutputFromArray ( $windowId:String ):void
+	{
+		var len:uint = _windows.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			if( (_windows[i] as Output ).windowId == $windowId )
+				_windows.splice(i,1);
+		}
 	}
 	
 	/** 

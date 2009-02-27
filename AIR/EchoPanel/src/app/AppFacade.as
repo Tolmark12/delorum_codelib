@@ -2,10 +2,8 @@ package app
 {
 import org.puremvc.as3.multicore.interfaces.IFacade;
 import org.puremvc.as3.multicore.patterns.facade.Facade;
-import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.control.*;
 import flash.display.Sprite;
-import delorum.utils.echo;
 
 public class AppFacade extends Facade implements IFacade
 {
@@ -26,7 +24,9 @@ public class AppFacade extends Facade implements IFacade
 	public static const NEW_ITEM_IN_STACK:String 	= "new_item_in_stack";  
 	public static const CELL_DATA_REQUEST:String 	= "cell_data_request";
 	public static const CELL_DATA_TO_ID:String 		= "cell_data_to_id";
-	// UI                                        	
+	
+	// UI
+	public static const REFRESH_WINDOW:String 		= "refresh_window";
 	public static const BAR_HEIGHT_CHANGE:String 	= "bar_height_change";
 	public static const APP_RESIZE:String        	= "app_resize";
 	public static const MINIMIZE:String          	= "minimize";
@@ -36,7 +36,7 @@ public class AppFacade extends Facade implements IFacade
 
 	public function AppFacade( key:String ):void
 	{
-		super(key);	
+		super(key);
 	}
 
 	/** Singleton factory method */

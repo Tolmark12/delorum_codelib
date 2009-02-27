@@ -14,7 +14,7 @@ public class EchoPanel extends Sprite
 	{
 		_init();
 		_createMvcApp();
-		//stage.quality = "low"
+		stage.quality = "low"
 		EchoMachine.register(this.stage);
 		//for ( var i:uint=0; i<200; i++ ) 
 		//{

@@ -15,7 +15,7 @@ import flash.events.*;
 *	FLIX: Refresh scolling after each change? 
 *	FLIX: Think of creating a singleton method like Echo("asdf"); instead of echo("asdf");
 *	FLIX: Rewrite the client side echo-er
-*	
+*	FLIX: I think we don't need the unizue id.... we can maybe just use the file path? maybe not if they have multiple instances open. in that case, we need to send the file path with each communication so we can initialize it at any time. 
 */
 
 public class SwfTalkProxy extends Proxy implements IProxy
@@ -121,7 +121,6 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		if( _activeWindowId != $id ) {
 			_activeWindowId = $id;
 			sendNotification( AppFacade.ACTIVATE_WINDOW, _activeWindowId );
-			
 		}
 	}
 	
@@ -129,6 +128,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Used to close a window
 	*	@param		id of window to close
 	*/
+	// FLIX : I think that this isn't working right....
 	public function killWindow ( $id:String ):void
 	{
 		delete _idObject[$id];

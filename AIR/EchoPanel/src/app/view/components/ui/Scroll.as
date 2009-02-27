@@ -4,11 +4,14 @@ package app.view.components.ui
 import flash.display.Sprite;
 import delorum.scrolling.*;
 import flash.events.*;
-
+import delorum.utils.echo;
 
 public class Scroll extends Sprite
 {
+	// Constants
+	public static const BOTTOM_PADDING:Number = 65;
 	
+	// Events
 	public static const SCROLL_CHANGE:String = "scroll_change";
 	
 	// How tall the app is
@@ -25,16 +28,15 @@ public class Scroll extends Sprite
 
 	public function resize ( $width:Number, $height:Number ):void
 	{
-		
 		_appHeight = $height;
 		
 		// Add Scrollbar if not here
 		if( _scroller == null )
-			_addScrollBar( $height-40 );
+			_addScrollBar( $height - BOTTOM_PADDING );
 		
 		// Resize / position scrollbar
 		_scroller.x = $width - 12;
-		_scroller.changeWidth($height - 40, 0);
+		_scroller.changeWidth($height - BOTTOM_PADDING, 0);
 	}
 	
 	
@@ -42,10 +44,11 @@ public class Scroll extends Sprite
 	{
 		// Create scrollbar
 		_scroller = new Scroller( $height, 14, "vertical" );
+		_scroller.keepButtonsTogether = true;
 		_scroller.y = 12;
 		// If this is not called, Scroller will build a default scroller
-		_scroller.createDefaultScroller( 0x333333, 0x000000, 0x222222, 2 );
-
+		_scroller.createDefaultScroller( 0x333333, 0x000000, 0x222222, 2, 10, 7, 0x555555 );
+										
 		// build Scroller
 		_scroller.build();
 

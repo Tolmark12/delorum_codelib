@@ -2,10 +2,10 @@ package app.model
 {
 import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.proxy.Proxy;
-import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.model.vo.*;
 import app.AppFacade;
 import flash.display.*;
+import delorum.utils.echo;
 
 public class LogProxy extends Proxy implements IProxy
 {
