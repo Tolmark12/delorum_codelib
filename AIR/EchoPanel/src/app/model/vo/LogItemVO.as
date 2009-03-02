@@ -1,7 +1,7 @@
 package app.model.vo
 {
 
-public class EchoVO
+public class LogItemVO
 {
 	public var id:String;
 	public var echoTxt:String;

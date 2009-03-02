@@ -6,7 +6,7 @@ import flash.display.Sprite;
 import ui.*;
 import net.hires.debug.Stats;
 import flash.net.LocalConnection;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 
 public class StageManager extends Sprite
 {
@@ -154,7 +154,6 @@ public class StageManager extends Sprite
 	*/
 	public function stats ( $statsObj:Object ):void
 	{
-		EchoMachine.echo( "bump" );
 		_stats.update( $statsObj.fps, $statsObj.mem, $statsObj.fr, $statsObj.ms )
 	}
 	
@@ -162,19 +161,6 @@ public class StageManager extends Sprite
 	{
 		_content.clear();
 		_stats.clear();
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
-		EchoMachine.echo( "222" );
 	}
 	
 }

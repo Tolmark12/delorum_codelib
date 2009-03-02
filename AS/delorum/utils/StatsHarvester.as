@@ -1,4 +1,4 @@
-package delorum.echo
+package delorum.utils
 {
 	
 import flash.utils.getTimer;
@@ -18,10 +18,10 @@ public class StatsHarvester extends EventDispatcher
 	private var _mem:Number;
 	private var _frameRate:Number;
 	
-	public function StatsHarvester( $stage:DisplayObjectContainer ):void
+	public function StatsHarvester( $stage:Stage ):void
 	{
 		$stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame );
-		_frameRate = $stage.stage.frameRate;
+		_frameRate = $stage.frameRate;
 	}
 	
 	private function _onEnterFrame ( e:Event ):void

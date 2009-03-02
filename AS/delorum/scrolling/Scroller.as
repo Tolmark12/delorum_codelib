@@ -15,7 +15,7 @@ import flash.display.Sprite;
 import flash.events.*;
 import flash.geom.*;
 import caurina.transitions.Tweener;
-
+import delorum.utils.echo;
 /**
 * 	A simple scrollbar
 * 	
@@ -43,6 +43,7 @@ public class Scroller extends Sprite
 	public var barWidth:Number 		= 0;
 	public var trackWidth:Number 	= 0;
 	public var barHeight:Number		= 0;
+	public var keepButtonsTogether:Boolean = false;
 	
 	private var _defaultCreated:Boolean = false;
 	
@@ -86,6 +87,7 @@ public class Scroller extends Sprite
 		_barHeight	 = barHeight = $height;
 		_trackWidth  = $width;
 		_orientaion	 = $orientation;
+		this.addEventListener( Event.ADDED_TO_STAGE, _onAddedToStage, false,0,true );
 	}
 	
 	// ______________________________________________________________ Make
@@ -136,7 +138,6 @@ public class Scroller extends Sprite
 		_changeOrientation( _orientaion );
 		_resetScrollSpeed();
 		changeWidth( _trackWidth );
-		//_activateMouseScrollWheel();
 	}
 	
 	// ______________________________________________________________ API
@@ -150,8 +151,16 @@ public class Scroller extends Sprite
 	public function updateScrollWindow ( $percentVisible:Number, $speed:Number=1 ):void
 	{
 		_percentOfContentVisible = $percentVisible;
-		_scrollWidth = _trackWidth - (_trackWidth * _percentOfContentVisible);
-		Tweener.addTween( this, { barWidth:_trackWidth * _percentOfContentVisible, time:$speed, transition:"EaseInOutQuint", onUpdate:_barTweenUpdate } );
+		
+		// Ensure the scrollbar width doesn't go below 22 pixels
+		var newWidth:Number= _trackWidth * _percentOfContentVisible;
+		newWidth = ( newWidth > 22 )? newWidth : 22 ;
+		
+		// Set the scroll width (the area the scroll bar can move in)
+		_scrollWidth = _trackWidth - newWidth;
+		
+		// Tween scrollbar
+		Tweener.addTween( this, { barWidth:newWidth, time:$speed, transition:"EaseInOutQuint", onUpdate:_barTweenUpdate } );
 		changeScrollPosition( _currentPercent, $speed );
 	}
 	
@@ -162,8 +171,8 @@ public class Scroller extends Sprite
 	*/
 	public function changeWidth ( $newWidth:Number, $speed:Number=1 ):void
 	{
-		updateScrollWindow(_percentOfContentVisible);
 		_trackWidth	= $newWidth;
+		updateScrollWindow(_percentOfContentVisible, $speed);
 		Tweener.addTween( this, { trackWidth:$newWidth, time:$speed, transition:"EaseInOutQuint", onUpdate:_trackTweenUpdate } );
 	}
 	
@@ -216,14 +225,14 @@ public class Scroller extends Sprite
 		this.addChild( _leftBtn  );
 		_positionButtons();
 		
-		_scrollBar.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll );
+		_scrollBar.addEventListener( MouseEvent.MOUSE_DOWN, _startScroll, false,0,true  );
         
 		_rightBtn.incrament = 1;
 		_leftBtn.incrament = -1;
-		_rightBtn.addEventListener( BaseScrollBtn.INCRAMENT, _handleButtonClick );
-		_leftBtn.addEventListener ( BaseScrollBtn.INCRAMENT, _handleButtonClick );
-		_leftBtn.addEventListener ( MouseEvent.CLICK, _resetScrollSpeed );
-		_rightBtn.addEventListener( MouseEvent.CLICK, _resetScrollSpeed );
+		_rightBtn.addEventListener( BaseScrollBtn.INCRAMENT, _handleButtonClick, false,0,true  );
+		_leftBtn.addEventListener ( BaseScrollBtn.INCRAMENT, _handleButtonClick, false,0,true  );
+		_leftBtn.addEventListener ( MouseEvent.CLICK, _resetScrollSpeed, false,0,true );
+		_rightBtn.addEventListener( MouseEvent.CLICK, _resetScrollSpeed, false,0,true );
 		
 		_rightBtn.draw();
 		_leftBtn.draw();
@@ -277,10 +286,37 @@ public class Scroller extends Sprite
 		
 	private function _positionButtons (  ):void
 	{
-		_rightBtn.x	= trackWidth + _rightBtn.buttonPadding;
-		_leftBtn.x	= -_leftBtn.buttonPadding;
-		_rightBtn.y = _leftBtn.y = barHeight / 2;
+		if( keepButtonsTogether ) 
+		{
+			_rightBtn.x	= trackWidth + _rightBtn.buttonPadding + 13;
+			_leftBtn.x	= trackWidth + _rightBtn.buttonPadding + 5;
+			_rightBtn.y = _leftBtn.y = barHeight / 2;
+		}
+		else
+		{
+			_rightBtn.x	= trackWidth + _rightBtn.buttonPadding;
+			_leftBtn.x	= -_leftBtn.buttonPadding;
+			_rightBtn.y = _leftBtn.y = barHeight / 2;
+		}
 	}
+	
+	// ______________________________________________________________ Jogging
+	
+	private function _jogScrollBar ( $amount:Number ):void
+	{
+		var x:Number = _scrollBar.x + $amount;
+		
+		if( x > _scrollWidth ) 
+			x = _scrollWidth;
+		else if( x < 0)
+			x = 0;
+		
+		if( x != _scrollBar.x ){ 	
+			_scrollBar.x = x;
+			_sendScrollEvent();
+		}
+	}
+	
 	
 	// ______________________________________________________________ Scrolling Event Handlers
 	
@@ -289,8 +325,8 @@ public class Scroller extends Sprite
 		Tweener.removeTweens( _scrollBar, "x" );
 		_isDragging = true;
 		_scrollBar.startDrag( false, _dragArea );
-		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent );
-		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_UP, _stopScrolling );
+		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_MOVE, _sendScrollEvent, false,0,true );
+		_scrollBar.stage.addEventListener( MouseEvent.MOUSE_UP, _stopScrolling, false,0,true );
 		this.dispatchEvent( new Event( SCROLL_START, true ) );
 	}
 	
@@ -328,40 +364,37 @@ public class Scroller extends Sprite
 		_barTarget = _scrollBar.x;
 	}
 	
+	// ______________________________________________________________ Event Handlers
+	
+	private function _onAddedToStage ( e:Event ):void {
+		//trace(this.stage);
+		_activateMouseScrollWheel();
+	}
+	
 	// ______________________________________________________________ Mouse Scroll Wheel
 	
 	/* This isn't working yet, for some reasont, the event linteners never file... */
 	
 	 private function _activateMouseScrollWheel (  ):void
 	 {
-	 	this.stage.addEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheelEvent);
+	 	this.stage.addEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheelEvent, false,0,true);
 	 }
 	
 	private function _deactivateMouseScrollWheel (  ):void
 	{
-		//this.removeEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheelEvent);
+		this.removeEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheelEvent);
 	}
 	
 	private function _onMouseWheelEvent ( e:MouseEvent ):void
 	{
-		trace( e.delta );
+		_jogScrollBar( -1*e.delta );
 	}
 	
 	// ______________________________________________________________ Arrow Button click
 	
 	private function _handleButtonClick ( e:Event ):void
 	{
-		var x:Number = _scrollBar.x + e.currentTarget.incrament * _scrollIncrament;
-        
-		if( x > _scrollWidth ) 
-			x = _scrollWidth;
-		else if( x < 0)
-			x = 0;
-		
-		if( x != _scrollBar.x ){ 	
-			_scrollBar.x = x;
-			_sendScrollEvent();
-		}
+        _jogScrollBar( e.currentTarget.incrament * _scrollIncrament );
 	}
 	
 	private function _resetScrollSpeed ( e:Event = null ):void

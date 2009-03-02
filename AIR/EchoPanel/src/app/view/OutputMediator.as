@@ -2,12 +2,12 @@ package app.view
 {
 import org.puremvc.as3.multicore.interfaces.*;
 import org.puremvc.as3.multicore.patterns.mediator.Mediator;
-import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.AppFacade;
 import app.model.vo.*;
 import app.view.components.*;
 import flash.display.Sprite;
-import delorum.echo.EchoMachine;
+import flash.events.*;
+import delorum.utils.echo;
 
 public class OutputMediator extends Mediator implements IMediator
 {	
@@ -23,6 +23,10 @@ public class OutputMediator extends Mediator implements IMediator
 	{
 		super( NAME );
    	}
+
+	// FLIX: I need to refresh the display on the following events:
+	// Switching tabs
+	// Adding / Removing tabs (doesn't jog down right)
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
@@ -34,7 +38,10 @@ public class OutputMediator extends Mediator implements IMediator
 					AppFacade.MINIMIZE,
 					AppFacade.MAXIMIZE,
 					AppFacade.STATS,
-					];
+					AppFacade.CELL_DATA_TO_ID,
+					AppFacade.NEW_ITEM_IN_STACK,
+					AppFacade.REFRESH_WINDOW,
+				];
 	}
 	
 	// PureMVC: Handle notifications
@@ -46,9 +53,9 @@ public class OutputMediator extends Mediator implements IMediator
 				var statsVo:StatsVO = note.getBody() as StatsVO;
 				_getWindowById( statsVo.id ).updateStats( statsVo.fps, statsVo.frameRate, statsVo.memoryUsed, statsVo.ms );      
 			break;
-			case AppFacade.ECHO_MESSAGE :
-				var echoVo:EchoVO = note.getBody() as EchoVO;
-			   _getWindowById( echoVo.id ).addTextToStack( echoVo.echoTxt );
+			case AppFacade.NEW_ITEM_IN_STACK :
+				var output:Outputter = _getWindowById( note.getBody() as String );
+				sendNotification( AppFacade.CELL_DATA_REQUEST, {id:output.windowId, percent:output.percentOfStack, stackSize:output.stackSize} );
 			break;
 			case AppFacade.NEW_OUTPUTTER:
 				var vo:OutputerVO = note.getBody() as OutputerVO;
@@ -56,13 +63,15 @@ public class OutputMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.ACTIVATE_WINDOW :
 				_activateOutputWindow( note.getBody() as String);
+				sendNotification( AppFacade.REFRESH_WINDOW );
 			break;
 			case AppFacade.APP_RESIZE :
-				var obj:Object = note.getBody() as Object;
-				_currentAppSize = obj;
-				_windowsHolder.y = obj.barHeight
+				_currentAppSize = note.getBody() as Object;
+				_windowsHolder.y = _currentAppSize.barHeight
 				if( _activeWindowId != null ) {
-					currentWindow.resize( obj.width, obj.height );
+					currentWindow.resize( _currentAppSize.width, _currentAppSize.height );
+					sendNotification( AppFacade.CELL_DATA_REQUEST, {id:currentWindow.windowId, percent:currentWindow.percentOfStack, stackSize:currentWindow.stackSize} );
+					
 				}
 			break;
 			case AppFacade.MINIMIZE :
@@ -70,6 +79,23 @@ public class OutputMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.MAXIMIZE :
 				_windowsHolder.visible = true;
+			break;
+			case AppFacade.CELL_DATA_TO_ID :
+				var data:CellDataUpdateVO = note.getBody() as CellDataUpdateVO;
+				_getWindowById( data.id ).changeData( data.cellData );
+			break;
+			case AppFacade.REFRESH_WINDOW :
+				if( _currentAppSize != null ){
+					sendNotification( AppFacade.APP_RESIZE, _currentAppSize );
+				}
+			break;
+			case AppFacade.KILL_WINDOW :
+				// NOT COMPLETE, sub objects not deallocated
+				var id:String = note.getBody() as String;
+				var out:Output = _getWindowById( id );
+				_windowsHolder.removeChild( out );
+				_removeOutputFromArray( id );
+				output.destruct();
 			break;
 		}
 	}
@@ -94,6 +120,7 @@ public class OutputMediator extends Mediator implements IMediator
 	{
 		var output:Output = new Output( $windowId );
 		output.make()
+		output.addEventListener( Output.CELL_DATA_REQUEST, _onCellDataRequest, false,0,true );
 		_windows.push( output );
 		_windowsHolder.addChild( output );
 		output.resize(_currentAppSize.width, _currentAppSize.height);
@@ -117,6 +144,14 @@ public class OutputMediator extends Mediator implements IMediator
 		// Show new window
 		_activeWindowId = $windowId;
 		currentWindow.visible = true
+		echo( "new window is active" )
+	}
+	
+	// ______________________________________________________________ Event Handlers
+	
+	private function _onCellDataRequest ( e:Event ):void {
+		var output:Output = e.target as Output;
+		sendNotification( AppFacade.CELL_DATA_REQUEST, {id:output.windowId, percent:output.percentOfStack, stackSize:output.stackSize} );
 	}
 	
 	// ______________________________________________________________ Helpers
@@ -138,9 +173,22 @@ public class OutputMediator extends Mediator implements IMediator
 	}
 	
 	/** 
+	*	Remove an Output from the array by id
+	*	@param		id of Output window
+	*/
+	private function _removeOutputFromArray ( $windowId:String ):void
+	{
+		var len:uint = _windows.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			if( (_windows[i] as Output ).windowId == $windowId )
+				_windows.splice(i,1);
+		}
+	}
+	
+	/** 
 	*	@return		Returns the active Outpu
 	*/
 	public function get currentWindow (  ):Output { return _getWindowById( _activeWindowId ); };
-	
 }
 }

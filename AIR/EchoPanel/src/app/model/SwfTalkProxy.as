@@ -6,9 +6,17 @@ import org.puremvc.as3.multicore.patterns.observer.Notification;
 import app.model.vo.*;
 import app.AppFacade;
 import flash.net.LocalConnection;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import flash.display.*;
 import flash.events.*;
+
+/** 
+*	FLIX: Either don't accept communications from previously initt-ed swfs or force swfs to send their url with every communication so we can initialize a new windwo at any point
+*	FLIX: Refresh scolling after each change? 
+*	FLIX: Think of creating a singleton method like Echo("asdf"); instead of echo("asdf");
+*	FLIX: Rewrite the client side echo-er
+*	FLIX: I think we don't need the unizue id.... we can maybe just use the file path? maybe not if they have multiple instances open. in that case, we need to send the file path with each communication so we can initialize it at any time. 
+*/
 
 public class SwfTalkProxy extends Proxy implements IProxy
 {
@@ -33,6 +41,8 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		_conn = new LocalConnection();
 		_conn.client = this;
 		_conn.allowDomain('*');
+		//_conn.allowInsecureDomain('localhost')
+		
 		try {
 		    _conn.connect("_delorum_air_connect");
 		} catch (error:ArgumentError) {
@@ -43,43 +53,23 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	// ______________________________________________________________ Local Connection API
 	
 	// These are called by EchoMachine swf
-	
-	public function initNewSwf ( $id:String ):void
+	public function initNewSwf ( $id:String, $swfUrl:String ):void
 	{
-		_checkIfOutputWindowExists( $id );
+		_checkIfOutputWindowExists( $id, $swfUrl );
 	}
 	
 	/** 
 	*	Called as a trace command
 	*	@param		Accepts any kind of parameter. 
 	*/
-	public function echo ( $id:String, ... $message ):void
+	public function print ( $id:String, ... $message ):void
 	{
 		_checkIfOutputWindowExists( $id );
-		
-		//_content.addText( $str);
-		var vo:EchoVO = new EchoVO();
-		vo.id = $id;
-		
 		var len:uint = $message.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			if( $message[i] is String ) {				// String
-				vo.echoTxt   = $message[i];
-				vo.echoColor = 0x0000FF;
-			} else if( $message[i] is Number ) {		// Number
-				vo.echoTxt   = String($message[i]);
-				vo.echoColor = 0xFF0000;
-			} else if( $message[i] is DisplayObject ) {	// Display Object
-				var mc:DisplayObject = $message[i];
-				vo.echoTxt   = String( mc );
-				vo.echoColor = 0x00FF00;
-				vo.metaTxt   = "x:" + mc.x + ", y:" + mc.y + ", width:" + mc.width + 
-								", height:" + mc.height + ", alpha:" + mc.alpha + ", vis:" + 
-								mc.visible + ", added:" + ((mc.parent == null)? "no" : "yes"); 
-				vo.metaColor = 0xCCCCCC;
-			}
-			sendNotification( AppFacade.ECHO_MESSAGE, vo );
+			// Add message to the stack
+			sendNotification( AppFacade.NEW_MESSAGE, {id:$id, message:$message[i]} );
 		}
 		
 		
@@ -92,12 +82,13 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*					mem : memory
 	*					ms  : miliseconds to render the frame
 	*/
+	
+	private var _count:Number = 0;
 	public function stats ( $id:String, $statsObj:Object ):void
 	{
 		_checkIfOutputWindowExists( $id );
 		var statsObj:StatsVO = new StatsVO( $statsObj );
 		statsObj.id = $id;
-		EchoMachine.echo( $id );
 		sendNotification( AppFacade.STATS, statsObj );
 	}
 	
@@ -112,6 +103,7 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	
 	public function infoAboutSwf ( $id:String, $obj:Object ):void
 	{
+		_checkIfOutputWindowExists( $id );
 		var vo:WindowInfoVO = new WindowInfoVO();
 		vo.id 	= $id;
 		vo.name = $obj.name;
@@ -129,7 +121,6 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		if( _activeWindowId != $id ) {
 			_activeWindowId = $id;
 			sendNotification( AppFacade.ACTIVATE_WINDOW, _activeWindowId );
-			
 		}
 	}
 	
@@ -137,11 +128,16 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Used to close a window
 	*	@param		id of window to close
 	*/
+	// FLIX : I think that this isn't working right....
 	public function killWindow ( $id:String ):void
 	{
+		delete _idObject[$id];
+		// Tell the swf to stop broadcasting
 		var airConnection:LocalConnection = new LocalConnection();
 		airConnection.addEventListener("status", _emptyHandler);
 		airConnection.send( $id, "stopBroadcasting" );
+		// Kill the broadcasting window
+		sendNotification( AppFacade.KILL_WINDOW, $id );
 	}
 	
 	// ______________________________________________________________ Windows helpers
@@ -150,10 +146,11 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Checks if a window with the new id string currently exists. If not, it creates it
 	*	@param		Id of window to check
 	*/
-	private function _checkIfOutputWindowExists ( $id:String ):void
+	private function _checkIfOutputWindowExists ( $id:String, $swfUrl:String=null ):void
 	{
+		
 		if( _idObject[$id] == null ) {
-			_createNewSwf( $id );
+			_createNewSwf( $id, $swfUrl );
 		}
 	}
 	
@@ -161,13 +158,22 @@ public class SwfTalkProxy extends Proxy implements IProxy
 	*	Creates a new window with a certain id
 	*	@param		Id of window to create	
 	*/
-	private function _createNewSwf ( $id:String ):void
+	private function _createNewSwf ( $id:String, $swfUrl:String ):void
 	{
-		var vo:OutputerVO = new OutputerVO();
-		vo.id = $id;
-		vo.shortName = "$obj.name";
-		vo.swfName = "temp_name.swf";
-		_idObject[$id] = "";
+		// See if a swf in this location already exists..
+		for( var i:String in _idObject ){
+			if( _idObject[i] == $swfUrl ){
+				killWindow(i);
+			}
+		}
+			
+		var vo:OutputerVO 	= new OutputerVO();
+		vo.id          		= $id;
+		vo.shortName   		= "$obj.name";
+		vo.url         		= $swfUrl
+		vo.swfName     		= "temp_name.swf";
+		_idObject[$id] 		= $swfUrl;
+		
 		sendNotification( AppFacade.NEW_OUTPUTTER, vo );
 		activateWindowById( vo.id );
 		
@@ -180,9 +186,8 @@ public class SwfTalkProxy extends Proxy implements IProxy
 		} 
 		catch (e:Error)
 		{
-			EchoMachine.echo( e );
+			echo( e );
 		}
-
 	}
 	
 	private function _emptyHandler ( e:Event ):void{};

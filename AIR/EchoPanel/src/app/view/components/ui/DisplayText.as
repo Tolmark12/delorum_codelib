@@ -6,9 +6,9 @@ import flash.text.*;
 import flash.geom.ColorTransform;
 import delorum.scrolling.*;
 import flash.events.*;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import delorum.text.QuickText;
-import delorum.echo.EchoMachine;
+import delorum.utils.echo;
 import flash.utils.*;
 import app.model.vo.MessageVO;
 
@@ -48,7 +48,7 @@ public class DisplayText extends Sprite
 	*	Add a String to the text
 	*	@param		Text to add
 	*	
-	*	Todo: Eventually, this will be done completely differently. I imagine
+	*	FLIX: Eventually, this will be done completely differently. I imagine
 	*	some sort of scenario where we are only rendering the visible chunk of
 	*	text. (that which is not masked). 
 	*/
@@ -71,16 +71,20 @@ public class DisplayText extends Sprite
 		//else
 			//_totalString = "reset";
 		
+//FLIX Figure out an intelligent refresher. 
+
 		// Prevent the display from refreshing too many times
 		// a second and slowing down the app
-		var _timer:Number = getTimer();
-		if( _timer - 1000 > _prevTimer )
-		{
-			_prevTimer = _timer;
-			var refreshTimer:Timer = new Timer( 1000,1 );
-			refreshTimer.addEventListener( TimerEvent.TIMER, _onRefreshTimer, false,0,true );
-			_refreshText();
-		} 
+//		var _timer:Number = getTimer();
+//		if( _timer - 1000 > _prevTimer )
+//		{
+//			_prevTimer = _timer;
+//			var refreshTimer:Timer = new Timer( 1000,1 );
+//			refreshTimer.addEventListener( TimerEvent.TIMER, _onRefreshTimer, false,0,true );
+//			_refreshText();
+//		} 
+//		
+		_refreshText();
 		
 		var style:StyleSheet = new StyleSheet();
 		setPosition();
@@ -150,7 +154,6 @@ public class DisplayText extends Sprite
 	*	@private Called when scrollbar is released
 	*/
 	private function _onScrollEnd ( e:Event ):void{
-		EchoMachine.echo( _scroller.scrollPosition );
 		_isScrolling = (_scroller.scrollPosition > 0.9 )? false : true ;
 	}
 	
@@ -178,7 +181,8 @@ public class DisplayText extends Sprite
 	public function setPosition (  ):void
 	{
 		// update the scrollbar's scroll window
-		_scroller.updateScrollWindow(_appHeight / _quickText.textHeight, 0);
+		var perc:Number = (_quickText.textHeight != 0)? _appHeight / _quickText.textHeight : 0;
+		_scroller.updateScrollWindow(perc, 0);
 		
 		// whether we should show the scrollbar or not
 		var doNeedScrollBar:Boolean = _quickText.textHeight > (_appHeight - this.parent.y);
