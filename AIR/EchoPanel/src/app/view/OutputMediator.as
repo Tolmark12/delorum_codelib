@@ -144,7 +144,6 @@ public class OutputMediator extends Mediator implements IMediator
 		// Show new window
 		_activeWindowId = $windowId;
 		currentWindow.visible = true
-		echo( "new window is active" )
 	}
 	
 	// ______________________________________________________________ Event Handlers

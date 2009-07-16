@@ -28,7 +28,7 @@ public class CellManager extends Sprite
 	public function changeDimmensions ( $width:Number, $height:Number ):void
 	{
 		var displayCell:DisplayCell;
-		var cellsNeeded:Number = Math.ceil( $height / DisplayCell.TOTAL_HEIGHT );
+		var cellsNeeded:Number = Math.ceil( $height / DisplayCell.TOTAL_HEIGHT ) - 1;
 		var len:Number = totalCells;
 		
 		// We'r too short, Add the additional cells needed to fill the height
@@ -57,8 +57,7 @@ public class CellManager extends Sprite
 	public function changeData ( $ar:Array ):void
 	{
 		var len:uint = $ar.length;
-		for ( var i:uint=0; i<len; i++ ) 
-		{
+		for ( var i:uint=0; i<len; i++ ) {
 			var vo:LogItemVO = $ar[i];
 			_cells[i].changeText( vo.echoTxt );
 		}
@@ -66,7 +65,9 @@ public class CellManager extends Sprite
 	
 	// ______________________________________________________________ Getters / Setters
 	
-	public function get totalCells (  ):Number { return _cells.length; };
+	public function get totalCells (  ):Number {  
+		return _cells.length; 
+	};
 }
 
 }

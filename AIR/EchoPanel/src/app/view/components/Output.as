@@ -7,6 +7,7 @@ import flash.display.Sprite;
 import app.view.components.ui.*;
 import delorum.utils.echo;
 import app.view.components.ui.virtualization.CellManager;
+import app.view.components.ui.virtualization.DisplayCell;
 
 public class Output extends Sprite
 {
@@ -61,6 +62,7 @@ public class Output extends Sprite
 	*/
 	public function changeData ( $ar:Array ):void
 	{
+		_testScrollerNeeded();
 		_content.changeData($ar);
 	}
 	
@@ -71,7 +73,6 @@ public class Output extends Sprite
 	*/
 	public function resize ( $width:Number, $height:Number ):void
 	{
-		echo( "resizing the scroll bar" );
 		//  mask
 		_mask.graphics.clear();
 		_mask.graphics.beginFill(0xFF0000, 0.2);
@@ -85,6 +86,8 @@ public class Output extends Sprite
 		
 		// Scroller
 		_scroll.resize($width, $height);
+		
+		_testScrollerNeeded();
 	}
 	
 	/** 
@@ -138,6 +141,14 @@ public class Output extends Sprite
 		{
 			this.removeChildAt( 0 );
 		}
+	}
+	
+	public function _testScrollerNeeded (  ):void
+	{
+		//if( _content.totalCells * DisplayCell.TOTAL_HEIGHT > this.height )
+		//	_scroll.visible = true;
+		//else
+		//	_scroll.visible = false;
 	}
 }
 

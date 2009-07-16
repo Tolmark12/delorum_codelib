@@ -82,8 +82,16 @@ public class EchoMachine
 	*	Sends a trace statement to the AIR app
 	*/
 	public static function send ( $str:* ):void {
-		 if( _doSend )
-			_airConnection.send( "_delorum_air_connect", "print", _connectionId, $str );
+		try
+		{
+			if( _doSend )
+				_airConnection.send( "_delorum_air_connect", "print", _connectionId, $str );
+		} 
+		catch (e:Error)
+		{
+			_airConnection.send( "_delorum_air_connect", "print", _connectionId, "Echo failed" + '  :  ' + e );
+		}
+
 	}
 	
 	
