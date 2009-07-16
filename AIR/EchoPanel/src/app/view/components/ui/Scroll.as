@@ -70,7 +70,7 @@ public class Scroll extends Sprite
 	*	@private Called when scrolling
 	*/
 	private function _onScroll ( e:ScrollEvent ):void {
-		scrollPercent = e.percent;
+		scrollPercent = Math.ceil( e.percent*100 )/100; //  e.percent;
 		dispatchEvent( new Event(SCROLL_CHANGE, true) );
 	}
 

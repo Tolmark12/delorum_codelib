@@ -1,3 +1,6 @@
+	Jun 04 - loading.DataLoader : Added public vars "vars" and "meth". Vars is URLVariables. Meth is POST or GET
+	Jun 04 - utils.NumFormatter : New class for formatting numbers, dollars, commas, etc 
+	May 12 - utils.SendBytes : New class for sending POSTs with multiple types of data
 	Feb 25 - deleted echo package, moved echoing to utils
 	Feb 23 - utils.Inspector : New class for inspecting public vars
 	Fev 23 - utils.* : Created new package

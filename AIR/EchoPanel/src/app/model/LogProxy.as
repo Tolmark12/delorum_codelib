@@ -19,6 +19,8 @@ public class LogProxy extends Proxy implements IProxy
 	}
 	
 	
+	
+	private var _tempCount:Number = 0;
 	// ______________________________________________________________ Message disbursion 
 	/** 
 	*	Adds a new item to the log stack
@@ -27,7 +29,6 @@ public class LogProxy extends Proxy implements IProxy
 	*/
 	public function addMessageToStack ( $id:String, $item:* ):void
 	{
-		//_content.addText( $str);
 		var vo:LogItemVO = new LogItemVO();
 		vo.id = $id;
 
@@ -45,7 +46,13 @@ public class LogProxy extends Proxy implements IProxy
 							", height:" + mc.height + ", alpha:" + mc.alpha + ", vis:" + 
 							mc.visible + ", added:" + ((mc.parent == null)? "no" : "yes" ); 
 			vo.metaColor = 0xCCCCCC;
+		}else{
+			vo.echoTxt   = $item.toString();
+			vo.echoColor = 0x00FF00;
 		}
+		
+		// Add a line number
+		vo.echoTxt = (_tempCount++) + "  " +  vo.echoTxt;
 		
 		var log:LogVO = _getLog($id);
 		log.logStack.push( vo );

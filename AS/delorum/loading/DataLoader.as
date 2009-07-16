@@ -89,6 +89,9 @@ public class DataLoader extends BaseLoader implements LoaderIF
 		
 	}
 	
+	public function set vars ( $vars:URLVariables ):void{ _dataRequest.data = $vars; };
+	public function set meth ( $method:String ):void{ _dataRequest.method = $method; };
+	
 	
 	// ______________________________________________________________ Event dispatcher
 	override protected function get _eventListener (  ):EventDispatcher
