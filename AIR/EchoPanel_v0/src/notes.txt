@@ -1,0 +1,8 @@
+Tracing:
+	data type testing
+		- diff colors for different data types
+		- when tracing a display object, show x, y, screengrab. An arrow for opening additional data
+		
+Multiple SWFs 
+	Tabs for each swf, the name of the swf. Icon for -> Flash, browser, air
+	When connecting, send a connection key (to air) for sending messages back (clear mem, etc) 

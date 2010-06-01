@@ -45,6 +45,7 @@ package net.hires.debug
 		public static const GRAPH_WIDTH:Number = 84;
 		public static const GRAPH_HEIGHT:Number = 50;
 		
+		public static var frameRate:Number;
 		
 		private var graph : BitmapData;
 		private var ver : Sprite;
@@ -58,13 +59,10 @@ package net.hires.debug
 		
 		public function Stats( ):void
 		{
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
-		private function onAddedToStage( e : Event ) : void
+		public function init(  ) : void
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		
 			//graphics.beginFill( BG_COLOR );
 			//graphics.drawRect( 0, 0, 65, 40 );
 			//graphics.endFill();
@@ -115,7 +113,6 @@ package net.hires.debug
 			
 			rectangle = new Rectangle( 0, 0, 1, graph.height );
 			
-			//addEventListener(MouseEvent.CLICK, onClick);
 			//addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			//addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			//addEventListener(Event.ENTER_FRAME, update);
@@ -123,17 +120,22 @@ package net.hires.debug
 		
 		public function update( $fps:Number, $mem:Number, $fr:Number, $ms:Number ) : void
 		{
-			var fpsGraph:int = Math.min( GRAPH_HEIGHT, GRAPH_HEIGHT / stage.frameRate * $fps );
+			trace( "a" );
+			trace( this.stage );
+			var fpsGraph:int = Math.min( GRAPH_HEIGHT, GRAPH_HEIGHT / frameRate * $fps );
+			trace( "b" );
 			var memGraph:Number =  Math.min( GRAPH_HEIGHT, Math.sqrt( Math.sqrt( $mem * 5000 ) ) ) - 2;
-			
+			trace( "c" );
 			graph.scroll( -1, 0 );
-			
+			trace( "d" );
 			graph.setPixel32( graph.width - 10, graph.height - fpsGraph, FRAME_COLOR);
 			graph.setPixel32( graph.width - 10, graph.height - ( ( $ms) >> 1 ), MS_TO_RENDER_FRAME_COLOR );
 			graph.setPixel32( graph.width - 10, graph.height - memGraph, MEM_COLOR);
-			
+			trace( "e" );
 			fpsText.text = "FPS: " + $fps + " / " + $fr;
+			trace( "f" );
 			memText.text = "MEM: " + $mem;
+			trace( "f" );
 			msText.text = "MS: " + $ms;
 		}
 		
@@ -145,12 +147,6 @@ package net.hires.debug
 				//graph.floodFill(0, 0, 0x00FF0000 );
 			}
 		}
-		
-		private function onClick( e : MouseEvent ) : void
-		{
-			(this.mouseY > this.height * .35) ? stage.frameRate-- : stage.frameRate++;
-			fpsText.text = "FPS: " + fps + " / " + stage.frameRate;
-		}	
 		
 		private function onMouseOver( e : MouseEvent ) : void
 		{
