@@ -15,26 +15,32 @@ var defaultItems = {};
 */
 function displayImage( $id )
 {
+	// Set current button visuals to unselected:
 	if (currentLIItem)
 		currentLIItem.className = "unSelected"
-		
+	
+	// Highlight the new button as selected:
 	currentLIItem = document.getElementById( $id );
 	if(currentLIItem)
 		currentLIItem.className = "selected";
 	
+	// Retrieve image path, and set it as div bg:
 	image = imageDictionary[ $id ];
 	document.getElementById('body').style.background = image[2] + " url(" + image[0] + ") no-repeat top center";
+	// Stretch the div to the correct height
 	document.getElementById('image-div').style.height = image[1] +"px";
 }
 
 /** 
-*	Displays the specified <ul> nav
+*	Displays the specified <ul> nav. Called via Select menu
 */
 var currentUlItem;
 function showNavById( $id ) {
+	// Hide the current ul nav if there is one
 	if (currentUlItem)
 		currentUlItem.className = "hidden"
-		
+	
+	// Show the new nave
 	var item = document.getElementById($id);
 	if (item) {
 		item.className = 'unhidden'
@@ -57,7 +63,7 @@ function createNav( $images )
 	var navDiv	= document.getElementById( "nav" );
 	var preload_image_object = new Image();
 	var totalClusters = 0;
-	// Loop through all of stacks
+	// Loop through all of the stacks
 	for (var x in $images){
 		totalClusters++;
 		// Create an optoin in the drop down:
@@ -104,7 +110,14 @@ function createNav( $images )
 	
 	showNavById( firstItem );
 	
-	// If there is only one cluster, hide the drop down
-	if (totalClusters == 1)
-		select.className = "hidden"
+	// If there is only one cluster, we don't need the drop down; therefore hide the drop down
+	if (totalClusters == 1){
+		select.className = "hidden";
+		
+		// If there is only one slide, hide the buttons
+		if (count == 2) 
+			ul.className = "hidden"
+	}
+		
+	
 }

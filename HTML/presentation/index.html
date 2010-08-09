@@ -6,64 +6,66 @@
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script language="JavaScript">
-    	<!--
+    	//<![CDATA[
 
 		// _____________________________ EDIT >>>>>
 		
-		myImages = {
+		/****** DESCRIPTION *******
+	   	* When creating a slid show, make sure that each slid has a unique id, 
+	   	* otherwise the will not work. 
+	   	* 
+	   	* ------------------------------------- INDIVIDUAL SLIDE: 
+	   	* Unique Id 	: [ image path, height, #color ]
+	   	* A1 			: [ 'path/to/image.jpg', 765, "#FF00FF" ]
+		/**************************/
+		
+		/****** OPTIONAL VARIABLS *******/
+		
+		// Set to true to use the labels you define instead of generic numbers:
+		//useLabels = true;
+		
+		
+		/****** SLIDES *******/
+		
+		slides = {
 			Casual : {
-				"A1" : ['images/001.png', 1362, "#F36935"],
-				"A2" : ['images/002.png', 1362, "#76AF57"],
-				"A3" : ['images/003.png', 1362, "#009EE1"],
-				"A4" : ['images/004.png', 1362, "#C71F1E"],
-				"A5" : ['images/005.png', 1362, "#984819"]
+				A1 : ['images/001.png', 1362, "#F36935"],
+				A2 : ['images/002.png', 1362, "#76AF57"],
+				A3 : ['images/003.png', 1362, "#009EE1"],
+				A4 : ['images/004.png', 1362, "#C71F1E"],
+				A5 : ['images/005.png', 1362, "#984819"]
 			},   
 			Professional :  {	 
-				"B1" : ['images/B_001.png', 1362, "#D7D7D7"],
-				"B2" : ['images/B_002.png', 1362, "#FEEE00"],
-				"B3" : ['images/B_003.png', 1362, "#D6DA90"],
-				"B4" : ['images/B_004.png', 1362, "#A12171"],
-				"B5" : ['images/B_005.png', 1362, "#678C3C"],
-				"B6" : ['images/B_006.png', 1362, "#0066A6"],
-				"B7" : ['images/B_007.png', 1362, "#CC62A6"],
+				B1 : ['images/B_001.png', 1362, "#D7D7D7"],
+				B2 : ['images/B_002.png', 1362, "#FEEE00"],
+				B3 : ['images/B_003.png', 1362, "#D6DA90"],
+				B4 : ['images/B_004.png', 1362, "#A12171"],
+				B5 : ['images/B_005.png', 1362, "#678C3C"],
+				B6 : ['images/B_006.png', 1362, "#0066A6"],
+				B7 : ['images/B_007.png', 1362, "#CC62A6"]
 			}
 		}
 		
-		// Optional Variabls:
-		//useLabels = true;		// Uses the labels you define above instead of generic numbers
-		
 		// _____________________________ END EDIT <<<<<<
 		
-    	//-->
+    	//]]>
     </script>
- 	<STYLE type="text/css">
+ 	
+	<!-- Optional: you can change the button colors here -->
+	<STYLE type="text/css">
 		/*
-		
-		// _____________________________ Optionally, you can change the link normal / hover / selected colors here
-		
-		li:hover{ 
-			background-color: #F00; 
-			color: #000; 
-		}
-		
-		li.selected, li.selected:hover { 
-			background-color: #FFFFFF; 
-			color : #000; 
-		}
-		
+		li 								{ background-color : #F00; color : #000; }
+		li:hover 						{ background-color : #F00; color : #000; }
+		li.selected, li.selected:hover 	{ background-color : #F00; color : #000; }
 		*/
  	</STYLE>
 </head>
 
-<body id="body" onLoad="createNav( myImages );">
+<body id="body" onLoad="createNav( slides );">
 
 	<div id="nav" onmouseover="this.className='opaque'" onmouseout="this.className='faded'" >
-		<select id="selectNav" onchange="showNavById( this.options[this.selectedIndex].value )"> 
-			<!-- Select items will be injected via javascript -->
-		</select>
-		
+		<select id="selectNav" onchange="showNavById( this.options[this.selectedIndex].value )"> <!-- Select items will be injected via javascript --></select>
 		<!-- ul / li items will be injectd here via javascript -->
-	
 	</div>
 	
 	<div id="image-div">
