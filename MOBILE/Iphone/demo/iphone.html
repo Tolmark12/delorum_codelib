@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" version="-//W3C//DTD XHTML 1.1//EN" xml:lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>untitled</title>
+		<meta name="description" content="content" />
+		<link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="/css/print.css" type="text/css" media="print" />
+		<link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
+		
+		<link rel="stylesheet" href="styles.css" type="text/css" />
+		<script type="text/javascript" src="jquery-ui-1.8.4.custom/development-bundle/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="jquery-ui-1.8.4.custom/development-bundle/ui/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="jquery-ui-1.8.4.custom/development-bundle/ui/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="jquery-ui-1.8.4.custom/development-bundle/ui/jquery.ui.mouse.js"></script>
+		<script type="text/javascript" src="jquery-ui-1.8.4.custom/development-bundle/ui/jquery.ui.draggable.js"></script>
+	</head>
+	
+	<body>
+		<div class='skin iphone-vertical'>
+			<div class='view'>
+				<div class='container'>
+					<div class='content draggable ui-widget-content'>
+						<img title='mobil content' src='01_Home.jpg' alt='home page' width=320 height=927 />
+						<!-- <img title='mobil content' src='21_Terms-of-Use.jpg' alt='home page' width=320 height=3310 /> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			//<![CDATA[
+				$(function(){
+					$(".content").draggable({ containment:'.container' });
+				});
+			//]]>
+		</script>
+
+	</body>
+</html>
