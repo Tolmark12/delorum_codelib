@@ -1,0 +1,58 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides:          unicorn-APP_NAME
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: unicorn handler for APP_NAME
+# Description:       unicorn handler for APP_NAME
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+pidfile='/var/run/APP_NAME.pid'
+config='/var/www/APP_NAME/config/unicorn.rb'
+name='unicorn-APP_NAME'
+
+. "/usr/local/rvm/scripts/rvm"
+
+case "$1" in
+  start)
+	echo -n "Starting $name: "
+	unicorn -c $config -E production -D
+	echo "done."
+	;;
+  stop)
+	echo -n "Stopping $name: "
+	cat $pidfile | xargs kill -QUIT
+    rm -f ${pidfile}
+	echo "done."
+	;;
+  restart)
+	echo -n "Restarting $name: "
+	cat $pidfile | xargs kill -QUIT
+    rm -f ${pidfile}
+	sleep 1
+	unicorn -c $config -E production -D
+	echo "done."
+	;;
+  reload)
+	echo -n "Reloading $name: "
+	cat $pidfile | xargs kill -USR2
+	echo "done."
+	;;
+  status)
+	if [ -f $pidfile ]
+	then
+		echo "* $name is running"
+	else
+		echo "* $name is not running"
+	fi
+	;;
+  *)
+	echo "Usage: /etc/init.d/unicorn-APP_NAME {start|stop|restart|reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

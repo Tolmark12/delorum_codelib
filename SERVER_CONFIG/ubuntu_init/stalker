@@ -1,0 +1,54 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides:          stalker
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: stalker workers slaving against a beanstalk queue
+# Description:       stalker workers slaving against a beanstalk queue
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+pidfile='/var/run/stalker.pid'
+workers=1
+jobfile='/var/www/nazgul/lib/jobs.rb'
+name='stalker'
+
+. "/usr/local/rvm/scripts/rvm"
+
+case "$1" in
+  start)
+	echo -n "Starting $name: "
+	stalk $jobfile
+	echo "done."
+	;;
+  stop)
+	echo -n "Stopping $name: "
+	cat $pidfile | xargs kill -QUIT
+    rm -f ${pidfile}
+	echo "done."
+	;;
+  restart)
+	echo -n "Restarting $name: "
+	cat $pidfile | xargs kill -QUIT
+    rm -f ${pidfile}
+	sleep 1
+	stalk $jobfile
+	echo "done."
+	;;
+  status)
+	if [ -f $pidfile ]
+	then
+		echo "* $name is running"
+	else
+		echo "* $name is not running"
+	fi
+	;;
+  *)
+	echo "Usage: /etc/init.d/stalker {start|stop|restart|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
