@@ -1,12 +1,12 @@
 #! /bin/bash
 ### BEGIN INIT INFO
-# Provides:          stalker
+# Provides:          clockwork
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: stalker workers slaving against a beanstalk queue
-# Description:       stalker workers slaving against a beanstalk queue
+# Short-Description: clockwork process that fires off jobs
+# Description:       clockwork process that fires off jobs
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -14,12 +14,12 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # source rvm for the rubies
 . /usr/local/lib/rvm
 
-bin=`which stalk`
+bin=`which clockwork`
 pidpath='/var/run'
-workers=4
-jobfile='/var/www/nazgul/lib/jobs.rb'
+workers=1
+jobfile='/var/www/zippelback/jobs/clock.rb'
 user='root'
-name='stalker'
+name='clockwork'
 
 function start {
 	echo -n "Starting $name: "
@@ -65,7 +65,7 @@ case "$1" in
 	fi
 	;;
   *)
-	echo "Usage: service stalker {start|stop|restart|status}" >&2
+	echo "Usage: service $name {start|stop|restart|status}" >&2
 	exit 1
 	;;
 esac

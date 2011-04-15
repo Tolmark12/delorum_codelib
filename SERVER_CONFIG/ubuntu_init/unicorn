@@ -1,20 +1,22 @@
 #! /bin/bash
 ### BEGIN INIT INFO
-# Provides:          unicorn-APP_NAME
+# Provides:          zippelback
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: unicorn handler for APP_NAME
-# Description:       unicorn handler for APP_NAME
+# Short-Description: unicorn handler for zippelback
+# Description:       unicorn handler for zippelback
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-pidfile='/var/run/APP_NAME.pid'
-config='/var/www/APP_NAME/config/unicorn.rb'
-name='unicorn-APP_NAME'
 
-. "/usr/local/rvm/scripts/rvm"
+pidfile='/var/run/nazgul.pid'
+config='/var/www/nazgul/config/unicorn.rb'
+name='nazgul'
+
+# . "/usr/local/rvm/scripts/rvm"
+. /usr/local/lib/rvm
 
 case "$1" in
   start)
@@ -50,7 +52,7 @@ case "$1" in
 	fi
 	;;
   *)
-	echo "Usage: /etc/init.d/unicorn-APP_NAME {start|stop|restart|reload|status}" >&2
+	echo "Usage: service nazgul {start|stop|restart|reload|status}" >&2
 	exit 1
 	;;
 esac

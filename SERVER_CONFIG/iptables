@@ -93,8 +93,14 @@ $IPT -A INPUT -i ${PUB_IF} -p icmp --icmp-type 8 -s 0/0 -m state --state NEW,EST
 $IPT -A OUTPUT -o ${PUB_IF} -p icmp --icmp-type 0 -d 0/0 -m state --state ESTABLISHED,RELATED -j ACCEPT
  
 # allow incoming HTTP port 80
-# $IPT -A INPUT -i ${PUB_IF} -p tcp -s 0/0 --sport 1024:65535 --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-# $IPT -A OUTPUT -o ${PUB_IF} -p tcp --sport 80 -d 0/0 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
+$IPT -A INPUT -i ${PUB_IF} -p tcp -s 0/0 --sport 1024:65535 --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -o ${PUB_IF} -p tcp --sport 80 -d 0/0 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
+
+# allow outgoing http/https
+$IPT -A OUTPUT -o ${PUB_IF} -p udp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A INPUT -i ${PUB_IF} -p udp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -o ${PUB_IF} -p udp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A INPUT -i ${PUB_IF} -p udp --sport 443 -m state --state ESTABLISHED -j ACCEPT
  
 # allow outgoing ntp
 $IPT -A OUTPUT -o ${PUB_IF} -p udp --dport 123 -m state --state NEW,ESTABLISHED -j ACCEPT
@@ -104,7 +110,6 @@ $IPT -A INPUT -i ${PUB_IF} -p udp --sport 123 -m state --state ESTABLISHED -j AC
 $IPT -A OUTPUT -o ${PUB_IF} -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
 $IPT -A INPUT -i ${PUB_IF} -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
  
-### add your other rules here ####
  
 #######################
 # drop and log everything else
